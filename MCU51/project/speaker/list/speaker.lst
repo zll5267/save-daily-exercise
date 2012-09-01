@@ -1,0 +1,70 @@
+C51 COMPILER V7.06   SPEAKER                                                               08/12/2012 08:46:11 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE SPEAKER
+OBJECT MODULE PLACED IN .\obj\speaker.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE speaker.c BROWSE DEBUG OBJECTEXTEND PRINT(.\list\speaker.lst) OBJECT(.\obj\
+                    -speaker.obj)
+
+stmt level    source
+
+   1          /*exercise for the speaker*/
+   2          #include <REG51.H>
+   3          
+   4          sbit SPEAKER = P2^0;
+   5          unsigned char frq;
+   6          void delay(unsigned char t);
+   7          void t0_init(void)
+   8          {
+   9   1              TMOD = TMOD|0x01;
+  10   1              TH0 = 0xFE;
+  11   1              TL0 = frq;
+  12   1      
+  13   1              EA = 1;
+  14   1              ET0 = 1;
+  15   1              TR0 = 1;
+  16   1      }
+  17          void t0_isr(void) interrupt 1
+  18          {
+  19   1              TH0 = 0xFA;
+  20   1              TL0 = frq;
+  21   1      
+  22   1              SPEAKER = !SPEAKER;
+  23   1      }
+  24          main()
+  25          {
+  26   1              unsigned char i;
+  27   1              t0_init();
+  28   1              while(1)
+  29   1              {
+  30   2                      
+  31   2                      for(i = 0; i < 200; i++){
+  32   3                              delay(10000);frq = i;
+  33   3                      }
+  34   2                      
+  35   2                      for(i = 200; i > 0; i--){
+  36   3                              delay(10000);frq = i;
+  37   3                      }
+  38   2              }
+  39   1      }
+  40          
+  41          void delay(unsigned char t)
+  42          {
+  43   1              while(--t);     
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     73    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V7.06   SPEAKER                                                               08/12/2012 08:46:11 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

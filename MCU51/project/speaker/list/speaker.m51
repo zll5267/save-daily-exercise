@@ -1,0 +1,179 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        08/13/2012  23:29:56  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\obj\music.obj TO .\obj\speaker PRINT (.\list\speaker.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\obj\music.obj (MUSIC)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\obj\speaker (MUSIC)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         ?DT?MUSIC
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     UNIT         ?PR?_DELAYUS2X?MUSIC
+                    0006H     0005H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     01D0H     UNIT         ?CO?MUSIC
+            CODE    01DEH     0041H     UNIT         ?PR?MAIN?MUSIC
+            CODE    021FH     0015H     UNIT         ?PR?_DELAYMS?MUSIC
+            CODE    0234H     0014H     UNIT         ?PR?_DELAY?MUSIC
+            CODE    0248H     000DH     UNIT         ?PR?TIM0_ISR?MUSIC
+            CODE    0255H     000DH     UNIT         ?PR?SONG?MUSIC
+            CODE    0262H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\obj\speaker (MUSIC)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MUSIC
+
+?PR?MAIN?MUSIC
+  +--> ?CO?MUSIC
+  +--> ?PR?SONG?MUSIC
+
+?PR?SONG?MUSIC
+  +--> ?PR?_DELAY?MUSIC
+
+?PR?_DELAY?MUSIC
+  +--> ?PR?_DELAYMS?MUSIC
+
+?PR?_DELAYMS?MUSIC
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/13/2012  23:29:56  PAGE 2
+
+
+  +--> ?PR?_DELAYUS2X?MUSIC
+
+
+
+SYMBOL TABLE OF MODULE:  .\obj\speaker (MUSIC)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MUSIC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:000EH         PUBLIC        MUSIC
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:0008H         PUBLIC        Time
+  C:021FH         PUBLIC        _DelayMs
+  C:0255H         PUBLIC        Song
+  D:00B8H         PUBLIC        IP
+  C:01DEH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0003H         PUBLIC        _DelayUs2x
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:0009H         PUBLIC        Timer0_H
+  D:000AH         PUBLIC        Timer0_L
+  D:00C8H         PUBLIC        T2CON
+  C:0248H         PUBLIC        TIM0_ISR
+  B:0090H.2       PUBLIC        SPK
+  C:0234H         PUBLIC        _delay
+  C:01A6H         PUBLIC        FREQH
+  D:00D0H         PUBLIC        PSW
+  C:01C2H         PUBLIC        FREQL
+  -------         PROC          _DELAYUS2X
+  D:0007H         SYMBOL        t
+  C:0003H         LINE#         77
+  C:0003H         LINE#         78
+  C:0003H         LINE#         79
+  C:0005H         LINE#         80
+  -------         ENDPROC       _DELAYUS2X
+  -------         PROC          _DELAYMS
+  D:0006H         SYMBOL        t
+  C:021FH         LINE#         86
+  C:0221H         LINE#         87
+  C:0221H         LINE#         89
+  C:0227H         LINE#         90
+  C:0227H         LINE#         92
+  C:022CH         LINE#         93
+  C:0231H         LINE#         94
+  C:0233H         LINE#         95
+  -------         ENDPROC       _DELAYMS
+  -------         PROC          _DELAY
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/13/2012  23:29:56  PAGE 3
+
+
+  D:0005H         SYMBOL        t
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:0234H         LINE#         103
+  C:0236H         LINE#         104
+  C:0236H         LINE#         106
+  C:023DH         LINE#         107
+  C:0245H         LINE#         108
+  C:0247H         LINE#         109
+  -------         ENDPROC       _DELAY
+  -------         PROC          TIM0_ISR
+  C:0248H         LINE#         113
+  C:0248H         LINE#         115
+  C:024AH         LINE#         116
+  C:024CH         LINE#         117
+  C:024FH         LINE#         118
+  C:0252H         LINE#         119
+  C:0254H         LINE#         120
+  -------         ENDPROC       TIM0_ISR
+  -------         PROC          SONG
+  C:0255H         LINE#         124
+  C:0255H         LINE#         125
+  C:0255H         LINE#         126
+  C:0258H         LINE#         127
+  C:025BH         LINE#         128
+  C:025DH         LINE#         129
+  -------         ENDPROC       SONG
+  -------         PROC          MAIN
+  -------         DO            
+  D:0002H         SYMBOL        k
+  D:0003H         SYMBOL        i
+  -------         ENDDO         
+  C:01DEH         LINE#         134
+  C:01DEH         LINE#         135
+  C:01DEH         LINE#         137
+  C:01E1H         LINE#         138
+  C:01E3H         LINE#         139
+  C:01E5H         LINE#         140
+  C:01E5H         LINE#         141
+  C:01E5H         LINE#         142
+  C:01E7H         LINE#         143
+  C:01F1H         LINE#         144
+  C:01F1H         LINE#         145
+  C:0203H         LINE#         146
+  C:0209H         LINE#         147
+  C:0210H         LINE#         148
+  C:0217H         LINE#         149
+  C:021AH         LINE#         150
+  C:021DH         LINE#         151
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MUSIC
+
+Program Size: data=12.0 xdata=0 code=617
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
