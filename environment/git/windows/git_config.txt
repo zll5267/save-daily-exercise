@@ -3,7 +3,6 @@
  *Author:leliang.zhang
  *Date:2012-08-17
  ******************************/
-yaolixiao003
 1 download the GIT tool for windows,and install it.
 	http://git-scm.com/downloads
 2 if you want to use the proxy to access the server,please do as follow.
