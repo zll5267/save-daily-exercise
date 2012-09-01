@@ -1,0 +1,104 @@
+C51 COMPILER V7.06   MOTOR                                                                 08/16/2012 21:49:27 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE MOTOR
+OBJECT MODULE PLACED IN .\obj\motor.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE motor.c BROWSE DEBUG OBJECTEXTEND PRINT(.\list\motor.lst) OBJECT(.\obj\moto
+                    -r.obj)
+
+stmt level    source
+
+   1          /* for the step motor*/
+   2          #include <REG51.H>
+   3          
+   4          sbit A1 = P1^0;
+   5          sbit B1 = P1^1;
+   6          sbit C1 = P1^2;
+   7          sbit D1 = P1^3;
+   8          
+   9          #define Coil_OFF {A1=0;B1=0;C1=0;D1=0;}
+  10          #define Coil_A {A1=1;B1=0;C1=0;D1=0;}
+  11          #define Coil_AB {A1=1;B1=1;C1=0;D1=0;}
+  12          #define Coil_B {A1=0;B1=1;C1=0;D1=0;}
+  13          #define Coil_BC {A1=0;B1=1;C1=1;D1=0;}
+  14          #define Coil_C {A1=0;B1=0;C1=1;D1=0;}
+  15          #define Coil_CD {A1=0;B1=0;C1=1;D1=1;}
+  16          #define Coil_D {A1=0;B1=0;C1=0;D1=1;}
+  17          #define Coil_DA {A1=1;B1=0;C1=0;D1=1;}
+  18          
+  19          unsigned char speed = 1;
+  20          
+  21          void delayMs(unsigned char t);
+  22          
+  23          main()
+  24          {
+  25   1              //unsigned char i;
+  26   1              speed = 3;
+  27   1              Coil_OFF;
+  28   1              while(1)
+  29   1              {
+  30   2                      //i++;
+  31   2                      Coil_A
+  32   2                      delayMs(speed);
+  33   2                      Coil_AB
+  34   2                      delayMs(speed);
+  35   2                      Coil_B
+  36   2                      delayMs(speed);
+  37   2                      Coil_BC
+  38   2                      delayMs(speed);
+  39   2                      Coil_C
+  40   2                      delayMs(speed);
+  41   2                      Coil_CD
+  42   2                      delayMs(speed);
+  43   2                      Coil_D
+  44   2                      delayMs(speed);
+  45   2                      Coil_DA
+  46   2                      delayMs(speed);
+  47   2                      /*
+  48   2                      if(i > 90){
+  49   2                              speed = 50;
+  50   2                              i=0;
+  51   2                      }else if(i > 80){
+  52   2                              speed = 40;
+  53   2                      }else if(i > 70){
+  54   2                              speed = 30;
+C51 COMPILER V7.06   MOTOR                                                                 08/16/2012 21:49:27 PAGE 2   
+
+  55   2                      }else if(i > 60){
+  56   2                              speed = 20;
+  57   2                      }else if(i > 50){
+  58   2                              speed = 10;
+  59   2                      }else if(i > 40){
+  60   2                              speed = 20;
+  61   2                      }else if(i > 30){
+  62   2                              speed = 30;
+  63   2                      }else if(i > 20){
+  64   2                              speed = 40;
+  65   2                      }
+  66   2                      */
+  67   2              }
+  68   1      }
+  69          
+  70          void delayMs(unsigned char t)
+  71          {
+  72   1              unsigned char i;
+  73   1              while(t--)
+  74   1              {
+  75   2                      i = 50;
+  76   2                      while(--i);
+  77   2              }
+  78   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    110    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,157 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        08/08/2012  22:37:10  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\obj\m_d_tube.obj TO .\obj\m_d_tube PRINT (.\list\m_d_tube.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\obj\m_d_tube.obj (M_D_TUBE)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\obj\m_d_tube (M_D_TUBE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     001AH     UNIT         ?DT?M_D_TUBE
+            DATA    0022H     0003H     UNIT         _DATA_GROUP_
+            IDATA   0025H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0075H     UNIT         ?PR?MAIN?M_D_TUBE
+            CODE    0104H     0032H     UNIT         ?PR?_DISPLAY?M_D_TUBE
+            CODE    0136H     0017H     UNIT         ?C_INITSEG
+            CODE    014DH     000AH     UNIT         ?PR?_DELAY?M_D_TUBE
+
+
+
+OVERLAY MAP OF MODULE:   .\obj\m_d_tube (M_D_TUBE)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?M_D_TUBE
+  +--> ?C_INITSEG
+
+?PR?MAIN?M_D_TUBE              0022H    0003H
+  +--> ?PR?_DISPLAY?M_D_TUBE
+
+?PR?_DISPLAY?M_D_TUBE          -----    -----
+  +--> ?PR?_DELAY?M_D_TUBE
+
+
+
+SYMBOL TABLE OF MODULE:  .\obj\m_d_tube (M_D_TUBE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/08/2012  22:37:10  PAGE 2
+
+
+  -------         MODULE        M_D_TUBE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0008H         PUBLIC        wei_in
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:008FH         PUBLIC        main
+  B:00A0H.2       PUBLIC        duan
+  D:0010H         PUBLIC        portData
+  B:00A0H.3       PUBLIC        wei
+  C:0104H         PUBLIC        _display
+  D:0018H         PUBLIC        duan_in
+  C:014DH         PUBLIC        _delay
+  -------         PROC          MAIN
+  -------         DO            
+  D:0022H         SYMBOL        i
+  D:0007H         SYMBOL        j
+  D:0023H         SYMBOL        k
+  D:0024H         SYMBOL        l
+  -------         ENDDO         
+  C:008FH         LINE#         15
+  C:008FH         LINE#         16
+  C:008FH         LINE#         39
+  C:008FH         LINE#         40
+  C:008FH         LINE#         41
+  C:0091H         LINE#         42
+  C:0095H         LINE#         43
+  C:0095H         LINE#         44
+  C:0095H         LINE#         45
+  C:0095H         LINE#         46
+  C:009EH         LINE#         47
+  C:009EH         LINE#         48
+  C:009EH         LINE#         50
+  C:00A5H         LINE#         51
+  C:00ACH         LINE#         52
+  C:00ACH         LINE#         53
+  C:00AFH         LINE#         54
+  C:00B3H         LINE#         55
+  C:00B3H         LINE#         56
+  C:00C4H         LINE#         57
+  C:00C8H         LINE#         58
+  C:00CAH         LINE#         59
+  C:00CFH         LINE#         60
+  C:00CFH         LINE#         61
+  C:00D4H         LINE#         62
+  C:00D6H         LINE#         63
+  C:00DEH         LINE#         64
+  C:00DEH         LINE#         65
+  C:00E1H         LINE#         66
+  C:00E3H         LINE#         68
+  C:00E3H         LINE#         69
+  C:00FAH         LINE#         70
+  C:0100H         LINE#         71
+  C:0102H         LINE#         72
+  C:0102H         LINE#         73
+  C:0102H         LINE#         74
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/08/2012  22:37:10  PAGE 3
+
+
+  D:0006H         SYMBOL        t
+  C:014DH         LINE#         84
+  C:014DH         LINE#         85
+  C:014DH         LINE#         86
+  C:0156H         LINE#         87
+  -------         ENDPROC       _DELAY
+  -------         PROC          _DISPLAY
+  D:0004H         SYMBOL        firstBit
+  D:0005H         SYMBOL        num
+  -------         DO            
+  D:0003H         SYMBOL        i
+  -------         ENDDO         
+  C:0104H         LINE#         93
+  C:0106H         LINE#         94
+  C:0106H         LINE#         96
+  C:010DH         LINE#         97
+  C:010DH         LINE#         99
+  C:0110H         LINE#         100
+  C:0112H         LINE#         101
+  C:0114H         LINE#         104
+  C:011CH         LINE#         105
+  C:011EH         LINE#         106
+  C:0120H         LINE#         108
+  C:0127H         LINE#         109
+  C:0129H         LINE#         110
+  C:012BH         LINE#         111
+  C:0132H         LINE#         112
+  C:0135H         LINE#         113
+  -------         ENDPROC       _DISPLAY
+  -------         ENDMOD        M_D_TUBE
+
+Program Size: data=38.0 xdata=0 code=343
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

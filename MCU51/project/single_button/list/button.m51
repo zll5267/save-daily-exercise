@@ -1,0 +1,110 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        08/10/2012  21:48:42  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\obj\button_QF.obj TO .\obj\button PRINT (.\list\button.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\obj\button_QF.obj (BUTTON_QF)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\obj\button (BUTTON_QF)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     0018H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     004FH     UNIT         ?PR?MAIN?BUTTON_QF
+            CODE    0052H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\obj\button (BUTTON_QF)
+
+
+SEGMENT                           BIT_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?BUTTON_QF
+
+?PR?MAIN?BUTTON_QF             0020H.0  0000H.1
+
+
+
+SYMBOL TABLE OF MODULE:  .\obj\button (BUTTON_QF)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BUTTON_QF
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  B:0080H.0       PUBLIC        LED1
+  B:0080H.1       PUBLIC        LED2
+  B:0080H.2       PUBLIC        LED3
+  B:0080H.3       PUBLIC        LED4
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/10/2012  21:48:42  PAGE 2
+
+
+  B:0080H.4       PUBLIC        LED5
+  B:0080H.5       PUBLIC        LED6
+  B:0080H.6       PUBLIC        LED7
+  B:0080H.7       PUBLIC        LED8
+  B:00A0H.0       PUBLIC        BTN1
+  B:00A0H.1       PUBLIC        BTN2
+  B:00A0H.2       PUBLIC        BTN3
+  B:00A0H.3       PUBLIC        BTN4
+  B:00A0H.4       PUBLIC        BTN5
+  B:00A0H.5       PUBLIC        BTN6
+  B:00A0H.6       PUBLIC        BTN7
+  B:00A0H.7       PUBLIC        BTN8
+  C:0003H         PUBLIC        main
+  -------         PROC          MAIN
+  -------         DO            
+  B:0020H.0       SYMBOL        flag
+  -------         ENDDO         
+  C:0003H         LINE#         21
+  C:0003H         LINE#         22
+  C:0003H         LINE#         24
+  C:0006H         LINE#         25
+  C:0006H         LINE#         26
+  C:0009H         LINE#         27
+  C:000DH         LINE#         28
+  C:0012H         LINE#         29
+  C:0016H         LINE#         30
+  C:001BH         LINE#         31
+  C:001FH         LINE#         32
+  C:0024H         LINE#         33
+  C:0028H         LINE#         34
+  C:002DH         LINE#         35
+  C:0031H         LINE#         36
+  C:0036H         LINE#         37
+  C:003AH         LINE#         38
+  C:003FH         LINE#         39
+  C:0043H         LINE#         40
+  C:0048H         LINE#         41
+  C:004CH         LINE#         42
+  C:004CH         LINE#         44
+  C:004EH         LINE#         45
+  C:0051H         LINE#         46
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        BUTTON_QF
+
+Program Size: data=9.1 xdata=0 code=94
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

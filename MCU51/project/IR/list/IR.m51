@@ -1,0 +1,249 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        08/24/2012  22:33:29  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\obj\IR.obj TO .\obj\IR PRINT (.\list\IR.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\obj\IR.obj (IR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CCASE)
+
+
+LINK MAP OF MODULE:  .\obj\IR (IR)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     0018H                  *** GAP ***
+            BIT     0020H.0   0000H.3   UNIT         ?BI?IR
+                    0020H.3   0000H.5                *** GAP ***
+            DATA    0021H     0027H     UNIT         ?DT?IR
+            IDATA   0048H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     0003H     UNIT         ?PR?TIM0_ISR?IR
+                    0009H     0002H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     006FH     UNIT         ?PR?IR_WORK?IR
+            CODE    007DH     0041H     UNIT         ?PR?EX0_ISR?IR
+            CODE    00BEH     0031H     UNIT         ?PR?IRCORDPRO?IR
+            CODE    00EFH     0026H     UNIT         ?C?LIB_CODE
+            CODE    0115H     001FH     UNIT         ?PR?MAIN?IR
+            CODE    0134H     000DH     UNIT         ?PR?TIM0INIT?IR
+            CODE    0141H     000CH     UNIT         ?C_C51STARTUP
+            CODE    014DH     000AH     UNIT         ?CO?IR
+            CODE    0157H     0007H     UNIT         ?PR?EX0INIT?IR
+
+
+
+OVERLAY MAP OF MODULE:   .\obj\IR (IR)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?IR
+
+?PR?MAIN?IR
+  +--> ?PR?EX0INIT?IR
+  +--> ?PR?TIM0INIT?IR
+  +--> ?PR?IRCORDPRO?IR
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/24/2012  22:33:29  PAGE 2
+
+
+  +--> ?PR?IR_WORK?IR
+
+?PR?IR_WORK?IR
+  +--> ?CO?IR
+
+
+
+SYMBOL TABLE OF MODULE:  .\obj\IR (IR)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        IR
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0157H         PUBLIC        EX0init
+  B:00A8H.7       PUBLIC        EA
+  D:0022H         PUBLIC        irtime
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:007DH         PUBLIC        EX0_ISR
+  B:00A0H.3       PUBLIC        LATCH2
+  C:0115H         PUBLIC        main
+  C:0006H         PUBLIC        tim0_isr
+  B:0090H.1       PUBLIC        RELAY1
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:0020H.1       PUBLIC        irok
+  C:00BEH         PUBLIC        Ircordpro
+  C:014DH         PUBLIC        dofly_DuanMa
+  D:0023H         PUBLIC        IRcord
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:008AH         PUBLIC        TL0
+  C:0134H         PUBLIC        TIM0init
+  B:0090H.0       PUBLIC        LED
+  B:0088H.4       PUBLIC        TR0
+  C:000EH         PUBLIC        Ir_work
+  D:00C8H         PUBLIC        T2CON
+  B:0020H.2       PUBLIC        irpro_ok
+  D:0027H         PUBLIC        irdata
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          TIM0_ISR
+  C:0006H         LINE#         52
+  C:0006H         LINE#         54
+  C:0008H         LINE#         55
+  -------         ENDPROC       TIM0_ISR
+  -------         PROC          EX0_ISR
+  -------         DO            
+  D:0021H         SYMBOL        i
+  B:0020H.0       SYMBOL        startflag
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/24/2012  22:33:29  PAGE 3
+
+
+  -------         ENDDO         
+  C:007DH         LINE#         60
+  C:0086H         LINE#         65
+  C:0089H         LINE#         66
+  C:0089H         LINE#         67
+  C:0097H         LINE#         68
+  C:009AH         LINE#         69
+  C:00A1H         LINE#         70
+  C:00A4H         LINE#         71
+  C:00A6H         LINE#         72
+  C:00ABH         LINE#         73
+  C:00ABH         LINE#         74
+  C:00ADH         LINE#         75
+  C:00B0H         LINE#         76
+  C:00B0H         LINE#         77
+  C:00B2H         LINE#         79
+  C:00B2H         LINE#         80
+  C:00B5H         LINE#         81
+  C:00B7H         LINE#         82
+  C:00B7H         LINE#         84
+  -------         ENDPROC       EX0_ISR
+  -------         PROC          TIM0INIT
+  C:0134H         LINE#         89
+  C:0134H         LINE#         90
+  C:0134H         LINE#         92
+  C:0137H         LINE#         93
+  C:013AH         LINE#         94
+  C:013CH         LINE#         95
+  C:013EH         LINE#         96
+  C:0140H         LINE#         97
+  -------         ENDPROC       TIM0INIT
+  -------         PROC          EX0INIT
+  C:0157H         LINE#         101
+  C:0157H         LINE#         102
+  C:0157H         LINE#         103
+  C:0159H         LINE#         104
+  C:015BH         LINE#         105
+  C:015DH         LINE#         106
+  -------         ENDPROC       EX0INIT
+  -------         PROC          IR_WORK
+  C:000EH         LINE#         111
+  C:000EH         LINE#         112
+  C:000EH         LINE#         114
+  C:0035H         LINE#         115
+  C:0035H         LINE#         116
+  C:0040H         LINE#         117
+  C:004BH         LINE#         118
+  C:0050H         LINE#         119
+  C:0055H         LINE#         120
+  C:005AH         LINE#         121
+  C:005FH         LINE#         122
+  C:0064H         LINE#         123
+  C:0069H         LINE#         124
+  C:006EH         LINE#         125
+  C:0077H         LINE#         126
+  C:007AH         LINE#         127
+  C:007AH         LINE#         129
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/24/2012  22:33:29  PAGE 4
+
+
+  C:007CH         LINE#         131
+  -------         ENDPROC       IR_WORK
+  -------         PROC          IRCORDPRO
+  -------         DO            
+  D:0005H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  D:0006H         SYMBOL        k
+  D:0003H         SYMBOL        cord
+  D:0007H         SYMBOL        value
+  -------         ENDDO         
+  C:00BEH         LINE#         135
+  C:00BEH         LINE#         136
+  C:00BEH         LINE#         140
+  C:00C0H         LINE#         141
+  C:00C2H         LINE#         142
+  C:00C2H         LINE#         143
+  C:00C4H         LINE#         144
+  C:00C4H         LINE#         145
+  C:00C9H         LINE#         146
+  C:00CEH         LINE#         147
+  C:00D1H         LINE#         148
+  C:00D7H         LINE#         149
+  C:00D7H         LINE#         150
+  C:00DBH         LINE#         151
+  C:00DBH         LINE#         152
+  C:00DCH         LINE#         153
+  C:00E0H         LINE#         154
+  C:00E6H         LINE#         155
+  C:00E8H         LINE#         156
+  C:00ECH         LINE#         157
+  C:00EEH         LINE#         158
+  -------         ENDPROC       IRCORDPRO
+  -------         PROC          MAIN
+  C:0115H         LINE#         163
+  C:0115H         LINE#         164
+  C:0115H         LINE#         165
+  C:0117H         LINE#         166
+  C:011AH         LINE#         167
+  C:011DH         LINE#         169
+  C:0120H         LINE#         170
+  C:0122H         LINE#         171
+  C:0124H         LINE#         173
+  C:0124H         LINE#         174
+  C:0124H         LINE#         175
+  C:0127H         LINE#         176
+  C:0127H         LINE#         177
+  C:012AH         LINE#         178
+  C:012CH         LINE#         179
+  C:012CH         LINE#         181
+  C:012FH         LINE#         182
+  C:012FH         LINE#         183
+  C:0132H         LINE#         184
+  C:0132H         LINE#         185
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        IR
+
+  -------         MODULE        ?C?CCASE
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/24/2012  22:33:29  PAGE 5
+
+
+  C:00EFH         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+Program Size: data=48.3 xdata=0 code=348
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

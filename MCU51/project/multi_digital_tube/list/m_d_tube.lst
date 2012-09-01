@@ -1,0 +1,141 @@
+C51 COMPILER V7.06   M_D_TUBE                                                              08/08/2012 22:37:10 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE M_D_TUBE
+OBJECT MODULE PLACED IN .\obj\m_d_tube.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE m_d_tube.c BROWSE DEBUG OBJECTEXTEND PRINT(.\list\m_d_tube.lst) OBJECT(.\ob
+                    -j\m_d_tube.obj)
+
+stmt level    source
+
+   1          /*
+   2           display the number from 999 to 0, and circle to this
+   3          */
+   4          #include <reg51.h>
+   5          #define dataPort  P0
+   6          sbit wei = P2^3;
+   7          sbit duan = P2^2;
+   8          
+   9          unsigned char duan_in[] = {0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};/*0-9*/
+  10          unsigned char wei_in[] = {0xFE,0xFD,0xFB,0xF7,0xEF,0xDF,0xBF,0x7F};/*0-7*/
+  11          unsigned char portData[8];
+  12          void delay(unsigned int t);
+  13          void display(unsigned char firstBit,unsigned char num);
+  14          unsigned char getDisplay(int n);
+  15          int main()
+  16          {
+  17   1      /*
+  18   1              int num = 100;
+  19   1              int j = 0;
+  20   1              while(1)
+  21   1              {
+  22   1                      j++;
+  23   1                      portData[0] = getDisplay(num/100);
+  24   1                      portData[1] = getDisplay((num%100)/10);
+  25   1                      if((portData[1] == 0x00)&&(portData[0] != 0x00))
+  26   1                              portData[1] = duan_in[0];
+  27   1                      portData[2] = getDisplay(num%10);
+  28   1                      if((portData[2] == 0x00)&&((portData[0] != 0x00)||(portData[1] != 0x00)))
+  29   1                              portData[2] = duan_in[0];
+  30   1                      display(4,3);
+  31   1                      if(j > 50){
+  32   1                              if(!(--num)) num = 100;
+  33   1                              j = 0;
+  34   1                      }
+  35   1              }
+  36   1              return 0;
+  37   1      */
+  38   1              unsigned char i,j,k,l;
+  39   1              while(1)
+  40   1              {
+  41   2                      i++;
+  42   2                      if(0==k)
+  43   2                      {
+  44   3                              for(j=0;j<8;j++)
+  45   3                              {
+  46   4                                      portData[j] = 0;
+  47   4                              }
+  48   3                      }
+  49   2                      //portData[0] = duan_in[0];
+  50   2                      display(0,8);
+  51   2                      if(i > 20)
+  52   2                      {
+  53   3                              i = 0;
+  54   3                              if(0 == l)
+C51 COMPILER V7.06   M_D_TUBE                                                              08/08/2012 22:37:10 PAGE 2   
+
+  55   3                              {
+  56   4                                      portData[7-l] = duan_in[k];
+  57   4                                  k++;l++;
+  58   4                              }
+  59   3                              else if(8 == k)
+  60   3                              {
+  61   4                                      k = 0; l = 0;
+  62   4                              }
+  63   3                              else if(l == (9 - k))
+  64   3                              {
+  65   4                                      l = 0;
+  66   4                              }
+  67   3                              else
+  68   3                              {
+  69   4                                      portData[8-l-1] = portData[8-l];
+  70   4                                      portData[8-l] = 0;
+  71   4                                      l++;
+  72   4                              }
+  73   3                      }
+  74   2              }
+  75   1      }
+  76          /* make sure the n < sizeof(duan_in)
+  77          unsigned char getDisplay(int n)
+  78          {
+  79                  if(n == 0)
+  80                          return 0x00;
+  81                  return duan_in[n];
+  82          }*/
+  83          /* delay for a while */
+  84          void delay(unsigned int t)
+  85          {
+  86   1              while(--t);
+  87   1      }
+  88          /* the display function
+  89             firstBit: from while wei to display the digital(0-7).
+  90             num : how many wei need to dispaly (1-8).
+  91             Note:make sure firstBit + num <= 8;
+  92          */
+  93          void display(unsigned char firstBit,unsigned char num)
+  94          {
+  95   1              unsigned char i;
+  96   1              for( i = 0; i < num; i++)
+  97   1              {
+  98   2                      
+  99   2                  dataPort = 0;//·ÀÖ¹½»ÌæÖØÓ°
+ 100   2                      duan = 1;
+ 101   2                      duan = 0;
+ 102   2                      
+ 103   2      
+ 104   2                      dataPort = wei_in[i + firstBit];
+ 105   2                      wei = 1;
+ 106   2                      wei = 0;
+ 107   2                      
+ 108   2                      dataPort = portData[i];
+ 109   2                      duan = 1;
+ 110   2                      duan = 0;
+ 111   2                      delay(200);
+ 112   2              }
+ 113   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V7.06   M_D_TUBE                                                              08/08/2012 22:37:10 PAGE 3   
+
+   CODE SIZE        =    177    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     26       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

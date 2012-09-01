@@ -1,0 +1,107 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        08/07/2012  22:28:56  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\obj\digital_tube.obj TO .\obj\digital_tube PRINT (.\list\digital_tube.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\obj\digital_tube.obj (DIGITAL_TUBE)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\obj\digital_tube (DIGITAL_TUBE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0031H     UNIT         ?PR?MAIN?DIGITAL_TUBE
+            CODE    0034H     0012H     UNIT         ?CO?DIGITAL_TUBE
+            CODE    0046H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0052H     000AH     UNIT         ?PR?_DELAY?DIGITAL_TUBE
+
+
+
+OVERLAY MAP OF MODULE:   .\obj\digital_tube (DIGITAL_TUBE)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?DIGITAL_TUBE
+
+?PR?MAIN?DIGITAL_TUBE           0008H    0001H
+  +--> ?CO?DIGITAL_TUBE
+  +--> ?PR?_DELAY?DIGITAL_TUBE
+
+
+
+SYMBOL TABLE OF MODULE:  .\obj\digital_tube (DIGITAL_TUBE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        DIGITAL_TUBE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/07/2012  22:28:56  PAGE 2
+
+
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0003H         PUBLIC        main
+  B:00A0H.2       PUBLIC        duan
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A0H.3       PUBLIC        wei
+  C:0052H         PUBLIC        _Delay
+  C:003EH         PUBLIC        whichbit
+  D:00C8H         PUBLIC        T2CON
+  C:0034H         PUBLIC        display
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         31
+  C:0003H         LINE#         32
+  C:0003H         LINE#         56
+  C:0005H         LINE#         57
+  C:0007H         LINE#         58
+  C:0007H         LINE#         60
+  C:000AH         LINE#         61
+  C:000AH         LINE#         62
+  C:0012H         LINE#         63
+  C:0014H         LINE#         64
+  C:0016H         LINE#         66
+  C:001EH         LINE#         67
+  C:0020H         LINE#         68
+  C:0022H         LINE#         69
+  C:0029H         LINE#         70
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        t
+  C:0052H         LINE#         74
+  C:0052H         LINE#         75
+  C:0052H         LINE#         76
+  C:005BH         LINE#         77
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DIGITAL_TUBE
+
+Program Size: data=10.0 xdata=0 code=92
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,329 @@
+C51 COMPILER V7.06   CALC                                                                  08/11/2012 20:48:47 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE CALC
+OBJECT MODULE PLACED IN .\obj\calc.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE calc.c BROWSE DEBUG OBJECTEXTEND PRINT(.\list\calc.lst) OBJECT(.\obj\calc.o
+                    -bj)
+
+stmt level    source
+
+   1          /* caculate*/
+   2          #include <REG51.H>
+   3          
+   4          #define dataPort P0
+   5          #define keyPort P1
+   6          sbit duan = P2^2;
+   7          sbit wei = P2^3;
+   8          
+   9          unsigned char duan_in[] = {0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};/*0-9*/
+  10          unsigned char wei_in[] = {0xFE,0xFD,0xFB,0xF7,0xEF,0xDF,0xBF,0x7F};/*0-7*/
+  11          unsigned char portData[8];
+  12          unsigned char keyPressed;
+  13          
+  14          int op1;
+  15          int op2;
+  16          unsigned char operator;
+  17          unsigned char num;
+  18          
+  19          void delay(unsigned char t)
+  20          {
+  21   1              while(--t);
+  22   1      }
+  23          
+  24          void display(unsigned char firstBit,unsigned char num)
+  25          {
+  26   1              static unsigned char i;
+  27   1              //for(i = 0; i < num; i++)
+  28   1              //{
+  29   1                      dataPort = 0;
+  30   1                      duan = 1;
+  31   1                      duan = 0;
+  32   1      
+  33   1                      dataPort = wei_in[i + firstBit];
+  34   1                      wei = 1;
+  35   1                      wei = 0;
+  36   1      
+  37   1                      dataPort = portData[i + firstBit];
+  38   1                      duan = 1;
+  39   1                      duan = 0;
+  40   1                      
+  41   1                      i++;
+  42   1                      if(i > num - 1) i = 0;
+  43   1      
+  44   1                      delay(100);
+  45   1              //}
+  46   1      }
+  47          
+  48          unsigned char key_scan()
+  49          {
+  50   1              unsigned char keyValue;
+  51   1              keyPort = 0xF0;
+  52   1              if(keyPort != 0xF0)
+  53   1              {
+  54   2                      delay(6000);
+C51 COMPILER V7.06   CALC                                                                  08/11/2012 20:48:47 PAGE 2   
+
+  55   2                      if(keyPort != 0xF0);
+  56   2                      {
+  57   3                              keyValue = keyPort&0xF0;
+  58   3                              keyPort = 0x0F;
+  59   3                              if(keyPort != 0x0F)
+  60   3                              {
+  61   4                                      delay(60000);
+  62   4                                      if(keyPort != 0x0F)
+  63   4                                      {
+  64   5                                              keyValue = keyValue|keyPort;
+  65   5                                              return keyValue;
+  66   5                                      }
+  67   4                              }
+  68   3                      }
+  69   2              }
+  70   1              return 0;
+  71   1      }
+  72          
+  73          unsigned char getNum(){
+  74   1              unsigned char keyValue;
+  75   1              keyValue = key_scan();
+  76   1              switch(keyValue)
+  77   1              {
+  78   2                      case 0x7E: return 1;
+  79   2                      case 0x7D: return 4;
+  80   2                      case 0x7B: return 7;
+  81   2                      case 0x77: return 0;
+  82   2                      case 0xBE: return 2;
+  83   2                      case 0xBD: return 5;
+  84   2                      case 0xBB: return 8;
+  85   2                      case 0xB7: return 'C';
+  86   2                      case 0xDE: return 3;
+  87   2                      case 0xDD: return 6;
+  88   2                      case 0xDB: return 9;
+  89   2                      case 0xD7: return '=';
+  90   2                      case 0xEE: return '+';
+  91   2                      case 0xED: return '-';
+  92   2                      case 0xEB: return '*';
+  93   2                      case 0xE7: return '/';
+  94   2                      default: return  0xFF;
+  95   2              }
+  96   1      }
+  97          
+  98          void time0_init(void)
+  99          {
+ 100   1              TMOD |= 0x01;
+ 101   1      
+ 102   1              EA = 1;
+ 103   1              ET0 = 1;
+ 104   1              TR0 = 1;
+ 105   1      }
+ 106          void time0_isr(void) interrupt 1 using 1
+ 107          {
+ 108   1              TH0 = (65535-2000)/256;
+ 109   1              TL0 = (65535-2000)%256;
+ 110   1              display(3,5);
+ 111   1      }
+ 112          
+ 113          void int0_init(void)
+ 114          {
+ 115   1              EA = 1;
+ 116   1              EX0 = 1;
+C51 COMPILER V7.06   CALC                                                                  08/11/2012 20:48:47 PAGE 3   
+
+ 117   1              IT0 = 1;
+ 118   1      }
+ 119          
+ 120          void int0_deact(void)
+ 121          {
+ 122   1              EX0 = 0;
+ 123   1      }
+ 124          void int0_isr(void) interrupt 0
+ 125          {
+ 126   1              keyPressed = 1;
+ 127   1      }
+ 128          
+ 129          void calc_error(void)
+ 130          {
+ 131   1              int0_deact();
+ 132   1      }
+ 133          
+ 134          void calc_init(void)
+ 135          {
+ 136   1              unsigned char i;
+ 137   1              int0_init();
+ 138   1              op1 = 0;
+ 139   1              op2 = 0;
+ 140   1              operator = 0;
+ 141   1              num = 0xFF;
+ 142   1              for(i = 0; i < 8; i++)
+ 143   1              {
+ 144   2                      portData[i] = 0;
+ 145   2              }
+ 146   1              portData[7] = duan_in[0];
+ 147   1      }
+ 148          /*stop the function,and display CE ,press RET */
+ 149          void calc_stop(void)
+ 150          {
+ 151   1              unsigned char i;
+ 152   1              calc_error();
+ 153   1              for(i = 0; i < 8; i++)
+ 154   1              {
+ 155   2                      portData[i] = 0;
+ 156   2              }
+ 157   1              portData[6] = 0x39;//C
+ 158   1              portData[7] = 0x79;//E
+ 159   1      }
+ 160          
+ 161          /* update display :max bits is 5*/
+ 162          void updatePortData(int disp)
+ 163          {
+ 164   1              unsigned char i;
+ 165   1              for(i = 0; i < 8; i++)
+ 166   1              {
+ 167   2                      portData[i] = 0;
+ 168   2              }
+ 169   1              if(!(disp/10000)){
+ 170   2                      portData[3] = 0;
+ 171   2                      disp = disp%10000;
+ 172   2                      if(!(disp/1000)){
+ 173   3                              portData[4] = 0;
+ 174   3                              disp = disp%1000;
+ 175   3                              if(!(disp/100)){
+ 176   4                                      portData[5] = 0;
+ 177   4                                      disp = disp%100;
+ 178   4                                      if(!(disp/10)){
+C51 COMPILER V7.06   CALC                                                                  08/11/2012 20:48:47 PAGE 4   
+
+ 179   5                                              portData[6] = 0;
+ 180   5                                              disp = disp%10;
+ 181   5                                              portData[7] = duan_in[disp];
+ 182   5                                      }else{
+ 183   5                                              portData[6] = duan_in[disp/10];
+ 184   5                                              disp = disp%10;
+ 185   5                                              portData[7] = duan_in[disp];
+ 186   5                                      }
+ 187   4                              }else{
+ 188   4                                      portData[5] = duan_in[disp/100];
+ 189   4                                      disp = disp%100;
+ 190   4                                      portData[6] = duan_in[disp/10];
+ 191   4                                      disp = disp%10;
+ 192   4                                      portData[7] = duan_in[disp];
+ 193   4                              }
+ 194   3                      }else{
+ 195   3                              portData[4] = duan_in[disp/1000];
+ 196   3                              disp = disp%1000;
+ 197   3                              portData[5] = duan_in[disp/100];
+ 198   3                              disp = disp%100;
+ 199   3                              portData[6] = duan_in[disp/10];
+ 200   3                              disp = disp%10;
+ 201   3                              portData[7] = duan_in[disp];
+ 202   3                      }
+ 203   2              }else{
+ 204   2                      portData[3] = duan_in[disp/10000];
+ 205   2                      disp = disp%10000;
+ 206   2                      portData[4] = duan_in[disp/1000];
+ 207   2                      disp = disp%1000;
+ 208   2                      portData[5] = duan_in[disp/100];
+ 209   2                      disp = disp%100;
+ 210   2                      portData[6] = duan_in[disp/10];
+ 211   2                      disp = disp%10;
+ 212   2                      portData[7] = duan_in[disp];
+ 213   2              }
+ 214   1      }
+ 215          
+ 216          /* input: 1 number,0 operator*/
+ 217          void updateOper(bit input)
+ 218          {
+ 219   1              if(input)
+ 220   1              {
+ 221   2                      if(operator != 0)
+ 222   2                      {
+ 223   3                              op2 = op2*10 + num;
+ 224   3                              updatePortData(op2);
+ 225   3                      }else{
+ 226   3                              op1 = op1*10 + num;
+ 227   3                              updatePortData(op1);
+ 228   3                      }               
+ 229   2              }else{
+ 230   2                      if(num == 'C'){
+ 231   3                              calc_init();
+ 232   3                      }else if(num == '='){
+ 233   3                              if(operator == '+'){
+ 234   4                                      op1 += op2;
+ 235   4                                      if(op1 > 65535){
+ 236   5                                              calc_stop();
+ 237   5                                              return;
+ 238   5                                      }
+ 239   4                                      updatePortData(op1);
+ 240   4                                      operator = 0;
+C51 COMPILER V7.06   CALC                                                                  08/11/2012 20:48:47 PAGE 5   
+
+ 241   4                              }else if(operator == '-'){
+ 242   4                                      if(op1<op2){
+ 243   5                                              calc_stop();
+ 244   5                                              return;
+ 245   5                                      }
+ 246   4                                      op1 -= op2;
+ 247   4                                      updatePortData(op1);
+ 248   4                                      operator = 0;
+ 249   4                              }else if(operator == '*'){
+ 250   4                                      op1 *= op2;
+ 251   4                                      if(op1 > 65535){
+ 252   5                                              calc_stop();
+ 253   5                                              return;
+ 254   5                                      }
+ 255   4                                      updatePortData(op1);
+ 256   4                                      operator = 0;
+ 257   4                              }else if(operator == '/'){
+ 258   4                                      op1 /= op2;
+ 259   4                                      if(op2 == 0){
+ 260   5                                              calc_stop();
+ 261   5                                              return;
+ 262   5                                      }
+ 263   4                                      updatePortData(op1);
+ 264   4                                      operator = 0;
+ 265   4                              }else{
+ 266   4                                      calc_stop();
+ 267   4                              }
+ 268   3      
+ 269   3                      }else{
+ 270   3                              operator = num;
+ 271   3                      }
+ 272   2              }
+ 273   1      }
+ 274          
+ 275          main()
+ 276          {
+ 277   1              time0_init();   
+ 278   1              calc_init();
+ 279   1      
+ 280   1              while(1)        
+ 281   1              {
+ 282   2                      keyPort = 0xF0;
+ 283   2                      if(keyPressed){
+ 284   3                              keyPressed = 0;
+ 285   3                              num = getNum();
+ 286   3                              if((num>=0)&&(num<=9)){
+ 287   4                                      updateOper(1);
+ 288   4                              }else{
+ 289   4                                      updateOper(0);
+ 290   4                              }
+ 291   3                      }
+ 292   2              }
+ 293   1      }
+ 294          
+ 295          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1066    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V7.06   CALC                                                                  08/11/2012 20:48:47 PAGE 6   
+
+   DATA SIZE        =     34    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

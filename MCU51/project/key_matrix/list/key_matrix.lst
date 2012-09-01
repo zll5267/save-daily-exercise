@@ -1,0 +1,208 @@
+C51 COMPILER V7.06   KEY_MATRIX                                                            08/11/2012 12:37:08 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE KEY_MATRIX
+OBJECT MODULE PLACED IN .\obj\key_matrix.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE key_matrix.c BROWSE DEBUG OBJECTEXTEND PRINT(.\list\key_matrix.lst) OBJECT(
+                    -.\obj\key_matrix.obj)
+
+stmt level    source
+
+   1          #include <REG51.H>
+   2          
+   3          #define dataPort P0
+   4          #define keyPort P1
+   5          sbit duan = P2^2;
+   6          sbit wei = P2^3;
+   7          
+   8          unsigned char duan_in[] = {0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};/*0-9*/
+   9          unsigned char wei_in[] = {0xFE,0xFD,0xFB,0xF7,0xEF,0xDF,0xBF,0x7F};/*0-7*/
+  10          unsigned char portData[8];
+  11          unsigned char keyPressed;
+  12          void delay(unsigned char t)
+  13          {
+  14   1              while(--t);
+  15   1      }
+  16          
+  17          void display(unsigned char firstBit,unsigned char num)
+  18          {
+  19   1              static unsigned char i;
+  20   1              //for(i = 0; i < num; i++)
+  21   1              //{
+  22   1                      dataPort = 0;
+  23   1                      duan = 1;
+  24   1                      duan = 0;
+  25   1      
+  26   1                      dataPort = wei_in[i + firstBit];
+  27   1                      wei = 1;
+  28   1                      wei = 0;
+  29   1      
+  30   1                      dataPort = portData[i];
+  31   1                      duan = 1;
+  32   1                      duan = 0;
+  33   1                      
+  34   1                      i++;
+  35   1                      if(i > num - 1) i = 0;
+  36   1      
+  37   1                      delay(100);
+  38   1              //}
+  39   1      }
+  40          
+  41          unsigned char key_scan()
+  42          {
+  43   1      /*      unsigned char keyValue;
+  44   1              keyPort = 0x0F;//0xF0
+  45   1              if(keyPort != 0x0F)
+  46   1              {
+  47   1                      delay(6000);
+  48   1                      if(keyPort != 0x0F)
+  49   1                      {
+  50   1                              keyPort = 0xEF;
+  51   1                              if(keyPort != 0xEF)
+  52   1                              {
+  53   1                                      keyValue = keyPort&0x0F;
+  54   1                                  keyValue = keyPort|0xE0;
+C51 COMPILER V7.06   KEY_MATRIX                                                            08/11/2012 12:37:08 PAGE 2   
+
+  55   1                                      return keyValue;
+  56   1                              }
+  57   1                              keyPort = 0xDF;
+  58   1                              if(keyPort != 0xDF)
+  59   1                              {
+  60   1                                      keyValue = keyPort&0x0F;
+  61   1                                  keyValue = keyPort|0xD0;
+  62   1                                      return keyValue;
+  63   1                              }
+  64   1                              keyPort = 0xBF;
+  65   1                              if(keyPort != 0xBF)
+  66   1                              {
+  67   1                                      keyValue = keyPort&0x0F;
+  68   1                                  keyValue = keyPort|0xB0;
+  69   1                                      return keyValue;
+  70   1                              }
+  71   1                              keyPort = 0x7F;
+  72   1                              if(keyPort != 0x7F)
+  73   1                              {
+  74   1                                      keyValue = keyPort&0x0F;
+  75   1                                  keyValue = keyPort|0x70;
+  76   1                                      return keyValue;
+  77   1                              }
+  78   1                      }
+  79   1      
+  80   1              }
+  81   1      */
+  82   1              unsigned char keyValue;
+  83   1              keyPort = 0xF0;
+  84   1              if(keyPort != 0xF0)
+  85   1              {
+  86   2                      delay(6000);
+  87   2                      if(keyPort != 0xF0);
+  88   2                      {
+  89   3                              keyValue = keyPort&0xF0;
+  90   3                              keyPort = 0x0F;
+  91   3                              if(keyPort != 0x0F)
+  92   3                              {
+  93   4                                      delay(60000);
+  94   4                                      if(keyPort != 0x0F)
+  95   4                                      {
+  96   5                                              keyValue = keyValue|keyPort;
+  97   5                                              return keyValue;
+  98   5                                      }
+  99   4                              }
+ 100   3                      }
+ 101   2              }
+ 102   1              return 0;
+ 103   1      }
+ 104          
+ 105          unsigned char getNum(){
+ 106   1              unsigned char keyValue;
+ 107   1              keyValue = key_scan();
+ 108   1              switch(keyValue)
+ 109   1              {
+ 110   2                      case 0x7E: return 1;
+ 111   2                      case 0x7D: return 2;
+ 112   2                      case 0x7B: return 3;
+ 113   2                      case 0x77: return 4;
+ 114   2                      case 0xBE: return 5;
+ 115   2                      case 0xBD: return 6;
+ 116   2                      case 0xBB: return 7;
+C51 COMPILER V7.06   KEY_MATRIX                                                            08/11/2012 12:37:08 PAGE 3   
+
+ 117   2                      case 0xB7: return 8;
+ 118   2                      case 0xDE: return 9;
+ 119   2                      case 0xDD: return 10;
+ 120   2                      case 0xDB: return 11;
+ 121   2                      case 0xD7: return 12;
+ 122   2                      case 0xEE: return 13;
+ 123   2                      case 0xED: return 14;
+ 124   2                      case 0xEB: return 15;
+ 125   2                      case 0xE7: return 16;
+ 126   2                      default: return  0;
+ 127   2              }
+ 128   1      }
+ 129          
+ 130          void time0_init(void)
+ 131          {
+ 132   1              TMOD |= 0x01;
+ 133   1      
+ 134   1              //TH0 = (65535-2000)/256;
+ 135   1              //TL0 = (65535-2000)%256;
+ 136   1      
+ 137   1              EA = 1;
+ 138   1              ET0 = 1;
+ 139   1              TR0 = 1;
+ 140   1      }
+ 141          void time0_isr(void) interrupt 1 using 1
+ 142          {
+ 143   1              TH0 = (65535-2000)/256;
+ 144   1              TL0 = (65535-2000)%256;
+ 145   1              display(1,2);
+ 146   1      }
+ 147          
+ 148          void int0_init(void)
+ 149          {
+ 150   1              EA = 1;
+ 151   1              EX0 = 1;
+ 152   1              IT0 = 1;
+ 153   1      }
+ 154          void int0_isr(void) interrupt 0
+ 155          {
+ 156   1              keyPressed = 1;
+ 157   1      }
+ 158          
+ 159          main()
+ 160          {
+ 161   1              unsigned char num;
+ 162   1              time0_init();
+ 163   1              int0_init();
+ 164   1              portData[0] = duan_in[0];
+ 165   1              portData[1] = duan_in[0];
+ 166   1      
+ 167   1              while(1)        
+ 168   1              {
+ 169   2                      keyPort = 0xF0;
+ 170   2                      if(keyPressed){
+ 171   3                              //display(1,2);
+ 172   3                              keyPressed = 0;
+ 173   3                              num = getNum();
+ 174   3                              portData[0] = duan_in[num/10];
+ 175   3                              portData[1] = duan_in[num%10];
+ 176   3                      }
+ 177   2              }
+ 178   1      }
+C51 COMPILER V7.06   KEY_MATRIX                                                            08/11/2012 12:37:08 PAGE 4   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    310    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     28    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
