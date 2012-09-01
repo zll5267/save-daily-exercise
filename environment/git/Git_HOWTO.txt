@@ -1,0 +1,65 @@
+1 Getting Help
+	git help <verb>
+	git <verb> --help
+	man git <verb>
+  for example:
+  	git help config
+2 set and get configuration variables that control all aspects of how Git looks and operates.
+git config --system :contains values for every user on the system and all their repository.(/etc/gitconfig|$home_git$/etc/gitconfig)
+git config --global :specific to your user.($user_home$/.gitconfig)
+git config          :specific to that single repository.($working_dir$/.git/config)
+
+$home_git$          : where you install the git on the windows platform.
+$user_home$         : on linux platform /home/$user$/,on windows platform C:\Documents and Settings\$user$.
+
+for example:
+	git config --global user.name "leliang.zhang"
+	git config --global user.email leliang.zhang@gmail.com
+	git config --global core.editor emacs
+	git config --global merge.tool vimdiff
+	git config -- list
+	git config user.name
+	git config --global http.proxy http://IP:port
+3 Getting a Repository
+ A Initializing a Repository in an Existing Directory
+  a. git init :create a .git dir which contains all of the necessary repository files-Git repository skeleton.
+  b. git add *.c;git add README
+  c. git commit m 'initial project version'
+ B Cloning an Existing Repository
+  git clone git://github.com/schacon/grit.git [mygrit](target directory name)
+4 Checking the Status of Your Files
+	git status
+5 Tracking New Files
+	git add <file>
+	If <file> is a directory,then add all the files in it recursively.
+  After you run 'git add' stage a file,you can use 'git reset HEAD <file>' to unstaged it.
+6 Igoring Files
+	create a file,named .gitignore contains the patterns to match the files you don't want Git to track.
+	
+	*~
+	*.[oa] #ignore all the files end with .o or .a
+	!lib.a #don't ignore the lib.a
+	/TODO  #only ignore the root TODO,not the subdir TODO
+	doc/*.txt #ignore doc/note.txt,but not doc/server/arch.txt
+7 Viewing Your Staged and Unstaged Changes
+  git diff # to see what you've changed but not yet staged.
+  git diff -cached/-staged # compares your staged changes to your last commit.
+8 Commit your Changes
+  git commit #anything that is still unstaged won't go into this commit.
+  git commit -v #add the diff of your change in the defaut editor.
+  git commit -m ""
+9 Skipping the Staging Area
+  git commit -a -m "commit without add"
+10 Removing Files
+  git rm <file> #remove the file from tracked,remove it from your staging area and then commit
+  git rm --cached <file> # only remove the file from the staging area,but keep it in the working dir.
+  git rm -f <file> #
+  git rm log/\*.log
+11 Moving Files
+  git mv file_from file_to
+  test by yaolixiao
+  git mv README README.txt
+  =>
+  mv README README.txt
+  git rm README
+  git add README.txt

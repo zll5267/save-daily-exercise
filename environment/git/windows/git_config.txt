@@ -1,0 +1,26 @@
+/****************************
+ *Description:this file describe how to use the GIT on the window platform.
+ *Author:leliang.zhang
+ *Date:2012-08-17
+ ******************************/
+
+1 download the GIT tool for windows,and install it.
+	http://git-scm.com/downloads
+2 if you want to use the proxy to access the server,please do as follow.
+git config --global http.proxy http://IP:port
+3 prepare the %HOME% variable according your PC.
+  you can check this variable using export command.
+4 under the %HOME% folder create a file named _netrc,and put the following line in this file.
+machine code.google.com login leliang.zhang@gmail.com password [you get from the code.google.com]
+
+if you have not use the git before,strongly recommend you to read the first two chapter of the GIT guid book.
+(the book you can find in this project/environment/git/GIT_user_guide.pdf)
+you also can find the online version of this book(http://git-scm.com/book);
+
+
+/*tips*/
+1 if you don't want Git to automatically add or even show you some kind of files, you can create the 
+.gitignore file while list patterns to match the unwanted files.see the example
+ *.[oa]
+ *~
+ 2
