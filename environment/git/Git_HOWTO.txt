@@ -46,7 +46,7 @@ for example:
 	doc/*.txt #ignore doc/note.txt,but not doc/server/arch.txt
 7 Viewing Your Staged and Unstaged Changes
   git diff # to see what you've changed but not yet staged.
-  git diff -cached/-staged # compares your staged changes to your last commit.
+  git diff --cached/--staged # compares your staged changes to your last commit.
 8 Commit your Changes
   git commit #anything that is still unstaged won't go into this commit.
   git commit -v #add the diff of your change in the defaut editor.
@@ -179,8 +179,10 @@ for example:
 	 c. Tagging Later
 	    git log --pretty=oneline
 	    git tag -a v1.2 9fceb02
-	 d. Shareing a Tags
+	 d. Sharing a Tags
 	    # By default,the git push command doesn't transfer tags to remote servrs.
 	    git push origin [tagname]
 	    git push origin --tags# transfer all of your tags to the remote server that are not already there.
+	 e. Delete a tag
+	    git tag -d <tagname>
 	    
