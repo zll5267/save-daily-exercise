@@ -1,0 +1,6 @@
+Branching mode "killer feature"
+1 Create Branch
+  git branch <name>
+2 Change the current Branch
+  git checkout <branchName>
+3.2 P48
