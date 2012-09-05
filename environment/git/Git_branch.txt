@@ -15,10 +15,12 @@ Branching mode "killer feature"
   
   git mergetool
   the conflict is divided by ===,about it is the content from the branch you are on.the below content is from the merge-in branch.
-2 Branch Management
+Branch Management
   list the branchs in the repository
   git branch # no arguments
   git branch -v # to see the last commit on each branch
   
   git branch --merged
-  git branch --no-merged
+  git branch --no-merged# to see the branchs which contain work that isn't merged in.
+  
+Branch Workflow P56  
