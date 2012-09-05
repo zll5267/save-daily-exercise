@@ -3,4 +3,22 @@ Branching mode "killer feature"
   git branch <name>
 2 Change the current Branch
   git checkout <branchName>
-3.2 P48
+  git checkout <branchName> #create a branch and switch to the new branch.
+  
+  git merge <branchName> # merge the changes on  <branchName> to the current branch you are work on
+  
+  Fast forwar merge:the commit pointed to by the branch you merged in was directly upstream of the commit you're on.
+  Three-way merge: Using the two snapshot pointed to by the branch tips and the common ancestor of the two.
+
+  Merge conflict:
+  git status # to see the unmerged file due to merge conflicts
+  
+  git mergetool
+  the conflict is divided by ===,about it is the content from the branch you are on.the below content is from the merge-in branch.
+2 Branch Management
+  list the branchs in the repository
+  git branch # no arguments
+  git branch -v # to see the last commit on each branch
+  
+  git branch --merged
+  git branch --no-merged
