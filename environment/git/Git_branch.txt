@@ -39,4 +39,30 @@ Remote Branch
   git remote add <remoteName> <URL>
   git fetch <remoteName> # looks up remote server <remoteName>,fetchs any data from it that you don't have yet.
                          # update the local database,move the <remoteName>/master to the new one.
-Pushing P61   
+Pushing 
+  The local branches aren't automatically synchronized to the remote ,you have to explicitly push the branches you want to share.
+  git push <remote> <branch>
+  git push <remote> <localBranch>:<remoteBranch>
+  
+  git fetch orign # the fetch brings down new remote branches,you don't automatically have local,editable copies of them.
+                  # you have an origin/<branch>
+  git merge origin/serverfix
+  git checkou -b <branch> origin/<branch>  
+Tracking branches
+  Checking out a local branch from a remote branch automatically creates what is called a tracking branch.
+  Tracking branches are local branches that have a direct relationship to a remote branch.
+  git clone URL: automatically create a master branch that tracks origin/master
+  git checkout -b <branch> <remoteName>/<branch>
+  ==> git checkout --track origin/serverfix
+  
+Deleting Remote Branches
+  git push <remoteName> :<branch> # delete the <branch> on the <remoteName>
+Rebasing
+  git checkout experiment
+  git rebase master
+  #There is no difference in the end product of the integration,but rebasing makes for a cleaner hisgory.
+  #the log of a rebased branch,it looks like a linear history:it appears that all the work happened in series,
+  #even when it originally happened in parallel.
+  #After use this, the master just do a fast-forward merge will be OK.
+  
+DO NOT REBASE COMMITS THAT YOU HAVE PUSHED TO A PUBLIC REPOSITORY.
