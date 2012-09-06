@@ -23,4 +23,20 @@ Branch Management
   git branch --merged
   git branch --no-merged# to see the branchs which contain work that isn't merged in.
   
-Branch Workflow P56  
+Branch Workflow 
+  master: stable,only code that has been or will be released.
+  develop: not stable, still under development.
+  topic: a short-lived branchs, use to fix bugs
+  
+  work silo
+Remote Branch
+  Remote branches are references to the state of branches on your remote repositories.
+  They're local branches that you can't move;they're moved automatically whenever you do
+  any network communication.
+  Remote branches act as bookmarks to remind where the branches on your remote rempositories
+  were the last time you connected to them.
+  the FORM: (remote)/(branch)
+  git remote add <remoteName> <URL>
+  git fetch <remoteName> # looks up remote server <remoteName>,fetchs any data from it that you don't have yet.
+                         # update the local database,move the <remoteName>/master to the new one.
+Pushing P61   
