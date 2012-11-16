@@ -27,7 +27,7 @@ for example:
  A Initializing a Repository in an Existing Directory
   a. git init :create a .git dir which contains all of the necessary repository files-Git repository skeleton.
   b. git add *.c;git add README
-  c. git commit m 'initial project version'
+  c. git commit -m 'initial project version'
  B Cloning an Existing Repository
   git clone git://github.com/schacon/grit.git [mygrit](target directory name)
 4 Checking the Status of Your Files
