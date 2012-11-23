@@ -47,7 +47,7 @@ Pushing
   git fetch orign # the fetch brings down new remote branches,you don't automatically have local,editable copies of them.
                   # you have an origin/<branch>
   git merge origin/serverfix
-  git checkou -b <branch> origin/<branch>  
+  git checkout -b <branch> origin/<branch>  
 Tracking branches
   Checking out a local branch from a remote branch automatically creates what is called a tracking branch.
   Tracking branches are local branches that have a direct relationship to a remote branch.
@@ -60,7 +60,7 @@ Deleting Remote Branches
 Rebasing
   git checkout experiment
   git rebase master
-  #There is no difference in the end product of the integration,but rebasing makes for a cleaner hisgory.
+  #There is no difference in the end product of the integration,but rebasing makes for a cleaner history.
   #the log of a rebased branch,it looks like a linear history:it appears that all the work happened in series,
   #even when it originally happened in parallel.
   #After use this, the master just do a fast-forward merge will be OK.
