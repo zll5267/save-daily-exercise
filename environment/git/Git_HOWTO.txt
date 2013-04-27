@@ -186,3 +186,4 @@ for example:
 	 e. Delete a tag
 	    git tag -d <tagname>
 	    
+git command for daily usage: https://www.kernel.org/pub/software/scm/git/docs/everyday.html
