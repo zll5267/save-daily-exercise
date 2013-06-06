@@ -6,6 +6,9 @@ package com.mk.test;
  */
 public class App
 {
+	static{
+		System.loadLibrary("test_cpp");
+	}
 	private int value;
 	private App next;
 	
@@ -52,6 +55,9 @@ public class App
 		System.out.println();
         System.out.println( "Hello World!" );
         System.out.println( "Hello You!" );
+        
+        System.out.println("invode the c library:"); 
+        last.print_cpp();
     }
 	
 	public App convertList(App first){
@@ -67,4 +73,6 @@ public class App
 	public void print(){
 		System.out.println("Hello World!");
 	}
+	
+	native public void print_cpp();
 }
