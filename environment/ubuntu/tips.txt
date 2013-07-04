@@ -1,2 +1,49 @@
-! remap the keyboard layout
+1****! remap the keyboard layout***********
 sudo dpkg-reconfigure keyboard-configuration
+
+dpkg-reconfigure keyboard-configuration #{   # 交互式对话
+Keyboard model:            Generic 104-key PC
+Country of origin for the keyboard:   English (US)
+Keyboard layout:         English (US)
+Key to function as AltGr:      The default for the keyboard layout
+Compose key:            No compose key
+#}
+
+2 ***********unlock and lock the root account ***********
+sudo passwd root
+sudo passwd -l root
+
+3****************install the software in the CD***********
+mount /dev/cdrom /media/cdrom
+
+添加软件源：
+apt-cdrom -m -d=/media/cdrom add
+我们可以查看下：
+
+现在该文件已经在我们执行添加本地源后自动生成并添加了内容了。
+现在执行
+apt-get update
+然后就可以使用apt-get install安装软件了。
+apt-get install openssh-server
+
+4**********hwclock************
+  -r, --show         读取并打印硬件时钟（read hardware clock and print result ）
+  -s, --hctosys      将硬件时钟同步到系统时钟（set the system time from the hardware clock ）
+  -w, --systohc     将系统时钟同步到硬件时钟（set the hardware clock to the current system time 
+5***************type**********************
+type命令的基本使用方式就是直接跟上命令名字。
+type -a可以显示所有可能的类型，比如有些命令如pwd是shell内建命令，也可以是外部命令。
+type -p只返回外部命令的信息，相当于which命令。
+type -f只返回shell函数的信息。
+type -t 只返回指定类型的信息
+alias 别名
+keyword 关键字，Shell保留字
+function 函数，Shell函数
+builtin 内建命令，Shell内建命令
+file 文件，磁盘文件，外部命令
+unfound 没有找到
+
+5**********apt-get update fail setting about the proxy******************
+update the file /etc/apt/apt.conf
+#Acquire::http::proxy "http://username:passowrd@proxy:80/";
+Acquire::http::proxy "http://www-proxy.ericsson.se:80/";

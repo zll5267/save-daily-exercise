@@ -6,3 +6,4 @@ install_manifest.txt
 test/test_maven/test/target
 *.obj
 *.Bak
+test/test_python/__pycache__/

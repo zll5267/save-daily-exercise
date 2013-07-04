@@ -1,0 +1,41 @@
+PXE:
+	PXE is short for Preboot eXecution Environment or Pre-Execution Environment. 
+	It allows computers to boot over network even without harddisk.
+	
+	
+IPMI    的核心是一个专用芯片/控制器(叫做服务器处理器或基板管理控制器(BMC))，
+	其并不依赖于服务器的处理器、BIOS或操作系统来工作，可谓非常地独立，
+	是一个单独在系统内运行的无代理管理子系统，只要有BMC与IPMI固件其便可开始工作，
+	而BMC通常是一个安装在服务器主板上的独立的板卡，现在也有服务器主板提供对IPMI支持的。
+	IPMI良好的自治特性便克服了以往基于操作系统的管理方式所受的限制，
+	例如操作系统不响应或未加载的情况下其仍然可以进行开关机、信息提取等操作。
+	
+Memcache是一个高性能的分布式的内存对象缓存系统，通过在内存里维护一个统一的巨大的hash表，
+	它能够用来存储各种格式的数据，包括图像、视频、文件以及数据库检索的结果等。
+	简单的说就是将数据调用到内存中，然后从内存中读取，从而大大提高读取速度。
+NOVNC	是一个用于远程访问的工具，功能类似window下的远程桌面功能。　
+	NOVNC是个VNC客户端，采用HTML 5 WebSockets、Canvas和JavaScript实现
+iSCSI	是internet Small Computer System Interface的缩写，又称为IP-SAN，
+	是一种基于因特网及SCSI-3协议下的存储技术，由IETF提出，并于2003年2月11日成为正式的标准。
+	iSCSI的目的是为了用IP协议将存储设备连接在一起。通过在IP网上传送SCSI命令和数据，
+	iSCSI推动了数据在网络之间的传递，同时也促进了数据的远距离管理。
+	由于其出色的数据传输能力，iSCSI协议被认为是促进存储区域网（SAN）市场快速发展的关键因素之一。
+	因为IP网络的广泛应用，iSCSI能够在LAN、WAN甚至Internet上进行数据传送，
+	使得数据的存储不再受地域的现在。iSCSI技术的核心是在TCP/IP网络上传输SCSI协议，
+	即使用TCP/IP报文和iSCSI报文封装SCSI报文，使得SCSI命令和数据可以在普通以太网络上进行传输，
+	如下图所示。
+ 
+iSCSI的工作过程：当iSCSI主机应用程序发出数据读写请求后，
+	操作系统会生成一个相应的SCSI命令，该SCSI命令在iSCSI initiator层被封装成ISCSI消息包并
+	通过TCP/IP传送到设备侧，设备侧的iSCSI target层会解开iSCSI消息包，得到SCSI命令的内容，
+	然后传送给SCSI设备执行；设备执行SCSI命令后的响应，在经过设备侧iSCSI target层时被封装成ISCSI响应PDU，
+	通过TCP/IP网络传送给主机的ISCSI initiator层，iSCSI initiator会从ISCSI响应PDU里解析出SCSI响应并
+	传送给操作系统，操作系统再响应给应用程序。
+iet（iSCSI Enterprise Target）
+	是Linux下的iSCSI Target实现，open-iscsi是Linux下的iscsi initiator实现，
+	使用iet（官方网站：http://iscsitarget.sourceforge.net）和open-iscsi就可以方便的实现简单的IPSAN，
+	同时iet也可以和其他系统的iscsi initiator配合使用
+	
+Nginx	（发音同 engine x）是一款轻量级的Web 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器，
+	并在一个BSD-like 协议下发行。
+Xen Cloud Platform（以下简称XCP）是Xen社区推出的开源云计算平台。
