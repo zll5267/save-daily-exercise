@@ -47,3 +47,58 @@ unfound 没有找到
 update the file /etc/apt/apt.conf
 #Acquire::http::proxy "http://username:passowrd@proxy:80/";
 Acquire::http::proxy "http://www-proxy.ericsson.se:80/";
+6**************iSCSI*****************************************
+#create a target(server) tid = 1, iqn.test is an unique identifier in one network
+#iqn号是局域网内iSCSI target的唯一标识，用来区分不同的target，所以在一个网络内，iqn号一定不能相同
+ tgtadm --lld iscsi --op new --mode target --tid 1 -T iqn.test
+ 
+  tgtadm --lld iscsi --op show --mode target
+# add one logical unit
+# 新建的target添加一个存储设备
+ tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b /dev/loop2
+  tgtadm --lld iscsi --op show --mode target
+
+#设置基于IP地址授权或基于用户验证的方式来控制对Target的访问任意被访问
+# 
+tgtadm --lld iscsi --op bind --mode target --tid 1 -I ALL
+tgtadm --lld -iscsi --op show --mode target
+
+把任意访问的授权给去掉
+tgtadm --lld iscsi --op unbind --mode target --tid 1 -I ALL
+设置基于ip地址的授权
+tgtadm --lld iscsi --op bind --mode target --tid 1 -I 192.168.2.23
+在授权一个ip：
+tgtadm --lld iscsi --op bind --mode target --tid 1 -I 192.168.2.33
+授权一段IP
+tgtadm --lld iscsi --op bind --mode target --tid 1 -I 192.168.4.0/24
+查看一下：
+tgtadm --lld iscsi --op show --mode target 
+
+从Target中移除lun
+tgtadm --lld iscsi --op delete --mode logicalunit --tid 1 --lun 2
+删除target
+tgtadm --lld iscsi --op delete --mode target --tid 1
+tgtadm --lld iscsi --op show --mode target
+
+client :安装iscsi-initiator-utils
+发现设备：指令会给我们返回所有target的iqn号
+iscsiadm --mode discoverydb --type sendtargets --portal 192.168.2.40 --discover
+登录设备：
+iscsiadm --mode node --targetname iqn.com.beyondsoft.2011-11.storage --portal 192.168.2.40:3260 --login
+从系统中卸载：
+iscsiadm --mode node --targetname iqn.com.beyondsoft.2011-11.storage --portal 192.168.2.40:3260 --logout
+7**************LVM***********************************
+#创建物理卷
+pvcreate /dev/sda6
+pvdisplay
+#创建逻辑卷组
+vgcreate tgt /dev/sda6
+vgdisplay
+#激活逻辑卷组
+vgchange -a y tgt
+#创建逻辑卷
+lvcreate -L 1000M -n lvm tgt (-L size,-n name)
+
+vgextend tgt /dev/sdb1
+lvextend -L XXXM /dev/tgt/lvm
+(e2fsck -f /dev/tgt/lvm;resize2fs /dev/tgt/lvm)
