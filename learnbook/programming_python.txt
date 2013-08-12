@@ -1,0 +1,75 @@
+chapter 1	
+	import this
+	
+chapter 2   System Tools
+	sys, sys.path, os, glob, socket, threading, _thread, queue,
+	time, timeit, subprocess, multiprocessing, signal, select,
+	shutil, tempfile
+	
+	#more.py
+	"""
+	split and interactively page a string or file of text
+	"""
+	def more(text, numlines=15):
+	    lines = text.splitlines() # like split('\n') but no '' at end
+	    while lines:
+	        chunk = lines[:numlines]
+	        lines = lines[numlines:]
+	        for line in chunk: print(line)
+	        if lines and input('More?') not in ['y', 'Y']: break
+	if __name__ == '__main__':
+	    import sys                        # when run, not imported
+	    more(open(sys.argv[1]).read(), 10)# page contents of file on cmdline
+	
+	String method:
+		''.find(); # find the first offset
+		''.replace('','') #global replacement
+		''.strip() # remove whitespace
+		''.rstrip() #just remove the right side whitespace
+		''.lower() # case converts
+		''.isalpha() # 
+		''.isdigit() # content test
+		str is a class type
+		string is a module
+		''.split()
+		delimiter.join()#join substring list
+		chars = list('abcd')
+		'%d' % 21
+		'{:d}'.format(32)
+	File operation basics	
+		open, os.listdir, os.walk
+		open('file').read() # read entire file into string
+		open('file').read(N) # read next N bytes into string
+		open('file').readlines() # read entire file into line strings list
+		open('file').readline() # read next line, through '\n'
+		file = open('spam.txt', 'w'); file.write('' + '\n'); file.close()
+	Module: sys
+		sys.platform
+		sys.version
+		if sys.platform[:3] == 'win': print('hello windows')
+		sys.path # module search path       
+		sys.modules # the loaded modules table   
+		sys.exc_info()  # the info about the latest exception
+				#(exception_type, value, traceback object)
+		sys.argv
+		sys.stdin, sys.stderr, sys.stdout
+		sys.exit
+	Module: os, os.path
+		os.environ
+		os.system, os.popen, os.execv, os.spawv
+		os.fork, os.pipe, os.waitpid, os.kill
+		os.open, os.read, os.write
+		os.remove, os.rename, os.mkfifo, os.mkdir, os.rmdir
+		os.getcwd, os.chdir, os.getpid, os.listdir, os.access
+		os.sep, os.pathsep, os.curdir, os.path.split, os.path.join
+		os.path.exists('path'), os.path.isdir('path'), os.path.getsize('path')
+		os.path.dirname('path'), os.path.base('path')
+		os.path.splittext('path') # split the file extension out
+		os.path.normpath('path')
+		os.path.abspath('path')
+		os.startfile('file') 
+		os.walk
+	Module: subprocess  
+		subprocess.call()
+		subprocess.Popen()
+		
