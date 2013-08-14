@@ -72,4 +72,68 @@ chapter 2   System Tools
 	Module: subprocess  
 		subprocess.call()
 		subprocess.Popen()
+
+chapter 3 Script Execution Context
+	CWD : where you start the script
+	Module Search path: the folder where the script located
+	
+	command-line arguments process:
+		module getopt optparse
+	shell environment variable:
+		os.environ
+		os.putenv/os.getenv
+	Standard streams:
+	sys.stdin, sys.stdout, sys.stderr
+		lines = sys.stdin.readlines()
+		lines.sort()
+		for line in lines:print(line, end=' ')
 		
+		for line in sys.stdin: sum += int(line)
+		
+		if len(sys.argv) == 1:
+			more(sys.stdin.read())
+		else:
+			more(open(sys.argv[1].read())
+			
+		sys.stdin.isatty() # if stdin is console
+		
+		if sys.platform[:3] == 'win':
+			import msvcrt
+			msvcrt.putch(b'?')
+			key = msvcrt.getche()
+			mscvrt.putch(b'\n')
+			return key
+	io.StringIO, io.ByteIO
+	os.popen()
+		pipe = os.popen('dir')
+		pipe.read()
+		pipe.close()# None means no error
+		
+		pipe = os.popen(' ', 'w')
+		pipe.write('xxx\n')
+		pipe.close()
+		
+	subprocess
+		subprocess.call('dir', shell=True)
+		
+		pipe = subprocess.Popen('dir',stdout=PIPE, shell=True)
+		pipe.communicate()[0] # stdout, stderr
+		pipe.returncode
+		
+		pipe.stdout.read()
+		pipe.stdin.write()
+		pipe.stdin.close()
+		pipe.wait()
+chapter 4 File and Directory Tools
+	codec
+		bytearray, bytes, str
+		bytes.decode()
+		str.encode()
+		str = 'ÄãºÃ'
+		b = str.encode()
+		b.decode()
+		b
+		
+	struct, pickle.dump, pickle.load (deal with byte  string)
+	xml package deal in Unicode str
+	glob.glob
