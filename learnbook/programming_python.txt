@@ -166,7 +166,7 @@ chapter 4 File and Directory Tools
 		values = struct.unpack('>i4shf', data)
 		
 		mode:
-		rw+ : either write or read, both allowed, when open clean the file
+		w+ : either write or read, both allowed, when open clean the file
 		r+  : either write or read, both allowed, won't clean the file when open
 		
 	File tools in os module:
@@ -222,4 +222,70 @@ chapter 4 File and Directory Tools
 		
 		sys.getdefaultencoding() #file content encoding
 		sys.getfilesystemencoding() # file name encoding
+
+
+
+Chapter5: Parallel System Tools
+	import _thread as thread
+	_thread module: low level interface
+		_thread.start_new_thread(fun, (v,))
+		synchronize:
+			mutex = _thread.allocate_lock()
+			mutex.acquire()
+			mutex.release()
+			mutex.locked()
+			with mutex: # auto acquire and release
+				pass
+	threading module: based on _thread, and java's threading model
+		class Mythread(threading.Thread):
+			def __init__(self, myId, count, mutex):
+				self.myId = myId
+				self.count = count
+				self.mutex = mutex
+				threading.Thread.__init__(self)
+			def run(self):
+				for i in range(self.count):
+					with self.mutex:
+						print('[%s] => %s' % (self.myId,i))
+		stdoutmutex = threading.Lock()
+		threads = []
+		for i in range(10):
+			thread = Mythread(i, 100, stdoutmutex)
+			thread.start()
+			threads.append(thread)
+		for thread in threads:
+			thread.join()
+		def action(i):
+			print(i ** 32)
+		thread = threading.Thread(target=(lambda:action(2)))
+		thread.start()
 		
+		threading.Thread(target=action,args=(2,)).start()
+		
+		_thread.start_new_thread(action, (2,))
+		
+		threading.Semaphore
+		threading.Condition
+		threading.Event
+		
+	queue: module
+		_thread.allocate_lock()
+		dataQueue = queue.Queue()
+		dataQueue.put()
+		dataQueue.get(block=False)	
+		daemon thread
+	threading.Timer
+		Timer(N.M, somfunc).start()
+		tkinter.Tk,tkinter.messagebox.showinfo
+		win = tkinter.Tk()
+		win.after(5500, lambda:tkinter.messagebox.showinfo('popup','Spam!'))
+		
+	GIL: global interpreter lock
+		sys.getswitchinterval()
+		sys.setswitchinterval()
+		sys.getcheckinterval()
+		sys.setcheckinterval()
+		
+		release the GIL on entry c-extention and reacquire it on exit when resuming Python code
+		
+		Atomic operations
