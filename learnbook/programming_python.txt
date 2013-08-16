@@ -137,3 +137,89 @@ chapter 4 File and Directory Tools
 	struct, pickle.dump, pickle.load (deal with byte  string)
 	xml package deal in Unicode str
 	glob.glob
+	File Object
+		file = open('')
+		file.read()/readline()/readlines()
+		file.write()/writelines()
+		file.seek()
+		file.flush()
+		file.fileno()
+		file.close()
+		
+		file = open('xxx.txt')
+		for line in file:
+			print(line,end='')
+		for line in open('xxx.txt'):
+		StopIteration
+		
+		list(map(str.split, open('data.txt')))
+		line = 'Hello file world!\n'
+		line in open('filename.txt')
+		
+		struct
+		struct.pack(fmt,v1, v2, ...)
+		data = struct.pack('>i4shf',2, 'spam', 3, 1.234)
+		>: big-endian
+		4s: four-character string
+		h: half integer
+		f: floating-point number
+		values = struct.unpack('>i4shf', data)
+		
+		mode:
+		rw+ : either write or read, both allowed, when open clean the file
+		r+  : either write or read, both allowed, won't clean the file when open
+		
+	File tools in os module:
+		descriptor-based file
+		os.open(path, flags, mode) # return file's descriptor
+		os.read(descriptor, N)      # read at most N bytes byte string
+		os.write(descriptor, string)# writes bytes in byte string to file
+		os.lseek(descriptor, position, how)
+		descriptor: 
+			sys.stdin.fileno() #0
+			sys.stdout.fileno() #1
+			sys.stderr.fileno() #2
+		Wrapping descriptor in file object
+		fdfile = os.open('',(os.O_RDWR|os.O_BINARY))	
+		objfile = os.fdopen(fdfile,'rb')
+		/objfile = open(fdfile,'r',encoding='latin1',closefd=False)
+		
+		os.rename()
+		os.remove()
+		os.chmod()
+		os.unlink
+		os.stat(filename)/ import stat
+	File Scanners
+		def filter_stream(function):
+			for line in sys.stdin:
+				print(function(line), end='')
+		def filter_files(name, function):
+			with open(name,'r') as input, open(name + '.out', 'w') as output:
+				for line in input:
+					output.write(function(line))
+	DirectoryTools
+		os.popen()
+		module: fnmatch
+		glob.glob('*') # * ? [] 
+		for path in glob.glob(r'PP3E/Examples/PP3E/*/s*.py'):print(path)
+		
+		os.listdir('.')
+		sorted(os.listdir('.'))
+		
+		os.path.split('/home/ezhalel/t.txt') # ('/home/ezhalel','t.txt')
+		os.path.join(dir,name)
+	Walking Directory Trees
+		os.walk()
+		
+		for (dirname, subshere, fileshere) in os.walk('.'):
+			print('[' + dirname + ']')
+			for fname in fileshere:
+				print(os.path.join(dirname,fname))
+		
+		os.listdir(b'.') # return undecoded filename, bytes string
+		os.walk, glob.glob dependent on os.listdir internally
+		so os.walk(b' '), glob.glob(b' ') also works.
+		
+		sys.getdefaultencoding() #file content encoding
+		sys.getfilesystemencoding() # file name encoding
+		
