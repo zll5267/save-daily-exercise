@@ -289,3 +289,105 @@ Chapter5: Parallel System Tools
 		release the GIL on entry c-extention and reacquire it on exit when resuming Python code
 		
 		Atomic operations
+	sys Module Exits
+		sys.exit(N) # exit with status N -> SystemExit exception
+		raise SystemExit
+	os Module Exits
+		os._exit() # immediately exit ,no raising an exception
+		_thread.exit()
+		Tk().quit()
+		
+		atexit.register(fun,arg,*argv)
+		
+		status code:
+			os.system
+			os.popen().close()
+			subprocess.Popen().returnvalue/.wait
+			os.wait() / os.waitpid()
+	Exit status with subprocess
+		
+	Process Exit Status and Shared State
+		newpid = os.fork()
+		if newpid == 0:
+			child()
+		else:
+			pid, status = os.wait()
+	Thread Exits
+		_thread.get_ident()
+		_thread.exit() == sys.exit() # raise SystemExit exception
+		os._exit(N) in thread will terminate the calling thread
+	Interprocess Communication IPC
+		simple files
+		command-line arguments
+		program exit status codes
+		shell environment variables
+		standard stream redirections
+		stream pipes managed by os.popen and subprocess
+		
+		socket, shared memory, signal, anonymous and named pipe
+		
+		module: mmap
+		Anonymous Pipes:
+			pipein, pipeout = os.pipe() # relative processes
+			os.read(pipein,32)
+			os.write(pipeout,msg.encode())
+			os.flush()
+			time.sleep(s)	
+			time.time() # seconds from 1970...
+			os.dup2(fd1,fd2) # fd2 = fd1
+			
+			flush 
+			python -u xxx.py/ set the PYTHONUNUFFERED= nonempty value
+			open mode: set to unbuffered, fully unbuffered mode only for binary mode files.
+			sockets: socket.socket.makefile
+			
+			pty module: force standard output to be unbuffered
+			Pexpect
+			
+		Named Pipes(Fifos) only unix-like system
+			os.mkfifo(fifoname)
+			
+			pipeout = os.open(fifoname, os.O_WRONLY)
+			os.write(pipeout, msg.encode())
+			pipein = open(fifoname, 'r')
+			pipein.readline()
+		Socket:
+			module socket
+			
+			from socket import socket, AF_INET, SOCK_STREAM
+			
+			port = 50008
+			host = 'localhost'
+			def server():
+				sock = socket(AF_INET, SOCK_STREAM)
+				sock.bind(('',port))
+				sock.listen(5)
+				while True:
+					conn, addr = sock.accept()
+					data = conn.recv(1024)
+					reply = 'server got: [%s]' % data
+					conn.send(reply.encode())
+			def client(name):
+				sock = socket(AF_INET, SOCK_STREAM)
+				sock.connect((host,port))
+				sock.send(name.encode())
+				reply = sock.recv(1024)
+				sock.close()
+				print('client got: [%s]' % reply)
+			if __name__ == '__main__':
+				from threading import Thread
+				sthread = Thread(target=server)
+				sthread.daemon = True
+				sthread.start()
+				for i in range(5)
+					Thread(target=client, args=('client%s' % i)).start()
+			socket use case:
+		module signal:
+			system-wide
+			asynchronous	
+		 time.ctime(time.time())
+		 	os.kill(pid,sig)
+		 	signal.signal(sig, action)
+		 	signal.pause()/alarm(), only on unix
+		 	
+		Module: multiprocessing
