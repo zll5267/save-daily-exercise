@@ -226,6 +226,31 @@ chapter 4 File and Directory Tools
 
 
 Chapter5: Parallel System Tools
+	multiprocessing, queue, threading
+	os.spawn, os.fork
+	MPI: Message Passing Interface
+	Forking Processes
+		os.fork() # unix
+		os._exit(0)
+		time.sleep(1) # sleep for 1s
+		fork() # create the new process with the copy global resource
+		thread # share the global resource
+		pid = os.fork()
+		if pid == 0:
+			os.execlp('python','python','child.py',str(par)) # overlay program
+			assert False, 'error starting program'
+		
+		os.execv(program, commandlinesequence)
+		os.execl(program, cmdarg1, cmdarg2, ... cmdargN)
+		os.execlp
+		os.execvp # search the program using the system search-path
+		os.execle
+		os.execve # last argument is a dictionary containing shell env variables
+		os.execvpe
+		os.execlpe
+		queue used in communication between threads
+		module: _thread, threading
+
 	import _thread as thread
 	_thread module: low level interface
 		_thread.start_new_thread(fun, (v,))
