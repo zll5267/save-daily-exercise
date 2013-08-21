@@ -416,3 +416,27 @@ Chapter5: Parallel System Tools
 		 	signal.pause()/alarm(), only on unix
 		 	
 		Module: multiprocessing
+		
+		
+		
+		
+		Other Ways to start Program
+			os.spawnv/os.spawnve
+			os.system('python makewords.py')
+			result = os.popen('python makewords.py').read()
+			//work on Windows platform
+			sys.executable
+			os.spawnv(os.P_WAIT, r'c:\Python33\python', ('python', 'makewords.py'))
+			os.spawnl(os.P_NOWAIT, r'c:\Python33\python', 'python', 'makewords.py')
+			
+			cmd = 'start lp4e-preface-preview.html'
+			os.system(cmd) # os.system won't wait for the spawned program to exit
+			os.system('lp4e-preface-preview.html')  # os.system will wait for the spawned program to exit
+			os.startfile('lp-code-readme.txt') # like double-click on the file
+			
+			hasattr(os, 'system')
+			hasattr(os, 'fork')
+			
+			select
+			
+			
