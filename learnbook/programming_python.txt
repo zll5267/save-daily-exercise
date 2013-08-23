@@ -439,4 +439,5 @@ Chapter5: Parallel System Tools
 			
 			select
 			
-			
+chapter 6 
+	module: gzip, zipfile, tarfile			
