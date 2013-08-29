@@ -440,4 +440,111 @@ Chapter5: Parallel System Tools
 			select
 			
 chapter 6 
-	module: gzip, zipfile, tarfile			
+	module: gzip, zipfile, tarfile, mimetypes
+			
+GUI
+	import tkinter
+	widget = tkinter.Label(None, text='Hello GUI world!')
+	widget.pack()
+	widget.mainloop()
+	
+	from tkinter import *
+	root = Tk()
+	Label(root, text='Hello GUI world!').pack(side=TOP) # BOTTOM, LEFT, RIGHT
+							    # expand=YES, fill=BOTH/X/Y
+	root.mainloop()
+	
+	Geometry manager: pack, grid
+	
+	Toplevel()
+	
+	widget = Label()
+	widget['text'] = "hello world!"
+	widget.config(text='hello world!')
+	
+	Old style:
+	Label(None, {'text': 'Hello GUI world!', Pack: {'side': 'top'}}).mainloop()
+	
+	widget = Button(None, text='hello widget', command=sys.exit)
+	
+	def handler(name):
+		print(name)
+	Button(text='press', command=(lambda: handler('spam')))
+	
+	def odd():
+    		funcs = []
+    		for c in 'abcdefg':
+       		funcs.append((lambda: c))      # c will be looked up later
+    		return funcs                   # does not remember current c
+	for func in odd():
+    		print(func(), end=' ')         # OOPS: print 7 g's, not a,b,c,... !
+    		
+    	def odd():
+    		funcs = []
+    		for c in 'abcdefg':
+       		funcs.append((lambda c=c: c))    # force to remember c now
+    		return funcs                        # defaults eval now
+	for func in odd():
+    		print(func(), end=' ')              # OK: now prints a,b,c,...
+    		
+    	callback coding scheme : function, lambda, class method, callable class.
+    	register callback:
+    		command option : Button, Menu, Scroll bar
+    		bind method    : with an event object(tkinter.Event) as the argument, 
+    				 context about widget, screen coordinates(key press,mouse movement click)
+    	WM_DELETE_WINDOW for window close button.
+    	
+    	import sys
+    	from tkinter import *
+    	def hello(event):
+    		print('click me')
+    	widget = Button(None, text="click")
+    	widget.pack()
+    	widget.bind('<Button-1>', hello) # <Double-1>
+    	widget.mainloop()
+    	
+    	win = tkinter.Frame()
+    	win.pack()
+    	Label(win, text="hello contain world").pack(side=TOP)
+    	Button(win, text='hello', command=greeting).pack(side=LEFT)
+    	Button(win, text="Quit", command=win.quit).pack(side=RIGHT)
+    	win.mainloop()
+    	
+    	packing order + side=TOP/BOTTOM/LEFT/RIGHT + fill=X/Y/BOTH + expand=YES/NO
+    	Using Anchor to Position Instread of Stretch
+    	Button(win, text="Hello", command=greeting).pack(side=LEFT, anchor=N)
+    	anchor=N/S/W/E/NE/NW/SE/SW/CENTER
+    	
+    	button.config(fg='spam', bg='black', font=('courier', 12), relief=RAISED, bd=5)
+    	
+    	Label A simple message area
+	Button A simple labeled push-button widget
+	Frame A container for attaching and arranging other widget objects
+	Toplevel, Tk   A new window managed by the window manager
+	Message A multiline label
+	Entry A simple single-line text-entry field
+	Checkbutton A two-state button widget, typically used for multiple-choice selections
+	Radiobutton A two-state button widget, typically used for single-choice selections
+	Scale A slider widget with scalable positions
+	PhotoImage An image object used for displaying full-color images on other widgets
+	BitmapImage An image object used for displaying bitmap images on other widgets
+	Menu A set of options associated with a Menubutton or top-level window
+	Menubutton A button that opens a Menu of selectable options and submenus
+	Scrollbar A control for scrolling other widgets (e.g., listbox, canvas, text)
+	Listbox A list of selection names
+	Text A multiline text browse/edit widget, with support for fonts, and so on
+	Canvas A graphic drawing area, which supports lines, circles, photos, text, and so on
+	
+	Geometry management
+	 pack, grid, place
+	tkinter linked variables
+	 StringVar, IntVar, DoubleVar, BooleanVar
+	Advanced Tk widgets
+	 Spinbox, LabelFrame, PanedWindow
+	Composite widgets
+	 Dialog, ScrolledText, OptionMenu
+	Scheduled callbacks
+	 Widget after, wait, and update methods
+	Other tools
+	 Standard dialogs, clipboard, bind and Event, widget configuration options, custom
+	 and modal dialogs, animation techniques
