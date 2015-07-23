@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+
+  <meta name="description" content="An overview of the high level structure of the V8 JavaScript Virtual Machine, with details on the full compiler and inline caches.">
+
+<title>A tour of V8: full compiler</title>
+<link rel="stylesheet" type="text/css" href="A%20tour%20of%20V8:%20full%20compiler_files/main.css">
+<link rel="stylesheet" type="text/css" href="A%20tour%20of%20V8:%20full%20compiler_files/syntax.css">
+<link rel="icon" type="image/gif" href="http://jayconrod.com/images/wave16.gif">
+<link rel="alternate" type="application/rss+xml" title="Jay Conrod's Blog" href="http://jayconrod.com/feed">
+
+  <link rel="canonical" href="http://jayconrod.com/posts/51/a-tour-of-v8-full-compiler">
+
+
+</head>
+<body>
+
+<div id="page">
+  <div id="header">
+    <a class="logo" href="http://jayconrod.com/"><div id="logo"><b>jay</b>conrod.com</div></a>
+  </div>
+  <div id="sidebar">
+    
+      <h1>About Me</h1>
+
+<p>I'm a software engineer in New&nbsp;York&nbsp;City. I created the the
+ Gypsum programming language, and I have worked on optimizing the V8 
+JavaScript engine for mobile phones. Most of my writing focuses on 
+compilers and programming languages. I'm also interested in 3D graphics,
+ high performance computing, cryptography, and security.</p>
+
+<p><a href="http://jayconrod.com/feed"><img src="A%20tour%20of%20V8:%20full%20compiler_files/rss.png" height="14" width="14"> Subscribe</a></p>
+
+<p><a href="mailto:jayconrod@gmail.com">E-mail me</a></p>
+
+<p><a href="http://careers.stackoverflow.com/jayconrod">View my résumé</a></p>
+
+<h1>Recent Posts</h1>
+
+<ul>
+  
+    <li><a href="http://jayconrod.com/posts/82/how-codeswitch-got-its-name">How CodeSwitch got its name</a></li>
+  
+    <li><a href="http://jayconrod.com/posts/80/packages-in-gypsum-and-codeswitch">Packages in Gypsum and CodeSwitch</a></li>
+  
+    <li><a href="http://jayconrod.com/posts/79/thoughts-on-automated-testing">Thoughts on automated testing</a></li>
+  
+    <li><a href="http://jayconrod.com/posts/78/build-notifications-in-ubuntu">Build notifications in Ubuntu</a></li>
+  
+    <li><a href="http://jayconrod.com/posts/76/type-parameter-bounds-and-variance">Type parameter bounds and variance</a></li>
+  
+</ul>
+
+<p><a id="all-posts" href="http://jayconrod.com/posts">All Posts</a></p>
+
+<h1>Tags</h1>
+
+<p class="tags">
+
+  <a class="tag" href="http://jayconrod.com/tags/compilers">compilers&nbsp;(18)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/gypsum">gypsum&nbsp;(8)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/python">python&nbsp;(8)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/fenris">fenris&nbsp;(7)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/javascript">javascript&nbsp;(5)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/virtual-machines">virtual-machines&nbsp;(5)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/emacs">emacs&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/imp">imp&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/linux">linux&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/optimization">optimization&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/scala">scala&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/v8">v8&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/web">web&nbsp;(4)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/3d">3d&nbsp;(3)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/parsers">parsers&nbsp;(3)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/codeswitch">codeswitch&nbsp;(2)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/debugging">debugging&nbsp;(2)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/opengl">opengl&nbsp;(2)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/android">android&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/bash">bash&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/benchmarks">benchmarks&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/c++">c++&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/functional-programming">functional-programming&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/garbage-collection">garbage-collection&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/gdb">gdb&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/object-oriented">object-oriented&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/parallelization">parallelization&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/productivity">productivity&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/testing">testing&nbsp;(1)</a>
+
+  <a class="tag" href="http://jayconrod.com/tags/webgl">webgl&nbsp;(1)</a>
+
+</p>
+
+    
+  </div>
+  <div id="content">
+    <h1>A tour of V8: full compiler</h1>
+    <p class="dates">
+  Published on 2012-11-04
+  <br>Edited on 2013-12-13
+  <br>Tagged:
+    
+      <a class="tag" href="http://jayconrod.com/tags/javascript">javascript</a>
+    
+      <a class="tag" href="http://jayconrod.com/tags/optimization">optimization</a>
+    
+      <a class="tag" href="http://jayconrod.com/tags/v8">v8</a>
+    
+      <a class="tag" href="http://jayconrod.com/tags/virtual-machines">virtual-machines</a>
+    
+  
+</p>
+
+
+  <p><em>This article has been translated into <a href="http://science.webhostinggeeks.com/obilazak-v8">Serbo-Croatian</a>.<br>
+Thanks to Anja Skrba of <a href="https://plus.google.com/103029211563161461335/posts">Web Hosting Geeks</a>!<br>
+Also translated into <a href="http://newhtml.net/v8-full-compiler/">Chinese</a>. Thanks to <a href="http://newhtml.net/">liuyanghejerry</a>!</em></p>
+
+<p>Over the last five years, JavaScript performance has increased 
+incredibly quickly, largely due to a transition from interpretation to 
+JIT compilation in JavaScript virtual machines. This has greatly 
+increased the usefulness of JavaScript and web apps in general. As a 
+result, JavaScript is now the driving force of HTML5, the next wave of 
+web technologies. One of the first JavaScript engines to generate and 
+execute native code was V8, which is used in Google Chrome, the Android 
+browser, WebOS, and other projects such as Node.js.</p>
+
+<p>A little over a year ago, I joined a team at my company which 
+optimizes V8 for our own ARM microarchitecture. Since that time, I've 
+seen SunSpider performance double, and V8 benchmark performance increase
+ by about 50%, due to contributions from both hardware and software.</p>
+
+<p>V8 is a really interesting project to work on, but unfortunately, the
+ documentation for it is a little sparse. In the next few articles, I'll
+ provide a high level overview, which will hopefully be interesting for 
+anyone curious about the internals of virtual machines or compilers.</p>
+
+<h2>High level architecture</h2>
+
+<p>V8 compiles all JavaScript to native code before executing it. There 
+is no interpretation and no bytecode. Compilation is done one function 
+at a time (as opposed to trace-based compilation as used in TraceMonkey,
+ the old FireFox VM). Usually, functions aren't actually compiled until 
+the first time they are called, so if you include a big library script, 
+the VM won't waste time compiling the unused parts of it.</p>
+
+<p>V8 actually uses two different JavaScript compilers. I like to think of them as <a href="http://hyperboleandahalf.blogspot.com/2010/11/dogs-dont-understand-basic-concepts.html">the simple compiler and the helper compiler</a>.
+ The full compiler (which is the focus of this article) is an 
+unoptimizing compiler. Its job is to produce native code as quickly as 
+possible, which is important for keeping page load times snappy. 
+Crankshaft is the optimizing compiler. V8 compiles everything first with
+ the full compiler, then uses a built-in profiler to select "hot" 
+functions to be optimized by Crankshaft. Since V8 is mostly 
+single-threaded (as of version 3.14), execution is paused while either 
+compiler is running. Consequently, both compilers are designed to 
+produce code quickly instead of spending a lot of time producing very 
+efficient code. In future versions of V8, Crankshaft (or at least 
+portions thereof) will run in a separate thread, concurrently with 
+JavaScript execution, enabling more expensive optimization.</p>
+
+<h2>Why no bytecode?</h2>
+
+<p>Most VMs contain a bytecode interpreter, but this is notably absent 
+from V8. You might wonder why the full compiler exists when it might be 
+easier to compile to bytecode and execute that. It turns out that 
+compiling to unoptimized native code isn't actually that much more 
+expensive than compiling to bytecode. Consider the compilation processes
+ for both:</p>
+
+<div style="float: left; width: 50%;">
+Bytecode compilation:
+<ul>
+<li>Syntax analysis (parsing)</li>
+<li>Scope analysis</li>
+<li>Translate syntax tree to bytecode</li>
+</ul>
+</div>
+<div style="float: right; width: 50%;">
+Native compilation:
+<ul>
+<li>Syntax analysis (parsing)</li>
+<li>Scope analysis</li>
+<li>Translate syntax tree to native</li>
+</ul>
+</div>
+
+<p>In both cases, we need to parse the source code and produce an 
+abstract syntax tree (AST). We need to perform scope analysis, which 
+tells us whether each symbol refers to a local variable, context 
+variable (used by closures), or global property. The translation step is
+ the only part that is different. You can do very elaborate things here,
+ but if you want the compiler to be as fast as possible, you pretty much
+ need to do a direct translation: every syntax tree node would get 
+translated to a fixed sequence of bytecodes or native instructions.</p>
+
+<p>Now consider how you would write an interpreter for bytecode. A na�ve
+ implementation would be a loop which fetches the next bytecode, enters a
+ big switch statement, and executes a fixed sequence of instructions. 
+There are <a href="http://wingolog.org/archives/2012/06/27/inside-javascriptcores-low-level-interpreter">various ways to improve</a> on this, but they all boil down to the same structure.</p>
+
+<p>Instead of generating bytecode and using an interpreter loop, what if
+ we just emitted the appropriate fixed sequence of instructions for each
+ operation? As it happens, this is exactly how the full compiler works. 
+This removes the need for an interpreter, and simplifies transitions 
+between unoptimized and optimized code.</p>
+
+<p>In general, bytecode is useful in situations where you can do some of
+ the compiler's work ahead of time. This isn't the case inside a web 
+browser, so the full compiler makes more sense for V8.</p>
+
+<h2>Inline caches: accelerating unoptimized code</h2>
+
+<p>If you look at the ECMAScript spec, you'll find that most operations are absurdly complicated. Take the <code>+</code>
+ operator for instance. If both operands are numbers, it performs 
+addition. If either operand is a string, it performs string 
+concatenation. If the operands are something other than numbers or 
+strings, some complicated (possibly user defined) conversion to 
+primitive occurs before either number addition or string concatenation. 
+Just by looking at the source code, there's no way to tell what 
+instructions should be emitted. Property loads (example: <code>o.x</code>)
+ are a good example of another potentially complicated operation. From 
+looking at the code, you can't tell whether you're loading a normal 
+property within the object (an "own" property), a property of a 
+prototype object, a getter method, or some magic browser-defined 
+callback. The property may not even exist. If you were to handle all 
+possible cases in full-compiled code, even this simple operation would 
+require hundreds of instructions.</p>
+
+<p>Inline caches (ICs) provide an elegant solution to this problem. An 
+inline cache is basically a function with multiple possible 
+implementations (usually generated on the fly) which can be called to 
+handle a specific operation. I previously wrote about <a href="http://jayconrod.com/posts/44/polymorphic-inline-caches-explained">polymorphic inline caches for function calls</a>.
+ V8 uses ICs for a much broader set of operations: the full compiler 
+uses ICs to implement loads, stores, calls, binary, unary and comparison
+ operators, as well as the <code>ToBoolean</code> implicit operation.</p>
+
+<p>The implementation of an IC is called a stub. Stubs behave like 
+functions in the sense that you call them, and they return, but they 
+don't necessarily set up a stack frame and follow the full calling 
+convention. Stubs are usually generated on the fly, but for common 
+cases, they can be cached and reused by multiple ICs. The stub which 
+implements an IC typically contains optimized code which handles the 
+types of operands that particular IC has encountered in the past (which 
+is why it's called a <em>cache</em>). If the stub encounters a case it's
+ not prepared to handle, it "misses" and calls the C++ runtime code. The
+ runtime handles the case, then generates a new stub which can handle 
+the missed case (as well as previous cases). The call to the old stub in
+ the full compiled code is rewritten to call the new stub, and execution
+ resumes as if the stub had been called normally.</p>
+
+<p>Let's take a simple example: a property load.</p>
+
+<pre>function f(o) {
+  return o.x;
+}
+</pre>
+
+<p>When the full compiler first generates code for this function, it 
+will use an IC for the load. The IC starts in the uninitialized state, 
+using a trivial stub which doesn't handle any cases. Here's how the full
+ compiled code calls the stub.</p>
+
+<pre>  ;; full compiled call site
+  ldr   r0, [fp, #+8]     ; load parameter "o" from stack
+  ldr   r2, [pc, #+84]    ; load string "x" from constant pool
+  ldr   ip, [pc, #+84]    ; load uninitialized stub from constant pool
+  blx   ip                ; call the stub
+  ...
+  dd    0xabcdef01        ; address of stub loaded above
+                          ; this gets replaced when the stub misses
+</pre>
+
+<p>(Sorry if you are not familiar with ARM assembly. Hopefully the comments make it clear what's happening.)</p>
+
+<p>Here's the code for the uninitialized stub:</p>
+
+<pre>  ;; uninitialized stub
+  ldr   ip,  [pc, #8]   ; load address of C++ runtime "miss" function
+  bx    ip              ; tail call it
+  ...
+</pre>
+
+<p>The first time this stub is called, it will "miss", and the runtime 
+will generate code to handle whatever case actually caused the miss. In 
+V8, the most common way to store a property is at a fixed offset within 
+an object, so let's see an example of that. Every object has a pointer 
+to a <em>map</em>, which is a mostly immutable structure which describes
+ the structure of the object. The in-object load stub will check the 
+object's map against a known map (the one seen when the uninitialized 
+stub missed) to quickly verify the object has the desired property in 
+the right position. This map check lets us avoid an expensive hash table
+ lookup.</p>
+
+<pre>  ;; monomorphic in-object load stub
+  tst   r0,   #1          ; test if receiver is an object
+  beq   miss              ; miss if not
+  ldr   r1,   [r0, #-1]   ; load object's map
+  ldr   ip,   [pc, #+24]  ; load expected map
+  cmp   r1,   ip          ; are they the same?
+  bne   miss              ; miss if not
+  ldr   r0,   [r0, #+11]  ; load the property
+  bx    lr                ; return
+miss:
+  ldr   ip,   [pc, #+8]   ; load code to call the C++ runtime
+  bx    ip                ; tail call it
+  ...
+</pre>
+
+<p>As long as this expression only has to deal with in-object property 
+loads, the load can be performed quickly with no additional code 
+generation. Since the IC can only handle one case, it is in a <em>monomorphic</em> state. If another case comes up, and the IC misses again, a <em>megamorphic</em> stub will be generated which is more general.</p>
+
+<h2>To be continued...</h2>
+
+<p>As you can see, the full compiler fulfills its goal of quickly 
+generating reasonably well-performing baseline code. Since ICs are used 
+extensively, full compiled code is very generic, which makes the full 
+compiler very simple. The ICs make the code very flexible, able to 
+handle any case.</p>
+
+<p>In the next article, we will look at how V8 represents objects in 
+memory, allowing O(1) access in most cases without any structural 
+specification from the programmer (such as a <code>class</code> declaration).</p>
+
+
+  </div>
+  <div id="footer">
+    Copyright © Jay Conrod, 2009-2015
+  </div>
+</div>
+
+
+
+</body></html>
