@@ -1,0 +1,11 @@
+http://kuaile.in/archives/1370   shadowsocks/redsocks proxy for the whole PC
+
+//dependency
+sudo apt-get install libevent-dev
+
+shadowsocks: (server)
+https://github.com/shadowsocks/shadowsocks
+
+redsocks
+https://github.com/darkk/redsocks
+    compile: make (very easy)
