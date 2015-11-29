@@ -1,0 +1,42 @@
+http://docs.docker.com/engine/installation/ubuntulinux/
+
+1. sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+2. sudo vi /etc/apt/sources.list.d/docker.list
+# Ubuntu Precise 12.04 (LTS)
+deb https://apt.dockerproject.org/repo ubuntu-precise main
+# Ubuntu Trusty 14.04 (LTS)
+deb https://apt.dockerproject.org/repo ubuntu-trusty main
+# Ubuntu Vivid 15.04
+deb https://apt.dockerproject.org/repo ubuntu-vivid main
+# Ubuntu Wily 15.10
+deb https://apt.dockerproject.org/repo ubuntu-wily main
+3. sudo apt-get update
+4. sudo apt-get purge lxc-docker*
+5. sudo apt-cache policy docker-engine
+6. install recommoned package
+sudo apt-get install linux-image-extra-$(uname -r)
+7. sudo apt-get install docker-engine
+8. sudo service docker start
+9. sudo docker run hello-world
+
+Upgrade Docker
+
+To install the latest version of Docker with apt-get:
+
+$ apt-get upgrade docker-engine
+
+Uninstallation
+
+To uninstall the Docker package:
+
+$ sudo apt-get purge docker-engine
+
+To uninstall the Docker package and dependencies that are no longer needed:
+
+$ sudo apt-get autoremove --purge docker-engine
+
+The above commands will not remove images, containers, volumes, or user created configuration files on your host. If you wish to delete all images, containers, and volumes run the following command:
+
+$ rm -rf /var/lib/docker
+
+You must delete the user created configuration files manually.
