@@ -1,0 +1,20 @@
+use letsencrypt-auto xxxx
+the certificate locations: /etc/letsencrypt/archive|keyss  /etc/letsencrypt/live point to the latest version.
+
+1. ./bootstrap/install-deps.sh
+   ./bootstrap/dev/venv.sh
+
+2. tox
+   test cover: tox -e cover  |  ./tox.cover.sh $package
+
+3. style
+   tox -e lint   | pylint --rcfile=.pylintrc $path
+
+4. Integration Test
+   install Go 1.5 libtool-ltdl, mariadb-server, rabbitmq-server
+   ./tests/boulder-start.sh or
+   docker run --rm -it --net host -p 4000:4000 -e MYSQL_CONTAINER=yes --name boulder letsencrypt/boulder
+
+   # Add an /etc/hosts entry pointing le.wtf to 127.0.0.1
+   ./tests/boulder-integration.sh && echo OK || echo FAIL
+

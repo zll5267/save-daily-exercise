@@ -59,6 +59,8 @@ def getInterfacesFromCarFile(fcar):
 #print("iiiii" + line)
                 ifMatch = re.compile("[\s]*interface[\s]+(?P<if>I[\w]+)[\s]*{[\s]*")
                 am = ifMatch.findall(line)
+                ifMatch = re.compile("[\s]*interface[\s]+(?P<if>I[\w]+)[\s]*$")
+                am += ifMatch.findall(line)
                 for m in am:
                     if m:
                         if not ifStart:

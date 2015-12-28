@@ -87,7 +87,7 @@ def getInterfaces(carfile):
 #handleInterfaces(interfaces)
     return interfaces
 
-def handleNeededInterfaces(filename, needed_interfaces):
+def handleNeededEIID(filename, needed_interfaces):
     global g_all_declared_interfaces_dic
     #print(g_all_declared_interfaces_dic)
     print(filename + " needed interfaces:")
@@ -95,11 +95,6 @@ def handleNeededInterfaces(filename, needed_interfaces):
     interface_startwords = {"Elastos::Droid":[], "Elastos::Core":[], "Elastos::IO":[], "other":[]}
     for interface in needed_interfaces:
         interface_with_ns = g_all_declared_interfaces_dic.get(interface, [interface])
-        if interface_with_ns == [interface]:
-            if (interface.startswith("C")):
-                interface_with_ns = g_all_declared_interfaces_dic.get("I" + interface[1:], [interface])
-                if interface_with_ns != interface:
-                    interface_with_ns = [x[:x.rfind(":")+1] + interface for x in interface_with_ns];
         #here interface is a list ,because there is interface under different namespace with same name
         interface = ";".join(interface_with_ns)
         for startwords in interface_startwords:
@@ -114,28 +109,27 @@ def handleNeededInterfaces(filename, needed_interfaces):
         print("=========interface for :" + startwords + "================")
         interfaces = sorted(interface_startwords[startwords])
         for interface in interfaces:
+            lastsemi = interface.rfind(":")
+            interface = interface[0:lastsemi+1] + "EIID_" + interface[lastsemi+1:]
             print("using " + interface + ";")
 
 
 def getNeededInterfacesForFile(f):
-    matchStrs = ["[^\w:](I[\w]+)[\s]*\*",
-    "AutoPtr<[\s]*(I[\w]+)[\s]*>",
-    "public[\s]*(I[\w]+)[\s]*$",
-    "(C[\w]+)::New",
-    "[^\w:]+(I[\w]+)::[A-Z]+",
-    "(Logger)::",
+    matchStrs = ["I[\w]+",
     ]
     needed_interfaces = set()
     not_interfaces = {'Int32', 'Int64', 'IInterface'}#TODO add all the not interfaces
     for line in f:
-        find_result = []
-        for matchStr in matchStrs:
-            interfaceMatch = re.compile(matchStr)
-            find_result += interfaceMatch.findall(line)
-        if len(find_result) > 0:
-            for i in find_result:
-                if i:
-                    needed_interfaces.add(i)
+        if line.startswith("CAR_INTERFACE_IMPL"):
+            line = line[line.find("Object") + 6:]
+            find_result = []
+            for matchStr in matchStrs:
+                interfaceMatch = re.compile(matchStr)
+                find_result += interfaceMatch.findall(line)
+            if len(find_result) > 0:
+                for i in find_result:
+                    if i:
+                        needed_interfaces.add(i)
     return needed_interfaces - not_interfaces
 
 def getNeededInterfacesForDir(path):
@@ -144,7 +138,9 @@ def getNeededInterfacesForDir(path):
         needed_interfaces = set
         with open(filename) as fc:
             needed_interfaces = getNeededInterfacesForFile(fc)
-            handleNeededInterfaces(filename, needed_interfaces)
+            print("need EIID for interfaces:\n")
+            print(needed_interfaces)
+        handleNeededEIID(filename, needed_interfaces)
 
 def fileExist(f):
     if (not f) or (not os.path.exists(f)):
