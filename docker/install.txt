@@ -40,3 +40,7 @@ The above commands will not remove images, containers, volumes, or user created 
 $ rm -rf /var/lib/docker
 
 You must delete the user created configuration files manually.
+=============================
+add to docker group will don't need to use "sudo" every time when run "docker" command.
+sudo groupadd docker, sudo gpasswd -a $user docker , sudo service docker restart
+maybe need you logout and login again to make this take effect.
