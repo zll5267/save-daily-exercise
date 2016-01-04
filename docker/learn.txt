@@ -1,0 +1,2 @@
+cp file
+docker cp containid:/xxx/yyy ./ssxx

@@ -14,7 +14,18 @@ the certificate locations: /etc/letsencrypt/archive|keyss  /etc/letsencrypt/live
    install Go 1.5 libtool-ltdl, mariadb-server, rabbitmq-server
    ./tests/boulder-start.sh or
    docker run --rm -it --net host -p 4000:4000 -e MYSQL_CONTAINER=yes --name boulder letsencrypt/boulder
+   #run a docker boulder
+   cd boulder/
+   ./test/run-docker.sh
+
 
    # Add an /etc/hosts entry pointing le.wtf to 127.0.0.1
    ./tests/boulder-integration.sh && echo OK || echo FAIL
+
+==========attach to the mysql container=================
+docker -exec -it boulder-mysql /bin/sh
+export TERM=linux
+mysql [-P xxx] -u root -p
+==========Rabbitmq==============
+docker -exec -it boulder-rabbitmq /bin/sh
 

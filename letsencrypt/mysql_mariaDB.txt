@@ -1,0 +1,110 @@
+
+http://www.runoob.com/mysql/mysql-database-export.html
+=====
+select version();
++--------------------------+
+| version()                |
++--------------------------+
+| 10.0.22-MariaDB-1~jessie |
++--------------------------+
+1 row in set (0.00 sec)
+show databases;
+use mysql;
+show tables;
+desc user;
+select Host, User, Password from user;
+==============================
+#add a new user
+insert into user
+(host, user, password, select_priv, insert_priv, update_priv)
+values
+('localhost', 'guest', PASSWORD("guest"), 'Y', 'Y', 'Y');
+flush privileges;
+--------
+grant select, insert, update, delete, create, drop
+on mysql.*
+to 'test'@'localhost'
+identified by 'test';
+========================
+USE 数据库名 :选择要操作的Mysql数据库，使用该命令后所有Mysql命令都只针对该数据库。
+SHOW DATABASES: 列出 MySQL 数据库管理系统的数据库列表。
+SHOW TABLES: 显示指定数据库的所有表，使用该命令前需要使用 use 命令来选择要操作的数据库。
+SHOW COLUMNS FROM 数据表: 显示数据表的属性，属性类型，主键信息 ，是否为 NULL，默认值等其他信息。
+SHOW INDEX FROM 数据表: 显示数据表的详细索引信息，包括PRIMARY KEY（主键）。
+SHOW TABLE STATUS LIKE 数据表\G: 该命令将输出Mysql数据库管理系统的性能及统计信息
+show table status like 'user'\g;
+=======Create database===============
+mysqladmin -u root -p create tutorials
+mysqladmin -u root -p drop tutorials;
+=======type===============================
+int 4byte
+float 4byte
+double 8byte
+date 3byte/ time 3byte/ year 1byte/ datetime 8byte [YYYY-MM-DD HH:MM:SS]
+timestamp 8type
+char(n)
+varchar(n)
+blob
+text
+==============================
+create table tutorials_tbl(
+   tutorial_id INT NOT NULL AUTO_INCREMENT,
+   tutorial_title VARCHAR(100) NOT NULL,
+   tutorial_author VARCHAR(40) NOT NULL,
+   submission_date DATE,
+   PRIMARY KEY ( tutorial_id )
+);
+----------
+drop tables xxx;
+----------------
+insert into table_name(f1, f2, f3 ...)
+values
+(v1, v2, v3 ...);
+---------------
+SELECT field1, field2,...fieldN table_name1, table_name2...
+[WHERE Clause]
+[OFFSET M ][LIMIT N]
+-------------------
+UPDATE table_name SET field1=new-value1, field2=new-value2
+[WHERE Clause]
+---------------------
+DELETE FROM table_name [WHERE Clause]
+----------------------
+like %(* in unix)
+----------------------
+order by f1, f2 ... [asc|desc]
+------------------------
+is null is not null
+-----------------------
+SELECT name FROM person_tbl WHERE name REGEXP '^st';
+---------------------------
+start tansaction; save point xxxx; operations; rollback/commit;
+--------------------
+ALTER TABLE testalter_tbl  DROP i;
+ALTER TABLE testalter_tbl ADD i INT;
+ALTER TABLE testalter_tbl ADD i INT FIRST;
+ALTER TABLE testalter_tbl ADD i INT AFTER c;
+ALTER TABLE testalter_tbl MODIFY c CHAR(10);
+ALTER TABLE testalter_tbl CHANGE i j BIGINT NOT NULL DEFAULT 100;
+ALTER TABLE testalter_tbl ALTER i SET DEFAULT 1000;
+ALTER TABLE testalter_tbl RENAME TO alter_tbl;
+---------------------------------
+show create table xxxx;
+insert into clone_tbl (x, x, x, ...)
+select x, x, x, xxx
+from old_tbl;
+----------------------------
+select version()/database()/user();
+show status/variables;
+==Export data===============================
+SELECT * FROM tutorials_tbl INTO OUTFILE '/tmp/tutorials.txt';
+LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl;
+------------------
+mysqldump -u root -p --no-create-info --tab=/tmp TUTORIALS tutorials_tbl
+mysqldump -u root -p TUTORIALS tutorials_tbl > dump.txt
+mysqldump -u root -p --all-databases > database_dump.txt
+mysql -u root -p database_name < dump.txt
+-----------------------
+mysqlimport -u root -p --local database_name dump.txt
+===========================
+
