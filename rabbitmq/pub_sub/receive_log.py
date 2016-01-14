@@ -5,7 +5,7 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
 channel.exchange_declare(exchange='logs', type='fanout')#broadcast to all the binded queues
-channel.exchange_declare(exchange='boulder', type='fanout')#broadcast to all the binded queues
+#channel.exchange_declare(exchange='boulder', type='fanout')#broadcast to all the binded queues
 
 result = channel.queue_declare(exclusive=True)#random name picked by rabbitmq, delete when disconnect
 queuename = result.method.queue
