@@ -10,7 +10,7 @@ def get_next_array(string):
     '''
     pdb.set_trace()
     next = [0] * len(string)
-    j = next[0] #next[i-1]
+    j = next[0] # i = 0, l = 1;next[l-1] l = 1, 2, ... ; i = l -1
     for i in range(len(string))[1:]:
         while(j > 0 and string[i] != string[j]):
             j = next[j]

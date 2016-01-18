@@ -7,3 +7,4 @@ test/test_maven/test/target
 *.obj
 *.Bak
 test/test_python/__pycache__/
+__pycache__
