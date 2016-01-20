@@ -1,0 +1,173 @@
+Script started on Wed 20 Jan 2016 04:22:04 PM CST
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufsleliang@leliang:~/myfile/projects/save-daily-exercise/aufs$ ls
+aufs.txt  learn.txt  tutorial.txt
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufsleliang@leliang:~/myfile/projects/save-daily-exercise/aufs$ mkdir test
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufsleliang@leliang:~/myfile/projects/save-daily-exercise/aufs$ cd ete[K[K[Ktest/
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ls
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ mkdir a b c d root
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ echo aaaaaa > a/a.txt
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ echo bbbbbb > b/b.tt[Kxt
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ echo cccccc > c/c.txt
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ls
+[0m[01;34ma[0m  [01;34mb[0m  [01;34mc[0m  [01;34md[0m  [01;34mroot[0m
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ tree
+[01;34m.[00m
+├── [01;34ma[00m
+│   └── a.txt
+├── [01;34mb[00m
+│   └── b.txt
+├── [01;34mc[00m
+│   └── c.txt
+├── [01;34md[00m
+└── [01;34mroot[00m
+
+5 directories, 3 files
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ sudo mount -v -t aufs -o br=./a:./b:./ c none ./root
+[sudo] password for leliang: 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ls
+[0m[01;34ma[0m  [01;34mb[0m  [01;34mc[0m  [01;34md[0m  [01;34mroot[0m
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll root/
+total 20
+drwxrwxr-x 4 leliang leliang 4096 Jan 20 16:23 [0m[01;34m.[0m/
+drwxrwxr-x 7 leliang leliang 4096 Jan 20 16:22 [01;34m..[0m/
+-rw-rw-r-- 1 leliang leliang    7 Jan 20 16:22 a.txt
+-rw-rw-r-- 1 leliang leliang    7 Jan 20 16:22 b.txt
+-rw-rw-r-- 1 leliang leliang    7 Jan 20 16:22 c.txt
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ tree
+[01;34m.[00m
+├── [01;34ma[00m
+│   └── a.txt
+├── [01;34mb[00m
+│   └── b.txt
+├── [01;34mc[00m
+│   └── c.txt
+├── [01;34md[00m
+└── [01;34mroot[00m
+    ├── a.txt
+    ├── b.txt
+    └── c.txt
+
+5 directories, 6 files
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ cat ./root/*
+aaaaaa
+bbbbbb
+cccccc
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ls /sys/fs/aufs/
+config               si_e590264b20615acd/ si_e590264b28a53acd/ 
+si_e5902648b4f59acd/ si_e590264b246fdacd/ 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ls /sys/fs/aufs/[Kmount -v
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,relatime,size=16416744k,nr_inodes=4104186,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,noexec,relatime,size=3285544k,mode=755)
+/dev/disk/by-uuid/83d659bb-c2f5-49f3-9ba5-8ca27fde5523 on / type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+none on /sys/fs/cgroup type tmpfs (rw,relatime,size=4k,mode=755)
+none on /sys/fs/fuse/connections type fusectl (rw,relatime)
+none on /sys/kernel/debug type debugfs (rw,relatime)
+none on /sys/kernel/security type securityfs (rw,relatime)
+none on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+none on /run/shm type tmpfs (rw,nosuid,nodev,relatime)
+none on /run/user type tmpfs (rw,nosuid,nodev,noexec,relatime,size=102400k,mode=755)
+none on /sys/fs/pstore type pstore (rw,relatime)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,relatime,cpuset)
+cgroup on /sys/fs/cgroup/cpu type cgroup (rw,relatime,cpu)
+cgroup on /sys/fs/cgroup/cpuacct type cgroup (rw,relatime,cpuacct)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,relatime,memory)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,relatime,devices)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,relatime,freezer)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,relatime,blkio)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,relatime,perf_event)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,relatime,hugetlb)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,nosuid,nodev,noexec,relatime)
+systemd on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,name=systemd)
+/dev/disk/by-uuid/83d659bb-c2f5-49f3-9ba5-8ca27fde5523 on /var/lib/docker/aufs type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+vmware-vmblock on /run/vmblock-fuse type fuse.vmware-vmblock (rw,nosuid,nodev,relatime,user_id=0,group_id=0,default_permissions,allow_other)
+gvfsd-fuse on /run/user/1001/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1001,group_id=1001)
+none on /var/lib/docker/aufs/mnt/9d868c52c82ee19c6712cf79a17e62e6a8d84e65baee4a1636b43673ccb4c166 type aufs (rw,relatime,si=e590264b20615acd,dio)
+none on /var/lib/docker/aufs/mnt/6006faeba20369e88ccfbd15229c403340f9bea29aaa08a7a2053263f2e3bbaa type aufs (rw,relatime,si=e5902648b4f59acd,dio)
+none on /var/lib/docker/aufs/mnt/e7180fcbd22f79ac96180fe3406f0871668db7b48ed8ee8ed531e7227857d6e1 type aufs (rw,relatime,si=e590264b28a53acd,dio)
+none on /home/leliang/myfile/projects/save-daily-exercise/aufs/test/root type aufs (rw,relatime,si=e590264b246fdacd)
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ [K]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ mount -v
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,relatime,size=16416744k,nr_inodes=4104186,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,noexec,relatime,size=3285544k,mode=755)
+/dev/disk/by-uuid/83d659bb-c2f5-49f3-9ba5-8ca27fde5523 on / type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+none on /sys/fs/cgroup type tmpfs (rw,relatime,size=4k,mode=755)
+none on /sys/fs/fuse/connections type fusectl (rw,relatime)
+none on /sys/kernel/debug type debugfs (rw,relatime)
+none on /sys/kernel/security type securityfs (rw,relatime)
+none on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+none on /run/shm type tmpfs (rw,nosuid,nodev,relatime)
+none on /run/user type tmpfs (rw,nosuid,nodev,noexec,relatime,size=102400k,mode=755)
+none on /sys/fs/pstore type pstore (rw,relatime)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,relatime,cpuset)
+cgroup on /sys/fs/cgroup/cpu type cgroup (rw,relatime,cpu)
+cgroup on /sys/fs/cgroup/cpuacct type cgroup (rw,relatime,cpuacct)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,relatime,memory)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,relatime,devices)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,relatime,freezer)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,relatime,blkio)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,relatime,perf_event)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,relatime,hugetlb)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,nosuid,nodev,noexec,relatime)
+systemd on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,name=systemd)
+/dev/disk/by-uuid/83d659bb-c2f5-49f3-9ba5-8ca27fde5523 on /var/lib/docker/aufs type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+vmware-vmblock on /run/vmblock-fuse type fuse.vmware-vmblock (rw,nosuid,nodev,relatime,user_id=0,group_id=0,default_permissions,allow_other)
+gvfsd-fuse on /run/user/1001/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1001,group_id=1001)
+none on /var/lib/docker/aufs/mnt/9d868c52c82ee19c6712cf79a17e62e6a8d84e65baee4a1636b43673ccb4c166 type aufs (rw,relatime,si=e590264b20615acd,dio)
+none on /var/lib/docker/aufs/mnt/6006faeba20369e88ccfbd15229c403340f9bea29aaa08a7a2053263f2e3bbaa type aufs (rw,relatime,si=e5902648b4f59acd,dio)
+none on /var/lib/docker/aufs/mnt/e7180fcbd22f79ac96180fe3406f0871668db7b48ed8ee8ed531e7227857d6e1 type aufs (rw,relatime,si=e590264b28a53acd,dio)
+none on /home/leliang/myfile/projects/save-daily-exercise/aufs/test/root type aufs (rw,relatime,si=e590264b246fdacd)
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll s[K/sys/fs/aufs/e59[K[K[K
+config               si_e5902648b4f59acd/ si_e590264b20615acd/ si_e590264b246fdacd/ si_e590264b28a53acd/ 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll /sys/fs/aufs/si_e590264b246fdacd/
+total 0
+drwxr-xr-x 2 root root    0 Jan 20 16:30 [0m[01;34m.[0m/
+drwxr-xr-x 6 root root    0 Jan 20 13:13 [01;34m..[0m/
+-r--r--r-- 1 root root 4096 Jan 20 16:31 br0
+-r--r--r-- 1 root root 4096 Jan 20 16:31 br1
+-r--r--r-- 1 root root 4096 Jan 20 16:31 br2
+-r--r--r-- 1 root root 4096 Jan 20 16:31 brid0
+-r--r--r-- 1 root root 4096 Jan 20 16:31 brid1
+-r--r--r-- 1 root root 4096 Jan 20 16:31 brid2
+-r--r--r-- 1 root root 4096 Jan 20 16:31 xi_path
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll /sys/fs/aufs/si_e590264b246fdacd/br0 
+-r--r--r-- 1 root root 4096 Jan 20 16:31 /sys/fs/aufs/si_e590264b246fdacd/br0
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll /sys/fs/aufs/si_e590264b246fdacd/br0 [K[K1
+-r--r--r-- 1 root root 4096 Jan 20 16:31 /sys/fs/aufs/si_e590264b246fdacd/br1
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll /sys/fs/aufs/si_e590264b246fdacd/br1[K[K[Kxi_path 
+-r--r--r-- 1 root root 4096 Jan 20 16:31 /sys/fs/aufs/si_e590264b246fdacd/xi_path
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ cat /sys/fs/aufs/si_e590264b246fdacd/br0
+/home/leliang/myfile/projects/save-daily-exercise/aufs/test/a=rw
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ cat /sys/fs/aufs/si_e590264b246fdacd/br0[K[K[Kbrid0
+64
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ cat /sys/fs/aufs/si_e590264b246fdacd/brid0[K[K[K[K[Kxi_path
+/home/leliang/myfile/projects/save-daily-exercise/aufs/test/a/.aufs.xino
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll a/.
+./            ../           .wh..wh.aufs  .wh..wh.orph/ .wh..wh.plnk/ 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll a/.auf[K[K[K
+./            ../           .wh..wh.aufs  .wh..wh.orph/ .wh..wh.plnk/ 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll a/.wh..wh.
+.wh..wh.aufs  .wh..wh.orph/ .wh..wh.plnk/ 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll a/.wh..wh.aufs 
+a/    b/    c/    d/    root/ 
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll a/.wh..wh.aufs 
+-r--r--r-- 1 root root 0 Jan 20 16:23 a/.wh..wh.aufs
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ ll a/.wh..wh.aufs [C[C[C[1P[1P[1@c[1@a[1@t
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ df
+Filesystem     1K-blocks      Used Available Use% Mounted on
+udev            16416744         4  16416740   1% /dev
+tmpfs            3285544      1412   3284132   1% /run
+/dev/sda3      469048808 359055376  86144064  81% /
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none            16427708       840  16426868   1% /run/shm
+none              102400        56    102344   1% /run/user
+none           469048808 359055376  86144064  81% /home/leliang/myfile/projects/save-daily-exercise/aufs/test/root
+]0;leliang@leliang: ~/myfile/projects/save-daily-exercise/aufs/testleliang@leliang:~/myfile/projects/save-daily-exercise/aufs/test$ exit
+exit
+
+Script done on Wed 20 Jan 2016 04:35:31 PM CST

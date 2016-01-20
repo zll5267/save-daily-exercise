@@ -1,0 +1,200 @@
+Script started on Fri 15 May 2015 02:08:01 PM CST
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ls
+aufs.txt  [0m[01;34mrodir[0m  [01;34mtmpdir[0m  [01;34munion[0m
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ mount -o loop ~/myfile/tmp/haiku-r1alpha4.1-iso/
+haiku-r1alpha4.iso            release_notes_r1alpha4.1.txt
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ mount -o loop ~/myfile/tmp/haiku-r1alpha4.1-iso/haiku-r1alpha4.iso /ro[K[K[K./rodir/
+mount: only root can do that
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ mount -o loop ~/myfile/tmp/haiku-r1alpha4.1-iso/haiku-r1alpha4.iso ./rodir/[1@s[1@u[1@d[1@o[1@
+[sudo] password for leliang:
+mount: block device /home/leliang/myfile/tmp/haiku-r1alpha4.1-iso/haiku-r1alpha4.iso is write-protected, mounting read-only
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ls
+aufs.txt  [0m[01;34mrodir[0m  [01;34mtmpdir[0m  [01;34munion[0m
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ cd [K[K[Kll
+total 18
+drwxrwxr-x  5 leliang leliang 4096 May 15 14:08 [0m[01;34m.[0m/
+drwxrwxr-x 13 leliang leliang 4096 May 15 13:56 [01;34m..[0m/
+-rw-rw-r--  1 leliang leliang    0 May 15 14:08 aufs.txt
+drwxr-xr-x 10 root    root    2048 Nov 15  2012 [01;34mrodir[0m/
+drwxrwxr-x  2 leliang leliang 4096 May 15 14:07 [01;34mtmpdir[0m/
+drwxrwxr-x  2 leliang leliang 4096 May 15 13:57 [01;34munion[0m/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ cd rodir/
+]0;leliang@leliang: ~/myfile/aufs/rodirleliang@leliang:~/myfile/aufs/rodir$ ls
+[0m[01;34mapps[0m  boot.catalog  [01;34mcommon[0m  [01;34mdevelop[0m  [01;34m_HAIKU[0m  haiku-boot-floppy.image  [01;34mhome[0m  [01;34moptional[0m  [01;34m_packages_[0m  [01;34msystem[0m
+]0;leliang@leliang: ~/myfile/aufs/rodirleliang@leliang:~/myfile/aufs/rodir$ touch ss
+touch: cannot touch ‘ss’: Read-only file system
+]0;leliang@leliang: ~/myfile/aufs/rodirleliang@leliang:~/myfile/aufs/rodir$ cd ..
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ m[Ksudo mount -t tmpfs tmpfs ./tmpdir/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ cd tmpdir/
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ ls
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ touch rw.txt
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ ls
+rw.txt
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ cd ..
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ll
+total 14
+drwxrwxr-x  5 leliang leliang 4096 May 15 14:08 [0m[01;34m.[0m/
+drwxrwxr-x 13 leliang leliang 4096 May 15 13:56 [01;34m..[0m/
+-rw-rw-r--  1 leliang leliang    0 May 15 14:08 aufs.txt
+drwxr-xr-x 10 root    root    2048 Nov 15  2012 [01;34mrodir[0m/
+drwxrwxrwt  2 root    root      60 May 15 14:09 [30;42mtmpdir[0m/
+drwxrwxr-x  2 leliang leliang 4096 May 15 13:57 [01;34munion[0m/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ df
+df: ‘/var/lib/docker/aufs’: Permission denied
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda3      469048808 153613980 291585460  35% /
+udev             8148304         4   8148300   1% /dev
+tmpfs            1631856      1376   1630480   1% /run
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none             8159268       372   8158896   1% /run/shm
+none              102400        52    102348   1% /run/user
+/dev/loop1        600690    600690         0 100% /home/leliang/myfile/aufs/rodir
+tmpfs            8159268         0   8159268   0% /home/leliang/myfile/aufs/tmpdir
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ sudo mount -t aufs -o br:[K=/home/leliang/myfile/aufs/tmpdir:/home/leliang/myfile/aufs/rodir aufs ./union/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ls
+aufs.txt  [0m[01;34mrodir[0m  [30;42mtmpdir[0m  [30;42munion[0m
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ll
+total 14
+drwxrwxr-x  5 leliang leliang 4096 May 15 14:08 [0m[01;34m.[0m/
+drwxrwxr-x 13 leliang leliang 4096 May 15 13:56 [01;34m..[0m/
+-rw-rw-r--  1 leliang leliang 4096 May 15 14:12 aufs.txt
+drwxr-xr-x 10 root    root    2048 Nov 15  2012 [01;34mrodir[0m/
+drwxrwxrwt  4 root    root     120 May 15 14:13 [30;42mtmpdir[0m/
+drwxrwxrwt 12 root    root     120 May 15 14:13 [30;42munion[0m/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ cd union/
+]0;leliang@leliang: ~/myfile/aufs/unionleliang@leliang:~/myfile/aufs/union$ ls
+[0m[01;34mapps[0m  boot.catalog  [01;34mcommon[0m  [01;34mdevelop[0m  [01;34m_HAIKU[0m  haiku-boot-floppy.image  [01;34mhome[0m  [01;34moptional[0m  [01;34m_packages_[0m  rw.txt  [01;34msystem[0m
+]0;leliang@leliang: ~/myfile/aufs/unionleliang@leliang:~/myfile/aufs/union$ cd home/
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ ls
+[0m[01;34mconfig[0m  [01;34mDesktop[0m  [01;34mmail[0m
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ touch rw.txt
+touch: cannot touch ‘rw.txt’: Permission denied
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ ls
+[0m[01;34mconfig[0m  [01;34mDesktop[0m  [01;34mmail[0m
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ ll
+total 8
+drwxr-xr-x  5 root root 2048 Nov 15  2012 [0m[01;34m.[0m/
+drwxrwxrwt 12 root root  120 May 15 14:13 [30;42m..[0m/
+drwxr-xr-x  7 root root 2048 Nov 15  2012 [01;34mconfig[0m/
+drwxr-xr-x  2 root root 2048 Nov 15  2012 [01;34mDesktop[0m/
+drwxr-xr-x  5 root root 2048 Nov 15  2012 [01;34mmail[0m/
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ sd[Kudo touch ls[K[Krw.txt
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ ls
+[0m[01;34mconfig[0m  [01;34mDesktop[0m  [01;34mmail[0m  rw.txt
+]0;leliang@leliang: ~/myfile/aufs/union/homeleliang@leliang:~/myfile/aufs/union/home$ cd ..
+]0;leliang@leliang: ~/myfile/aufs/unionleliang@leliang:~/myfile/aufs/union$ ls
+[0m[01;34mapps[0m  boot.catalog  [01;34mcommon[0m  [01;34mdevelop[0m  [01;34m_HAIKU[0m  haiku-boot-floppy.image  [01;34mhome[0m  [01;34moptional[0m  [01;34m_packages_[0m  rw.txt  [01;34msystem[0m
+]0;leliang@leliang: ~/myfile/aufs/unionleliang@leliang:~/myfile/aufs/union$ cd ..
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ls
+aufs.txt  [0m[01;34mrodir[0m  [30;42mtmpdir[0m  [30;42munion[0m
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ll
+total 14
+drwxrwxr-x  5 leliang leliang 4096 May 15 14:08 [0m[01;34m.[0m/
+drwxrwxr-x 13 leliang leliang 4096 May 15 13:56 [01;34m..[0m/
+-rw-rw-r--  1 leliang leliang 4096 May 15 14:12 aufs.txt
+drwxr-xr-x 10 root    root    2048 Nov 15  2012 [01;34mrodir[0m/
+drwxrwxrwt  5 root    root     140 May 15 14:14 [30;42mtmpdir[0m/
+drwxrwxrwt 13 root    root     140 May 15 14:14 [30;42munion[0m/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ df
+df: ‘/var/lib/docker/aufs’: Permission denied
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda3      469048808 153615452 291583988  35% /
+udev             8148304         4   8148300   1% /dev
+tmpfs            1631856      1376   1630480   1% /run
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none             8159268       372   8158896   1% /run/shm
+none              102400        52    102348   1% /run/user
+/dev/loop1        600690    600690         0 100% /home/leliang/myfile/aufs/rodir
+tmpfs            8159268        56   8159212   1% /home/leliang/myfile/aufs/tmpdir
+aufs             8159268        56   8159212   1% /home/leliang/myfile/aufs/union
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ sudo umount -t aufs ./union
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ df
+df: ‘/var/lib/docker/aufs’: Permission denied
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda3      469048808 153615468 291583972  35% /
+udev             8148304         4   8148300   1% /dev
+tmpfs            1631856      1376   1630480   1% /run
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none             8159268       372   8158896   1% /run/shm
+none              102400        52    102348   1% /run/user
+/dev/loop1        600690    600690         0 100% /home/leliang/myfile/aufs/rodir
+tmpfs            8159268         0   8159268   0% /home/leliang/myfile/aufs/tmpdir
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ll
+total 22
+drwxrwxr-x  5 leliang leliang 4096 May 15 14:08 [0m[01;34m.[0m/
+drwxrwxr-x 13 leliang leliang 4096 May 15 13:56 [01;34m..[0m/
+-rw-rw-r--  1 leliang leliang 8192 May 15 14:14 aufs.txt
+drwxr-xr-x 10 root    root    2048 Nov 15  2012 [01;34mrodir[0m/
+drwxrwxrwt  5 root    root     140 May 15 14:14 [30;42mtmpdir[0m/
+drwxrwxr-x  2 leliang leliang 4096 May 15 13:57 [01;34munion[0m/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ll ni[K[Kn[Kunion/
+total 8
+drwxrwxr-x 2 leliang leliang 4096 May 15 13:57 [0m[01;34m.[0m/
+drwxrwxr-x 5 leliang leliang 4096 May 15 14:08 [01;34m..[0m/
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ cd tmpdir/
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ ls
+[0m[01;34mhome[0m  rw.txt
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ cd home/
+]0;leliang@leliang: ~/myfile/aufs/tmpdir/homeleliang@leliang:~/myfile/aufs/tmpdir/home$ ls
+rw.txt
+]0;leliang@leliang: ~/myfile/aufs/tmpdir/homeleliang@leliang:~/myfile/aufs/tmpdir/home$ cd ..
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ ls
+[0m[01;34mhome[0m  rw.txt
+]0;leliang@leliang: ~/myfile/aufs/tmpdirleliang@leliang:~/myfile/aufs/tmpdir$ cd ..
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ df
+df: ‘/var/lib/docker/aufs’: Permission denied
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda3      469048808 153615476 291583964  35% /
+udev             8148304         4   8148300   1% /dev
+tmpfs            1631856      1376   1630480   1% /run
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none             8159268       372   8158896   1% /run/shm
+none              102400        52    102348   1% /run/user
+/dev/loop1        600690    600690         0 100% /home/leliang/myfile/aufs/rodir
+tmpfs            8159268         0   8159268   0% /home/leliang/myfile/aufs/tmpdir
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ umount -t tmpfs /tmp/[K[K[K[K[K./tmpdir
+umount: only root can do that
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ umount -t tmpfs ./tmpdir [1@s[C[1@u[1@d[1@o[1@
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ df
+df: ‘/var/lib/docker/aufs’: Permission denied
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda3      469048808 153615468 291583972  35% /
+udev             8148304         4   8148300   1% /dev
+tmpfs            1631856      1376   1630480   1% /run
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none             8159268       372   8158896   1% /run/shm
+none              102400        52    102348   1% /run/user
+/dev/loop1        600690    600690         0 100% /home/leliang/myfile/aufs/rodir
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ sudo umou[K[Kn[K[Knmount ./rodir/
+sudo: unmount: command not found
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ sudo unmount ./rodir/[1P
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ df
+df: ‘/var/lib/docker/aufs’: Permission denied
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda3      469048808 153615476 291583964  35% /
+udev             8148304         4   8148300   1% /dev
+tmpfs            1631856      1376   1630480   1% /run
+none                   4         0         4   0% /sys/fs/cgroup
+none                5120         0      5120   0% /run/lock
+none             8159268       372   8158896   1% /run/shm
+none              102400        52    102348   1% /run/user
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ ls
+aufs.txt  [0m[01;34mrodir[0m  [01;34mtmpdir[0m  [01;34munion[0m
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ scr
+screendump    script        scriptreplay
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ script
+Script started, file is typescript
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ exit[K[K[K[Kecho #[K$SHLVL
+3
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ exit
+exit
+Script done, file is typescript
+]0;leliang@leliang: ~/myfile/aufsleliang@leliang:~/myfile/aufs$ xit[K[K[Kexit
+exit
+
+Script done on Fri 15 May 2015 02:16:51 PM CST

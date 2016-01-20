@@ -5,6 +5,8 @@ cmake_install.cmake
 install_manifest.txt
 test/test_maven/test/target
 *.obj
+*.o
+*.out
 *.Bak
 test/test_python/__pycache__/
 __pycache__

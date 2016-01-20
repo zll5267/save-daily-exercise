@@ -1,0 +1,1 @@
+use more or cat command to read the aufs.txt

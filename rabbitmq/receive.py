@@ -7,7 +7,7 @@ def callback(ch, method, properties, body):
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
-channel.exchange_declare(exchange='boulder', type='fanout')#broadcast to all the binded queues
+channel.exchange_declare(exchange='boulder', type='topic')#broadcast to all the binded queues
 #channel.queue_declare(queue='hello')
 #channel.basic_consume(callback, queue='hello', no_ack=True)
 

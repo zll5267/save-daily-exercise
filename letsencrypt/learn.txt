@@ -28,4 +28,25 @@ export TERM=linux
 mysql [-P xxx] -u root -p
 ==========Rabbitmq==============
 docker -exec -it boulder-rabbitmq /bin/sh
-
+rabbitmqctl list_queues/bindings/..
+rabbitmqadmin
+rabbitmq-plugins enable rabbitmq_management #enable web management port:15672 guest:guest
+=================================
+how to user the docker to start boulder as the server to do the test
+1. run boulder/test/run-docker.sh
+   maybe encounter no exchange boulder error.
+   should create the exchange on rabbitmq manually [name:boulder, type:topic]
+   a. use a script, refer to ../rabbitmq/receive.py
+   b. use web, rabbitmq-plugins enable rabbitmq_management,  port 15672
+2. update the fake DNS server.
+   boulder/test/dns-test-srv/main.go
+   if no update, the DNS always return 127.0.0.1 for the client.
+   a. update the test/dns-test-srv/main.go script.
+   b. add a env variabe when start boulder in boulder/test/run-docker.sh
+        -e FAKE_DNS=your.client.ip
+3. when do the identifier validation, the tls SNI validation will fail,
+   because the bould will try tlsport 5001(set in test/boulder-config.json,
+   the client maybe use 443, so one way is to update 5001->443 in the config
+   file: boulder/test/boulder-config.json.
+4. before start the client, update the server address in the file:
+   letsencrypt/constants.py   server="http://127.0.0.1:4000/directory"
