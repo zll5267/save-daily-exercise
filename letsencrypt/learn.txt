@@ -50,3 +50,19 @@ how to user the docker to start boulder as the server to do the test
    file: boulder/test/boulder-config.json.
 4. before start the client, update the server address in the file:
    letsencrypt/constants.py   server="http://127.0.0.1:4000/directory"
+5. if connect mysql failed. maybe update the table mysql/user
+   update user set host = '%';
+===============================================================
+1. install the virtualenv and create one for client dev.
+2. source venv/bin/active
+3. venv/bin/letsencrypt
+   load_entry_point(dist, group, name)
+   dist: for d in pkg_resources.working_set: print(d) => find letsencrypt
+	d=pkg_resources.working_set.find(pkg_resources.Requirement.parse("letsencrypt==0.1.0.dev0"))
+        d.location/setup.py  => entry_points => letsencrypt.cli:main
+4. 
+   
+
+
+
+

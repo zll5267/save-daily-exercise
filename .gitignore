@@ -4,6 +4,7 @@ Makefile
 cmake_install.cmake
 install_manifest.txt
 test/test_maven/test/target
+test
 *.obj
 *.o
 *.out
