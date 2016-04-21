@@ -6,7 +6,7 @@ class GValue
     public:
         static const std::string NAME;
 };
-//const std::string GValue::NAME = "zhang ll";
+const std::string GValue::NAME = "zhang ll";
 
 class GFunc
 {
@@ -20,7 +20,7 @@ class GFunc
 int* value = GFunc::getString();
 
 //initialized here will cause the getString wrong.
-const std::string GValue::NAME = "zhang ll";
+//const std::string GValue::NAME = "zhang ll";
 
 
 int main()
