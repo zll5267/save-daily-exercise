@@ -1,3 +1,5 @@
+GIT_user_guide.pdf
+
 1 Getting Help
 	git help <verb>
 	git <verb> --help
