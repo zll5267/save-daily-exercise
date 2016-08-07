@@ -1,0 +1,550 @@
+chapter 1	
+	import this
+	
+chapter 2   System Tools
+	sys, sys.path, os, glob, socket, threading, _thread, queue,
+	time, timeit, subprocess, multiprocessing, signal, select,
+	shutil, tempfile
+	
+	#more.py
+	"""
+	split and interactively page a string or file of text
+	"""
+	def more(text, numlines=15):
+	    lines = text.splitlines() # like split('\n') but no '' at end
+	    while lines:
+	        chunk = lines[:numlines]
+	        lines = lines[numlines:]
+	        for line in chunk: print(line)
+	        if lines and input('More?') not in ['y', 'Y']: break
+	if __name__ == '__main__':
+	    import sys                        # when run, not imported
+	    more(open(sys.argv[1]).read(), 10)# page contents of file on cmdline
+	
+	String method:
+		''.find(); # find the first offset
+		''.replace('','') #global replacement
+		''.strip() # remove whitespace
+		''.rstrip() #just remove the right side whitespace
+		''.lower() # case converts
+		''.isalpha() # 
+		''.isdigit() # content test
+		str is a class type
+		string is a module
+		''.split()
+		delimiter.join()#join substring list
+		chars = list('abcd')
+		'%d' % 21
+		'{:d}'.format(32)
+	File operation basics	
+		open, os.listdir, os.walk
+		open('file').read() # read entire file into string
+		open('file').read(N) # read next N bytes into string
+		open('file').readlines() # read entire file into line strings list
+		open('file').readline() # read next line, through '\n'
+		file = open('spam.txt', 'w'); file.write('' + '\n'); file.close()
+	Module: sys
+		sys.platform
+		sys.version
+		if sys.platform[:3] == 'win': print('hello windows')
+		sys.path # module search path       
+		sys.modules # the loaded modules table   
+		sys.exc_info()  # the info about the latest exception
+				#(exception_type, value, traceback object)
+		sys.argv
+		sys.stdin, sys.stderr, sys.stdout
+		sys.exit
+	Module: os, os.path
+		os.environ
+		os.system, os.popen, os.execv, os.spawv
+		os.fork, os.pipe, os.waitpid, os.kill
+		os.open, os.read, os.write
+		os.remove, os.rename, os.mkfifo, os.mkdir, os.rmdir
+		os.getcwd, os.chdir, os.getpid, os.listdir, os.access
+		os.sep, os.pathsep, os.curdir, os.path.split, os.path.join
+		os.path.exists('path'), os.path.isdir('path'), os.path.getsize('path')
+		os.path.dirname('path'), os.path.base('path')
+		os.path.splittext('path') # split the file extension out
+		os.path.normpath('path')
+		os.path.abspath('path')
+		os.startfile('file') 
+		os.walk
+	Module: subprocess  
+		subprocess.call()
+		subprocess.Popen()
+
+chapter 3 Script Execution Context
+	CWD : where you start the script
+	Module Search path: the folder where the script located
+	
+	command-line arguments process:
+		module getopt optparse
+	shell environment variable:
+		os.environ
+		os.putenv/os.getenv
+	Standard streams:
+	sys.stdin, sys.stdout, sys.stderr
+		lines = sys.stdin.readlines()
+		lines.sort()
+		for line in lines:print(line, end=' ')
+		
+		for line in sys.stdin: sum += int(line)
+		
+		if len(sys.argv) == 1:
+			more(sys.stdin.read())
+		else:
+			more(open(sys.argv[1].read())
+			
+		sys.stdin.isatty() # if stdin is console
+		
+		if sys.platform[:3] == 'win':
+			import msvcrt
+			msvcrt.putch(b'?')
+			key = msvcrt.getche()
+			mscvrt.putch(b'\n')
+			return key
+	io.StringIO, io.ByteIO
+	os.popen()
+		pipe = os.popen('dir')
+		pipe.read()
+		pipe.close()# None means no error
+		
+		pipe = os.popen(' ', 'w')
+		pipe.write('xxx\n')
+		pipe.close()
+		
+	subprocess
+		subprocess.call('dir', shell=True)
+		
+		pipe = subprocess.Popen('dir',stdout=PIPE, shell=True)
+		pipe.communicate()[0] # stdout, stderr
+		pipe.returncode
+		
+		pipe.stdout.read()
+		pipe.stdin.write()
+		pipe.stdin.close()
+		pipe.wait()
+chapter 4 File and Directory Tools
+	codec
+		bytearray, bytes, str
+		bytes.decode()
+		str.encode()
+		str = 'ÄãºÃ'
+		b = str.encode()
+		b.decode()
+		b
+		
+	struct, pickle.dump, pickle.load (deal with byte  string)
+	xml package deal in Unicode str
+	glob.glob
+	File Object
+		file = open('')
+		file.read()/readline()/readlines()
+		file.write()/writelines()
+		file.seek()
+		file.flush()
+		file.fileno()
+		file.close()
+		
+		file = open('xxx.txt')
+		for line in file:
+			print(line,end='')
+		for line in open('xxx.txt'):
+		StopIteration
+		
+		list(map(str.split, open('data.txt')))
+		line = 'Hello file world!\n'
+		line in open('filename.txt')
+		
+		struct
+		struct.pack(fmt,v1, v2, ...)
+		data = struct.pack('>i4shf',2, 'spam', 3, 1.234)
+		>: big-endian
+		4s: four-character string
+		h: half integer
+		f: floating-point number
+		values = struct.unpack('>i4shf', data)
+		
+		mode:
+		w+ : either write or read, both allowed, when open clean the file
+		r+  : either write or read, both allowed, won't clean the file when open
+		
+	File tools in os module:
+		descriptor-based file
+		os.open(path, flags, mode) # return file's descriptor
+		os.read(descriptor, N)      # read at most N bytes byte string
+		os.write(descriptor, string)# writes bytes in byte string to file
+		os.lseek(descriptor, position, how)
+		descriptor: 
+			sys.stdin.fileno() #0
+			sys.stdout.fileno() #1
+			sys.stderr.fileno() #2
+		Wrapping descriptor in file object
+		fdfile = os.open('',(os.O_RDWR|os.O_BINARY))	
+		objfile = os.fdopen(fdfile,'rb')
+		/objfile = open(fdfile,'r',encoding='latin1',closefd=False)
+		
+		os.rename()
+		os.remove()
+		os.chmod()
+		os.unlink
+		os.stat(filename)/ import stat
+	File Scanners
+		def filter_stream(function):
+			for line in sys.stdin:
+				print(function(line), end='')
+		def filter_files(name, function):
+			with open(name,'r') as input, open(name + '.out', 'w') as output:
+				for line in input:
+					output.write(function(line))
+	DirectoryTools
+		os.popen()
+		module: fnmatch
+		glob.glob('*') # * ? [] 
+		for path in glob.glob(r'PP3E/Examples/PP3E/*/s*.py'):print(path)
+		
+		os.listdir('.')
+		sorted(os.listdir('.'))
+		
+		os.path.split('/home/ezhalel/t.txt') # ('/home/ezhalel','t.txt')
+		os.path.join(dir,name)
+	Walking Directory Trees
+		os.walk()
+		
+		for (dirname, subshere, fileshere) in os.walk('.'):
+			print('[' + dirname + ']')
+			for fname in fileshere:
+				print(os.path.join(dirname,fname))
+		
+		os.listdir(b'.') # return undecoded filename, bytes string
+		os.walk, glob.glob dependent on os.listdir internally
+		so os.walk(b' '), glob.glob(b' ') also works.
+		
+		sys.getdefaultencoding() #file content encoding
+		sys.getfilesystemencoding() # file name encoding
+
+
+
+Chapter5: Parallel System Tools
+	multiprocessing, queue, threading
+	os.spawn, os.fork
+	MPI: Message Passing Interface
+	Forking Processes
+		os.fork() # unix
+		os._exit(0)
+		time.sleep(1) # sleep for 1s
+		fork() # create the new process with the copy global resource
+		thread # share the global resource
+		pid = os.fork()
+		if pid == 0:
+			os.execlp('python','python','child.py',str(par)) # overlay program
+			assert False, 'error starting program'
+		
+		os.execv(program, commandlinesequence)
+		os.execl(program, cmdarg1, cmdarg2, ... cmdargN)
+		os.execlp
+		os.execvp # search the program using the system search-path
+		os.execle
+		os.execve # last argument is a dictionary containing shell env variables
+		os.execvpe
+		os.execlpe
+		queue used in communication between threads
+		module: _thread, threading
+
+	import _thread as thread
+	_thread module: low level interface
+		_thread.start_new_thread(fun, (v,))
+		synchronize:
+			mutex = _thread.allocate_lock()
+			mutex.acquire()
+			mutex.release()
+			mutex.locked()
+			with mutex: # auto acquire and release
+				pass
+	threading module: based on _thread, and java's threading model
+		class Mythread(threading.Thread):
+			def __init__(self, myId, count, mutex):
+				self.myId = myId
+				self.count = count
+				self.mutex = mutex
+				threading.Thread.__init__(self)
+			def run(self):
+				for i in range(self.count):
+					with self.mutex:
+						print('[%s] => %s' % (self.myId,i))
+		stdoutmutex = threading.Lock()
+		threads = []
+		for i in range(10):
+			thread = Mythread(i, 100, stdoutmutex)
+			thread.start()
+			threads.append(thread)
+		for thread in threads:
+			thread.join()
+		def action(i):
+			print(i ** 32)
+		thread = threading.Thread(target=(lambda:action(2)))
+		thread.start()
+		
+		threading.Thread(target=action,args=(2,)).start()
+		
+		_thread.start_new_thread(action, (2,))
+		
+		threading.Semaphore
+		threading.Condition
+		threading.Event
+		
+	queue: module
+		_thread.allocate_lock()
+		dataQueue = queue.Queue()
+		dataQueue.put()
+		dataQueue.get(block=False)	
+		daemon thread
+	threading.Timer
+		Timer(N.M, somfunc).start()
+		tkinter.Tk,tkinter.messagebox.showinfo
+		win = tkinter.Tk()
+		win.after(5500, lambda:tkinter.messagebox.showinfo('popup','Spam!'))
+		
+	GIL: global interpreter lock
+		sys.getswitchinterval()
+		sys.setswitchinterval()
+		sys.getcheckinterval()
+		sys.setcheckinterval()
+		
+		release the GIL on entry c-extention and reacquire it on exit when resuming Python code
+		
+		Atomic operations
+	sys Module Exits
+		sys.exit(N) # exit with status N -> SystemExit exception
+		raise SystemExit
+	os Module Exits
+		os._exit() # immediately exit ,no raising an exception
+		_thread.exit()
+		Tk().quit()
+		
+		atexit.register(fun,arg,*argv)
+		
+		status code:
+			os.system
+			os.popen().close()
+			subprocess.Popen().returnvalue/.wait
+			os.wait() / os.waitpid()
+	Exit status with subprocess
+		
+	Process Exit Status and Shared State
+		newpid = os.fork()
+		if newpid == 0:
+			child()
+		else:
+			pid, status = os.wait()
+	Thread Exits
+		_thread.get_ident()
+		_thread.exit() == sys.exit() # raise SystemExit exception
+		os._exit(N) in thread will terminate the calling thread
+	Interprocess Communication IPC
+		simple files
+		command-line arguments
+		program exit status codes
+		shell environment variables
+		standard stream redirections
+		stream pipes managed by os.popen and subprocess
+		
+		socket, shared memory, signal, anonymous and named pipe
+		
+		module: mmap
+		Anonymous Pipes:
+			pipein, pipeout = os.pipe() # relative processes
+			os.read(pipein,32)
+			os.write(pipeout,msg.encode())
+			os.flush()
+			time.sleep(s)	
+			time.time() # seconds from 1970...
+			os.dup2(fd1,fd2) # fd2 = fd1
+			
+			flush 
+			python -u xxx.py/ set the PYTHONUNUFFERED= nonempty value
+			open mode: set to unbuffered, fully unbuffered mode only for binary mode files.
+			sockets: socket.socket.makefile
+			
+			pty module: force standard output to be unbuffered
+			Pexpect
+			
+		Named Pipes(Fifos) only unix-like system
+			os.mkfifo(fifoname)
+			
+			pipeout = os.open(fifoname, os.O_WRONLY)
+			os.write(pipeout, msg.encode())
+			pipein = open(fifoname, 'r')
+			pipein.readline()
+		Socket:
+			module socket
+			
+			from socket import socket, AF_INET, SOCK_STREAM
+			
+			port = 50008
+			host = 'localhost'
+			def server():
+				sock = socket(AF_INET, SOCK_STREAM)
+				sock.bind(('',port))
+				sock.listen(5)
+				while True:
+					conn, addr = sock.accept()
+					data = conn.recv(1024)
+					reply = 'server got: [%s]' % data
+					conn.send(reply.encode())
+			def client(name):
+				sock = socket(AF_INET, SOCK_STREAM)
+				sock.connect((host,port))
+				sock.send(name.encode())
+				reply = sock.recv(1024)
+				sock.close()
+				print('client got: [%s]' % reply)
+			if __name__ == '__main__':
+				from threading import Thread
+				sthread = Thread(target=server)
+				sthread.daemon = True
+				sthread.start()
+				for i in range(5)
+					Thread(target=client, args=('client%s' % i)).start()
+			socket use case:
+		module signal:
+			system-wide
+			asynchronous	
+		 time.ctime(time.time())
+		 	os.kill(pid,sig)
+		 	signal.signal(sig, action)
+		 	signal.pause()/alarm(), only on unix
+		 	
+		Module: multiprocessing
+		
+		
+		
+		
+		Other Ways to start Program
+			os.spawnv/os.spawnve
+			os.system('python makewords.py')
+			result = os.popen('python makewords.py').read()
+			//work on Windows platform
+			sys.executable
+			os.spawnv(os.P_WAIT, r'c:\Python33\python', ('python', 'makewords.py'))
+			os.spawnl(os.P_NOWAIT, r'c:\Python33\python', 'python', 'makewords.py')
+			
+			cmd = 'start lp4e-preface-preview.html'
+			os.system(cmd) # os.system won't wait for the spawned program to exit
+			os.system('lp4e-preface-preview.html')  # os.system will wait for the spawned program to exit
+			os.startfile('lp-code-readme.txt') # like double-click on the file
+			
+			hasattr(os, 'system')
+			hasattr(os, 'fork')
+			
+			select
+			
+chapter 6 
+	module: gzip, zipfile, tarfile, mimetypes
+			
+GUI
+	import tkinter
+	widget = tkinter.Label(None, text='Hello GUI world!')
+	widget.pack()
+	widget.mainloop()
+	
+	from tkinter import *
+	root = Tk()
+	Label(root, text='Hello GUI world!').pack(side=TOP) # BOTTOM, LEFT, RIGHT
+							    # expand=YES, fill=BOTH/X/Y
+	root.mainloop()
+	
+	Geometry manager: pack, grid
+	
+	Toplevel()
+	
+	widget = Label()
+	widget['text'] = "hello world!"
+	widget.config(text='hello world!')
+	
+	Old style:
+	Label(None, {'text': 'Hello GUI world!', Pack: {'side': 'top'}}).mainloop()
+	
+	widget = Button(None, text='hello widget', command=sys.exit)
+	
+	def handler(name):
+		print(name)
+	Button(text='press', command=(lambda: handler('spam')))
+	
+	def odd():
+    		funcs = []
+    		for c in 'abcdefg':
+       		funcs.append((lambda: c))      # c will be looked up later
+    		return funcs                   # does not remember current c
+	for func in odd():
+    		print(func(), end=' ')         # OOPS: print 7 g's, not a,b,c,... !
+    		
+    	def odd():
+    		funcs = []
+    		for c in 'abcdefg':
+       		funcs.append((lambda c=c: c))    # force to remember c now
+    		return funcs                        # defaults eval now
+	for func in odd():
+    		print(func(), end=' ')              # OK: now prints a,b,c,...
+    		
+    	callback coding scheme : function, lambda, class method, callable class.
+    	register callback:
+    		command option : Button, Menu, Scroll bar
+    		bind method    : with an event object(tkinter.Event) as the argument, 
+    				 context about widget, screen coordinates(key press,mouse movement click)
+    	WM_DELETE_WINDOW for window close button.
+    	
+    	import sys
+    	from tkinter import *
+    	def hello(event):
+    		print('click me')
+    	widget = Button(None, text="click")
+    	widget.pack()
+    	widget.bind('<Button-1>', hello) # <Double-1>
+    	widget.mainloop()
+    	
+    	win = tkinter.Frame()
+    	win.pack()
+    	Label(win, text="hello contain world").pack(side=TOP)
+    	Button(win, text='hello', command=greeting).pack(side=LEFT)
+    	Button(win, text="Quit", command=win.quit).pack(side=RIGHT)
+    	win.mainloop()
+    	
+    	packing order + side=TOP/BOTTOM/LEFT/RIGHT + fill=X/Y/BOTH + expand=YES/NO
+    	Using Anchor to Position Instread of Stretch
+    	Button(win, text="Hello", command=greeting).pack(side=LEFT, anchor=N)
+    	anchor=N/S/W/E/NE/NW/SE/SW/CENTER
+    	
+    	button.config(fg='spam', bg='black', font=('courier', 12), relief=RAISED, bd=5)
+    	
+    	Label A simple message area
+	Button A simple labeled push-button widget
+	Frame A container for attaching and arranging other widget objects
+	Toplevel, Tk   A new window managed by the window manager
+	Message A multiline label
+	Entry A simple single-line text-entry field
+	Checkbutton A two-state button widget, typically used for multiple-choice selections
+	Radiobutton A two-state button widget, typically used for single-choice selections
+	Scale A slider widget with scalable positions
+	PhotoImage An image object used for displaying full-color images on other widgets
+	BitmapImage An image object used for displaying bitmap images on other widgets
+	Menu A set of options associated with a Menubutton or top-level window
+	Menubutton A button that opens a Menu of selectable options and submenus
+	Scrollbar A control for scrolling other widgets (e.g., listbox, canvas, text)
+	Listbox A list of selection names
+	Text A multiline text browse/edit widget, with support for fonts, and so on
+	Canvas A graphic drawing area, which supports lines, circles, photos, text, and so on
+	
+	Geometry management
+	 pack, grid, place
+	tkinter linked variables
+	 StringVar, IntVar, DoubleVar, BooleanVar
+	Advanced Tk widgets
+	 Spinbox, LabelFrame, PanedWindow
+	Composite widgets
+	 Dialog, ScrolledText, OptionMenu
+	Scheduled callbacks
+	 Widget after, wait, and update methods
+	Other tools
+	 Standard dialogs, clipboard, bind and Event, widget configuration options, custom
+	 and modal dialogs, animation techniques
