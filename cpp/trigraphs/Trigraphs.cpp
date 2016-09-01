@@ -20,5 +20,6 @@ Before any other processing takes place, each occurrence of one of the following
 int main() {
     std::cout << "??=" << std::endl;
     std::cout << "\?\?=" << std::endl;
+    std::cout << "?\?\?/???" << std::endl;
     return 0;
 }
