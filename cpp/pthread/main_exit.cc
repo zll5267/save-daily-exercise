@@ -12,11 +12,12 @@
 
 void* threadRun(void* arg)
 {
-    printf("enter thread\n");
+    printf("enter thread 1\n");
+    printf("enter thread 2\n");
     sleep(2);
     printf("thread wake up after 2 seconds\n");
     //exit(0);
-    pthread_exit(0);
+    //pthread_exit(0);
     return NULL;
 }
 
@@ -34,6 +35,7 @@ int main()
         printf("create thread fail!\n");
     }
     printf("after create thread in main\n");
+    //exit(0);
     pthread_exit(0);
     //sleep(5);
     printf("after sleep 5s in main\n");
