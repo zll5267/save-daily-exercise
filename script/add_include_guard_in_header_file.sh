@@ -12,6 +12,9 @@ function usage() {
     echo "      e.g. l 1 -p PREFIX_XXX means file a/b/c/file.h will use include guard"
     echo "      PREFIX_XXX_C_FILE_H"
     echo "  file: the file will add the include guard"
+    echo "note:"
+    echo "     set evn Author_lastName_ll&Author_firstName_ll&EmailName_ll "
+    echo "     first as the author and email username"
 }
 
 function debug() {
@@ -85,12 +88,6 @@ if [ $1 == "-p" ]; then
     shift
 fi
 
-if [ "x$LEVEL" = "x" ]; then
-    LEVEL=2 #default value
-    echo "leliang"
-    input LEVEL "please input the LEVEL" isIntNum
-fi
-
 debug "file:$1;"
 if [ -z $1 ]; then
     echo "no input file!!!!"
@@ -107,22 +104,56 @@ debug "FILE:$FILE;LEVEL:$LEVEL;prefix:$PREFIX"
 filePath=`readlink -f $FILE`
 fileName=`basename $filePath`
 dirPath=`dirname $filePath`
-debug "fileName:$fileName, dirPath:$dirPath"
+echo "fileName:$fileName"
+echo "dirPath:$dirPath"
+
+if [ "x$LEVEL" = "x" ]; then
+    LEVEL=2 #default value
+    input LEVEL "please input the LEVEL" isIntNum
+fi
+
 while [ $LEVEL -gt 0 ]; do
     debug "level:$LEVEL"
     INCLUDE_GUARD="${dirPath##*/}_${INCLUDE_GUARD}"
     dirPath=${dirPath%/*}
     ((--LEVEL))
 done
+
 #add the fileName, no '_' before the fileName needed, added before
+if [ -z $PREFIX ]; then
+INCLUDE_GUARD="${INCLUDE_GUARD}${fileName}"
+else
 INCLUDE_GUARD="${PREFIX}_${INCLUDE_GUARD}${fileName}"
+fi
+
 #replace . - to _
-INCLUDE_GUARD="${INCLUDE_GUARD/./_}"
-INCLUDE_GUARD="${INCLUDE_GUARD/-/_}"
+INCLUDE_GUARD="${INCLUDE_GUARD//./_}"
+INCLUDE_GUARD="${INCLUDE_GUARD//-/_}"
+
 #to upper case
 INCLUDE_GUARD=`echo ${INCLUDE_GUARD}|tr [a-z] [A-Z]`
 debug "INCLUDE_GUARD:$INCLUDE_GUARD"
-sed -i "1i #ifndef $INCLUDE_GUARD\n#define $INCLUDE_GUARD\n" $FILE
+
+if [ "x$Author_lastName_ll" = "x" ]; then
+    Author_lastName_ll="LastName" #default value
+    input Author_lastName_ll "please input the lastName" notempty
+fi
+if [ "x$Author_firstName_ll" = "x" ]; then
+    Author_firstName_ll="FirstName" #default value
+    input Author_firstName_ll "please input the firstName" notempty
+fi
+if [ "x$EmailName_ll" = "x" ]; then
+    EmailName_ll="user_name" #default value
+    input EmailName_ll "please input the EmailName" notempty
+fi
+
+FILE_CLAIM_L1="// Copyright 2017 Baidu Inc. All Rights Reserved.\n"
+FILE_CLAIM_L2="// Author: ${Author_lastName_ll} ${Author_firstName_ll} (${EmailName_ll}@baidu.com)\n"
+FILE_CLAIM_L3="//\n"
+FILE_CLAIM_L4="// Description:\n"
+FILE_CLAIM="${FILE_CLAIM_L1}${FILE_CLAIM_L2}${FILE_CLAIM_L3}${FILE_CLAIM_L4}\n"
+debug $FILE_CLAIM
+sed -i "1i ${FILE_CLAIM}#ifndef $INCLUDE_GUARD\n#define $INCLUDE_GUARD\n" $FILE
 #add an empty line
 echo "" >> $FILE
 echo "#endif // $INCLUDE_GUARD" >> $FILE
