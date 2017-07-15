@@ -108,7 +108,7 @@ echo "fileName:$fileName"
 echo "dirPath:$dirPath"
 
 if [ "x$LEVEL" = "x" ]; then
-    LEVEL=2 #default value
+    LEVEL=6 #default value
     input LEVEL "please input the LEVEL" isIntNum
 fi
 
