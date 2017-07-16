@@ -31,6 +31,11 @@ void do_myown_call(void) {
     for(int i = 0; i < func_count; ++i) {
         _myown_start[i](NULL);
     }
+    array = &_myown_start;
+    printf("count of array:%ld\n", sizeof(array[0])/sizeof(array[0][0]));
+    for(int i = 0; i < func_count; ++i) {
+        array[0][i](NULL);
+    }
 }
 
 int main(void) {
