@@ -1,0 +1,415 @@
+Script started on 2017年07月16日 星期日 21时31分23秒
+
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ uname -a
+Linux xman 4.8.0-58-generic #63~16.04.1-Ubuntu SMP Mon Jun 26 18:08:51 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ sudo sysctl -w kernel.randomize_za[K[Kva_space = [K[K[K=0
+[sudo] password for leliang: 
+kernel.randomize_va_space = 0
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ cat /r[Kproc/self/maps 
+00400000-0040c000 r-xp 00000000 08:01 8781848                            /bin/cat
+0060b000-0060c000 r--p 0000b000 08:01 8781848                            /bin/cat
+0060c000-0060d000 rw-p 0000c000 08:01 8781848                            /bin/cat
+0060d000-0062e000 rw-p 00000000 00:00 0                                  [heap]
+7ffff7583000-7ffff7a0d000 r--p 00000000 08:01 3944805                    /usr/lib/locale/locale-archive
+7ffff7a0d000-7ffff7bcd000 r-xp 00000000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7bcd000-7ffff7dcd000 ---p 001c0000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7dcd000-7ffff7dd1000 r--p 001c0000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7dd1000-7ffff7dd3000 rw-p 001c4000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 137739                     /lib/x86_64-linux-gnu/ld-2.23.so
+7ffff7fb7000-7ffff7fdc000 rw-p 00000000 00:00 0 
+7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+7ffff7ffc000-7ffff7ffd000 r--p 00025000 08:01 137739                     /lib/x86_64-linux-gnu/ld-2.23.so
+7ffff7ffd000-7ffff7ffe000 rw-p 00026000 08:01 137739                     /lib/x86_64-linux-gnu/ld-2.23.so
+7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0 
+7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ cat /proc/self/maps 
+00400000-0040c000 r-xp 00000000 08:01 8781848                            /bin/cat
+0060b000-0060c000 r--p 0000b000 08:01 8781848                            /bin/cat
+0060c000-0060d000 rw-p 0000c000 08:01 8781848                            /bin/cat
+0060d000-0062e000 rw-p 00000000 00:00 0                                  [heap]
+7ffff7583000-7ffff7a0d000 r--p 00000000 08:01 3944805                    /usr/lib/locale/locale-archive
+7ffff7a0d000-7ffff7bcd000 r-xp 00000000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7bcd000-7ffff7dcd000 ---p 001c0000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7dcd000-7ffff7dd1000 r--p 001c0000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7dd1000-7ffff7dd3000 rw-p 001c4000 08:01 137761                     /lib/x86_64-linux-gnu/libc-2.23.so
+7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 137739                     /lib/x86_64-linux-gnu/ld-2.23.so
+7ffff7fb7000-7ffff7fdc000 rw-p 00000000 00:00 0 
+7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+7ffff7ffc000-7ffff7ffd000 r--p 00025000 08:01 137739                     /lib/x86_64-linux-gnu/ld-2.23.so
+7ffff7ffd000-7ffff7ffe000 rw-p 00026000 08:01 137739                     /lib/x86_64-linux-gnu/ld-2.23.so
+7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0 
+7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ ff[K[Kdd if=/proc/self/mem of=gate.so bs=4096 skip=$[0x7ffff7ffa000] count [K=2
+dd: /proc/self/mem: cannot skip to specified offset
+dd: error reading '/proc/self/mem': Input/output error
+0+0 records in
+0+0 records out
+0 bytes copied, 0.000494281 s, 0.0 kB/s
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ [Kleliang@xman:~/project/save-daily-exercise/os/vsyscall$ dd if=/proc/self/mem of=gate.so bs=4096 skip=$[0x7ffff7ffa000] count=2[1P[1P[1P
+dd: /proc/self/mem: cannot skip to specified offset
+2+0 records in
+2+0 records out
+8192 bytes (8.2 kB, 8.0 KiB) copied, 0.000294997 s, 27.8 MB/s
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ ls
+gate.so  getvdso.script
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ file gate.so 
+gate.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=7a29fd6e058e0d42e9e6ed28d7dac177f8401815, stripped
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ objdump -d gate.so 
+
+gate.so:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000930 <__vdso_clock_gettime@@LINUX_2.6-0xc0>:
+ 930:	55                   	push   %rbp
+ 931:	48 89 e5             	mov    %rsp,%rbp
+ 934:	0f ae e8             	lfence 
+ 937:	0f 31                	rdtsc  
+ 939:	48 c1 e2 20          	shl    $0x20,%rdx
+ 93d:	48 09 d0             	or     %rdx,%rax
+ 940:	48 8b 15 41 d7 ff ff 	mov    -0x28bf(%rip),%rdx        # ffffffffffffe088 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e8>
+ 947:	48 39 c2             	cmp    %rax,%rdx
+ 94a:	77 02                	ja     94e <LINUX_2.6@@LINUX_2.6+0x94e>
+ 94c:	5d                   	pop    %rbp
+ 94d:	c3                   	retq   
+ 94e:	48 89 d0             	mov    %rdx,%rax
+ 951:	5d                   	pop    %rbp
+ 952:	c3                   	retq   
+ 953:	0f 1f 00             	nopl   (%rax)
+ 956:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+ 95d:	00 00 00 
+ 960:	55                   	push   %rbp
+ 961:	8b 15 99 e6 ff ff    	mov    -0x1967(%rip),%edx        # fffffffffffff000 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe260>
+ 967:	48 89 e5             	mov    %rsp,%rbp
+ 96a:	83 e2 fe             	and    $0xfffffffe,%edx
+ 96d:	41 89 d0             	mov    %edx,%r8d
+ 970:	f6 05 a6 e6 ff ff 01 	testb  $0x1,-0x195a(%rip)        # fffffffffffff01d <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe27d>
+ 977:	74 64                	je     9dd <LINUX_2.6@@LINUX_2.6+0x9dd>
+ 979:	0f ae e8             	lfence 
+ 97c:	0f 31                	rdtsc  
+ 97e:	48 c1 e2 20          	shl    $0x20,%rdx
+ 982:	0f be 0d 93 e6 ff ff 	movsbl -0x196d(%rip),%ecx        # fffffffffffff01c <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe27c>
+ 989:	8b 35 89 e6 ff ff    	mov    -0x1977(%rip),%esi        # fffffffffffff018 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe278>
+ 98f:	48 09 c2             	or     %rax,%rdx
+ 992:	48 2b 15 6f e6 ff ff 	sub    -0x1991(%rip),%rdx        # fffffffffffff008 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe268>
+ 999:	48 89 d0             	mov    %rdx,%rax
+ 99c:	48 d3 e0             	shl    %cl,%rax
+ 99f:	85 c9                	test   %ecx,%ecx
+ 9a1:	78 30                	js     9d3 <LINUX_2.6@@LINUX_2.6+0x9d3>
+ 9a3:	89 f2                	mov    %esi,%edx
+ 9a5:	48 8b 0d 64 e6 ff ff 	mov    -0x199c(%rip),%rcx        # fffffffffffff010 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe270>
+ 9ac:	48 f7 e2             	mul    %rdx
+ 9af:	48 0f ac d0 20       	shrd   $0x20,%rdx,%rax
+ 9b4:	8b 15 46 e6 ff ff    	mov    -0x19ba(%rip),%edx        # fffffffffffff000 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffe260>
+ 9ba:	44 39 c2             	cmp    %r8d,%edx
+ 9bd:	75 ab                	jne    96a <LINUX_2.6@@LINUX_2.6+0x96a>
+ 9bf:	48 01 c8             	add    %rcx,%rax
+ 9c2:	48 39 05 bf d6 ff ff 	cmp    %rax,-0x2941(%rip)        # ffffffffffffe088 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e8>
+ 9c9:	48 0f 43 05 b7 d6 ff 	cmovae -0x2949(%rip),%rax        # ffffffffffffe088 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e8>
+ 9d0:	ff 
+ 9d1:	5d                   	pop    %rbp
+ 9d2:	c3                   	retq   
+ 9d3:	f7 d9                	neg    %ecx
+ 9d5:	48 89 d0             	mov    %rdx,%rax
+ 9d8:	48 d3 e8             	shr    %cl,%rax
+ 9db:	eb c6                	jmp    9a3 <LINUX_2.6@@LINUX_2.6+0x9a3>
+ 9dd:	31 c0                	xor    %eax,%eax
+ 9df:	c7 07 00 00 00 00    	movl   $0x0,(%rdi)
+ 9e5:	5d                   	pop    %rbp
+ 9e6:	c3                   	retq   
+ 9e7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+ 9ee:	00 00 
+
+00000000000009f0 <__vdso_clock_gettime@@LINUX_2.6>:
+ 9f0:	55                   	push   %rbp
+ 9f1:	41 89 f9             	mov    %edi,%r9d
+ 9f4:	48 89 e5             	mov    %rsp,%rbp
+ 9f7:	53                   	push   %rbx
+ 9f8:	48 8d 5d f4          	lea    -0xc(%rbp),%rbx
+ 9fc:	48 83 ec 10          	sub    $0x10,%rsp
+ a00:	83 ff 01             	cmp    $0x1,%edi
+ a03:	74 75                	je     a7a <__vdso_clock_gettime@@LINUX_2.6+0x8a>
+ a05:	0f 8e 07 01 00 00    	jle    b12 <__vdso_clock_gettime@@LINUX_2.6+0x122>
+ a0b:	83 ff 05             	cmp    $0x5,%edi
+ a0e:	74 3f                	je     a4f <__vdso_clock_gettime@@LINUX_2.6+0x5f>
+ a10:	83 ff 06             	cmp    $0x6,%edi
+ a13:	0f 85 e8 00 00 00    	jne    b01 <__vdso_clock_gettime@@LINUX_2.6+0x111>
+ a19:	8b 05 61 d6 ff ff    	mov    -0x299f(%rip),%eax        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ a1f:	a8 01                	test   $0x1,%al
+ a21:	0f 85 fb 01 00 00    	jne    c22 <__vdso_clock_gettime@@LINUX_2.6+0x232>
+ a27:	48 8b 15 a2 d6 ff ff 	mov    -0x295e(%rip),%rdx        # ffffffffffffe0d0 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd330>
+ a2e:	48 89 16             	mov    %rdx,(%rsi)
+ a31:	48 8b 15 a0 d6 ff ff 	mov    -0x2960(%rip),%rdx        # ffffffffffffe0d8 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd338>
+ a38:	48 89 56 08          	mov    %rdx,0x8(%rsi)
+ a3c:	3b 05 3e d6 ff ff    	cmp    -0x29c2(%rip),%eax        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ a42:	75 d5                	jne    a19 <__vdso_clock_gettime@@LINUX_2.6+0x29>
+ a44:	48 83 c4 10          	add    $0x10,%rsp
+ a48:	31 c0                	xor    %eax,%eax
+ a4a:	5b                   	pop    %rbx
+ a4b:	5d                   	pop    %rbp
+ a4c:	c3                   	retq   
+ a4d:	f3 90                	pause  
+ a4f:	8b 05 2b d6 ff ff    	mov    -0x29d5(%rip),%eax        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ a55:	a8 01                	test   $0x1,%al
+ a57:	75 f4                	jne    a4d <__vdso_clock_gettime@@LINUX_2.6+0x5d>
+ a59:	48 8b 15 60 d6 ff ff 	mov    -0x29a0(%rip),%rdx        # ffffffffffffe0c0 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd320>
+ a60:	48 89 16             	mov    %rdx,(%rsi)
+ a63:	48 8b 15 5e d6 ff ff 	mov    -0x29a2(%rip),%rdx        # ffffffffffffe0c8 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd328>
+ a6a:	48 89 56 08          	mov    %rdx,0x8(%rsi)
+ a6e:	39 05 0c d6 ff ff    	cmp    %eax,-0x29f4(%rip)        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ a74:	74 ce                	je     a44 <__vdso_clock_gettime@@LINUX_2.6+0x54>
+ a76:	eb d7                	jmp    a4f <__vdso_clock_gettime@@LINUX_2.6+0x5f>
+ a78:	f3 90                	pause  
+ a7a:	44 8b 15 ff d5 ff ff 	mov    -0x2a01(%rip),%r10d        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ a81:	41 f6 c2 01          	test   $0x1,%r10b
+ a85:	75 f1                	jne    a78 <__vdso_clock_gettime@@LINUX_2.6+0x88>
+ a87:	8b 05 f7 d5 ff ff    	mov    -0x2a09(%rip),%eax        # ffffffffffffe084 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e4>
+ a8d:	89 45 f4             	mov    %eax,-0xc(%rbp)
+ a90:	48 8b 05 19 d6 ff ff 	mov    -0x29e7(%rip),%rax        # ffffffffffffe0b0 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd310>
+ a97:	48 89 06             	mov    %rax,(%rsi)
+ a9a:	8b 15 e4 d5 ff ff    	mov    -0x2a1c(%rip),%edx        # ffffffffffffe084 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e4>
+ aa0:	4c 8b 1d 11 d6 ff ff 	mov    -0x29ef(%rip),%r11        # ffffffffffffe0b8 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd318>
+ aa7:	83 fa 01             	cmp    $0x1,%edx
+ aaa:	0f 84 1d 01 00 00    	je     bcd <__vdso_clock_gettime@@LINUX_2.6+0x1dd>
+ ab0:	31 c0                	xor    %eax,%eax
+ ab2:	83 fa 02             	cmp    $0x2,%edx
+ ab5:	0f 84 3c 01 00 00    	je     bf7 <__vdso_clock_gettime@@LINUX_2.6+0x207>
+ abb:	8b 0d db d5 ff ff    	mov    -0x2a25(%rip),%ecx        # ffffffffffffe09c <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2fc>
+ ac1:	44 3b 15 b8 d5 ff ff 	cmp    -0x2a48(%rip),%r10d        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ ac8:	75 b0                	jne    a7a <__vdso_clock_gettime@@LINUX_2.6+0x8a>
+ aca:	4c 01 d8             	add    %r11,%rax
+ acd:	48 d3 e8             	shr    %cl,%rax
+ ad0:	48 3d ff c9 9a 3b    	cmp    $0x3b9ac9ff,%rax
+ ad6:	0f 86 3f 01 00 00    	jbe    c1b <__vdso_clock_gettime@@LINUX_2.6+0x22b>
+ adc:	31 d2                	xor    %edx,%edx
+ ade:	48 2d 00 ca 9a 3b    	sub    $0x3b9aca00,%rax
+ ae4:	83 c2 01             	add    $0x1,%edx
+ ae7:	48 3d ff c9 9a 3b    	cmp    $0x3b9ac9ff,%rax
+ aed:	77 ef                	ja     ade <__vdso_clock_gettime@@LINUX_2.6+0xee>
+ aef:	48 01 16             	add    %rdx,(%rsi)
+ af2:	48 89 46 08          	mov    %rax,0x8(%rsi)
+ af6:	8b 45 f4             	mov    -0xc(%rbp),%eax
+ af9:	85 c0                	test   %eax,%eax
+ afb:	0f 85 43 ff ff ff    	jne    a44 <__vdso_clock_gettime@@LINUX_2.6+0x54>
+ b01:	49 63 f9             	movslq %r9d,%rdi
+ b04:	b8 e4 00 00 00       	mov    $0xe4,%eax
+ b09:	0f 05                	syscall 
+ b0b:	48 83 c4 10          	add    $0x10,%rsp
+ b0f:	5b                   	pop    %rbx
+ b10:	5d                   	pop    %rbp
+ b11:	c3                   	retq   
+ b12:	85 ff                	test   %edi,%edi
+ b14:	48 8d 5d f4          	lea    -0xc(%rbp),%rbx
+ b18:	75 e7                	jne    b01 <__vdso_clock_gettime@@LINUX_2.6+0x111>
+ b1a:	44 8b 15 5f d5 ff ff 	mov    -0x2aa1(%rip),%r10d        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ b21:	41 f6 c2 01          	test   $0x1,%r10b
+ b25:	0f 85 fe 00 00 00    	jne    c29 <__vdso_clock_gettime@@LINUX_2.6+0x239>
+ b2b:	8b 05 53 d5 ff ff    	mov    -0x2aad(%rip),%eax        # ffffffffffffe084 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e4>
+ b31:	89 45 f4             	mov    %eax,-0xc(%rbp)
+ b34:	48 8b 05 6d d5 ff ff 	mov    -0x2a93(%rip),%rax        # ffffffffffffe0a8 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd308>
+ b3b:	48 89 06             	mov    %rax,(%rsi)
+ b3e:	8b 15 40 d5 ff ff    	mov    -0x2ac0(%rip),%edx        # ffffffffffffe084 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e4>
+ b44:	4c 8b 1d 55 d5 ff ff 	mov    -0x2aab(%rip),%r11        # ffffffffffffe0a0 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd300>
+ b4b:	83 fa 01             	cmp    $0x1,%edx
+ b4e:	74 56                	je     ba6 <__vdso_clock_gettime@@LINUX_2.6+0x1b6>
+ b50:	31 c0                	xor    %eax,%eax
+ b52:	83 fa 02             	cmp    $0x2,%edx
+ b55:	0f 84 ae 00 00 00    	je     c09 <__vdso_clock_gettime@@LINUX_2.6+0x219>
+ b5b:	8b 0d 3b d5 ff ff    	mov    -0x2ac5(%rip),%ecx        # ffffffffffffe09c <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2fc>
+ b61:	44 39 15 18 d5 ff ff 	cmp    %r10d,-0x2ae8(%rip)        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ b68:	75 b0                	jne    b1a <__vdso_clock_gettime@@LINUX_2.6+0x12a>
+ b6a:	4c 01 d8             	add    %r11,%rax
+ b6d:	48 d3 e8             	shr    %cl,%rax
+ b70:	48 3d ff c9 9a 3b    	cmp    $0x3b9ac9ff,%rax
+ b76:	0f 86 9f 00 00 00    	jbe    c1b <__vdso_clock_gettime@@LINUX_2.6+0x22b>
+ b7c:	31 d2                	xor    %edx,%edx
+ b7e:	48 2d 00 ca 9a 3b    	sub    $0x3b9aca00,%rax
+ b84:	83 c2 01             	add    $0x1,%edx
+ b87:	48 3d ff c9 9a 3b    	cmp    $0x3b9ac9ff,%rax
+ b8d:	77 ef                	ja     b7e <__vdso_clock_gettime@@LINUX_2.6+0x18e>
+ b8f:	48 01 16             	add    %rdx,(%rsi)
+ b92:	48 89 46 08          	mov    %rax,0x8(%rsi)
+ b96:	8b 45 f4             	mov    -0xc(%rbp),%eax
+ b99:	85 c0                	test   %eax,%eax
+ b9b:	0f 84 60 ff ff ff    	je     b01 <__vdso_clock_gettime@@LINUX_2.6+0x111>
+ ba1:	e9 9e fe ff ff       	jmpq   a44 <__vdso_clock_gettime@@LINUX_2.6+0x54>
+ ba6:	48 89 75 e8          	mov    %rsi,-0x18(%rbp)
+ baa:	e8 81 fd ff ff       	callq  930 <LINUX_2.6@@LINUX_2.6+0x930>
+ baf:	48 8b 75 e8          	mov    -0x18(%rbp),%rsi
+ bb3:	48 2b 05 ce d4 ff ff 	sub    -0x2b32(%rip),%rax        # ffffffffffffe088 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e8>
+ bba:	8b 15 d8 d4 ff ff    	mov    -0x2b28(%rip),%edx        # ffffffffffffe098 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2f8>
+ bc0:	48 23 05 c9 d4 ff ff 	and    -0x2b37(%rip),%rax        # ffffffffffffe090 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2f0>
+ bc7:	48 0f af c2          	imul   %rdx,%rax
+ bcb:	eb 8e                	jmp    b5b <__vdso_clock_gettime@@LINUX_2.6+0x16b>
+ bcd:	48 89 75 e8          	mov    %rsi,-0x18(%rbp)
+ bd1:	e8 5a fd ff ff       	callq  930 <LINUX_2.6@@LINUX_2.6+0x930>
+ bd6:	48 8b 75 e8          	mov    -0x18(%rbp),%rsi
+ bda:	48 2b 05 a7 d4 ff ff 	sub    -0x2b59(%rip),%rax        # ffffffffffffe088 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e8>
+ be1:	8b 15 b1 d4 ff ff    	mov    -0x2b4f(%rip),%edx        # ffffffffffffe098 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2f8>
+ be7:	48 23 05 a2 d4 ff ff 	and    -0x2b5e(%rip),%rax        # ffffffffffffe090 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2f0>
+ bee:	48 0f af c2          	imul   %rdx,%rax
+ bf2:	e9 c4 fe ff ff       	jmpq   abb <__vdso_clock_gettime@@LINUX_2.6+0xcb>
+ bf7:	48 89 df             	mov    %rbx,%rdi
+ bfa:	48 89 75 e8          	mov    %rsi,-0x18(%rbp)
+ bfe:	e8 5d fd ff ff       	callq  960 <LINUX_2.6@@LINUX_2.6+0x960>
+ c03:	48 8b 75 e8          	mov    -0x18(%rbp),%rsi
+ c07:	eb d1                	jmp    bda <__vdso_clock_gettime@@LINUX_2.6+0x1ea>
+ c09:	48 89 df             	mov    %rbx,%rdi
+ c0c:	48 89 75 e8          	mov    %rsi,-0x18(%rbp)
+ c10:	e8 4b fd ff ff       	callq  960 <LINUX_2.6@@LINUX_2.6+0x960>
+ c15:	48 8b 75 e8          	mov    -0x18(%rbp),%rsi
+ c19:	eb 98                	jmp    bb3 <__vdso_clock_gettime@@LINUX_2.6+0x1c3>
+ c1b:	31 d2                	xor    %edx,%edx
+ c1d:	e9 cd fe ff ff       	jmpq   aef <__vdso_clock_gettime@@LINUX_2.6+0xff>
+ c22:	f3 90                	pause  
+ c24:	e9 f0 fd ff ff       	jmpq   a19 <__vdso_clock_gettime@@LINUX_2.6+0x29>
+ c29:	f3 90                	pause  
+ c2b:	e9 ea fe ff ff       	jmpq   b1a <__vdso_clock_gettime@@LINUX_2.6+0x12a>
+
+0000000000000c30 <__vdso_gettimeofday@@LINUX_2.6>:
+ c30:	55                   	push   %rbp
+ c31:	48 89 e5             	mov    %rsp,%rbp
+ c34:	53                   	push   %rbx
+ c35:	48 83 ec 10          	sub    $0x10,%rsp
+ c39:	48 85 ff             	test   %rdi,%rdi
+ c3c:	0f 84 b8 00 00 00    	je     cfa <__vdso_gettimeofday@@LINUX_2.6+0xca>
+ c42:	48 8d 5d f4          	lea    -0xc(%rbp),%rbx
+ c46:	49 89 f9             	mov    %rdi,%r9
+ c49:	44 8b 15 30 d4 ff ff 	mov    -0x2bd0(%rip),%r10d        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ c50:	41 f6 c2 01          	test   $0x1,%r10b
+ c54:	0f 85 ea 00 00 00    	jne    d44 <__vdso_gettimeofday@@LINUX_2.6+0x114>
+ c5a:	8b 05 24 d4 ff ff    	mov    -0x2bdc(%rip),%eax        # ffffffffffffe084 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e4>
+ c60:	89 45 f4             	mov    %eax,-0xc(%rbp)
+ c63:	48 8b 05 3e d4 ff ff 	mov    -0x2bc2(%rip),%rax        # ffffffffffffe0a8 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd308>
+ c6a:	49 89 01             	mov    %rax,(%r9)
+ c6d:	8b 15 11 d4 ff ff    	mov    -0x2bef(%rip),%edx        # ffffffffffffe084 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e4>
+ c73:	4c 8b 1d 26 d4 ff ff 	mov    -0x2bda(%rip),%r11        # ffffffffffffe0a0 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd300>
+ c7a:	83 fa 01             	cmp    $0x1,%edx
+ c7d:	0f 84 b2 00 00 00    	je     d35 <__vdso_gettimeofday@@LINUX_2.6+0x105>
+ c83:	31 c0                	xor    %eax,%eax
+ c85:	83 fa 02             	cmp    $0x2,%edx
+ c88:	74 7e                	je     d08 <__vdso_gettimeofday@@LINUX_2.6+0xd8>
+ c8a:	8b 0d 0c d4 ff ff    	mov    -0x2bf4(%rip),%ecx        # ffffffffffffe09c <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2fc>
+ c90:	44 39 15 e9 d3 ff ff 	cmp    %r10d,-0x2c17(%rip)        # ffffffffffffe080 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e0>
+ c97:	75 b0                	jne    c49 <__vdso_gettimeofday@@LINUX_2.6+0x19>
+ c99:	4c 01 d8             	add    %r11,%rax
+ c9c:	48 d3 e8             	shr    %cl,%rax
+ c9f:	48 3d ff c9 9a 3b    	cmp    $0x3b9ac9ff,%rax
+ ca5:	48 89 c1             	mov    %rax,%rcx
+ ca8:	0f 86 bc 00 00 00    	jbe    d6a <__vdso_gettimeofday@@LINUX_2.6+0x13a>
+ cae:	31 d2                	xor    %edx,%edx
+ cb0:	48 89 c8             	mov    %rcx,%rax
+ cb3:	83 c2 01             	add    $0x1,%edx
+ cb6:	48 8d 88 00 36 65 c4 	lea    -0x3b9aca00(%rax),%rcx
+ cbd:	48 81 f9 ff c9 9a 3b 	cmp    $0x3b9ac9ff,%rcx
+ cc4:	77 ea                	ja     cb0 <__vdso_gettimeofday@@LINUX_2.6+0x80>
+ cc6:	8b 45 f4             	mov    -0xc(%rbp),%eax
+ cc9:	49 01 11             	add    %rdx,(%r9)
+ ccc:	49 89 49 08          	mov    %rcx,0x8(%r9)
+ cd0:	85 c0                	test   %eax,%eax
+ cd2:	0f 84 86 00 00 00    	je     d5e <__vdso_gettimeofday@@LINUX_2.6+0x12e>
+ cd8:	48 89 c8             	mov    %rcx,%rax
+ cdb:	48 ba cf f7 53 e3 a5 	movabs $0x20c49ba5e353f7cf,%rdx
+ ce2:	9b c4 20 
+ ce5:	48 f7 ea             	imul   %rdx
+ ce8:	48 89 c8             	mov    %rcx,%rax
+ ceb:	48 c1 f8 3f          	sar    $0x3f,%rax
+ cef:	48 c1 fa 07          	sar    $0x7,%rdx
+ cf3:	48 29 c2             	sub    %rax,%rdx
+ cf6:	49 89 51 08          	mov    %rdx,0x8(%r9)
+ cfa:	31 c0                	xor    %eax,%eax
+ cfc:	48 85 f6             	test   %rsi,%rsi
+ cff:	75 4a                	jne    d4b <__vdso_gettimeofday@@LINUX_2.6+0x11b>
+ d01:	48 83 c4 10          	add    $0x10,%rsp
+ d05:	5b                   	pop    %rbx
+ d06:	5d                   	pop    %rbp
+ d07:	c3                   	retq   
+ d08:	48 89 df             	mov    %rbx,%rdi
+ d0b:	48 89 75 e8          	mov    %rsi,-0x18(%rbp)
+ d0f:	e8 4c fc ff ff       	callq  960 <LINUX_2.6@@LINUX_2.6+0x960>
+ d14:	48 8b 75 e8          	mov    -0x18(%rbp),%rsi
+ d18:	48 2b 05 69 d3 ff ff 	sub    -0x2c97(%rip),%rax        # ffffffffffffe088 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2e8>
+ d1f:	8b 15 73 d3 ff ff    	mov    -0x2c8d(%rip),%edx        # ffffffffffffe098 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2f8>
+ d25:	48 23 05 64 d3 ff ff 	and    -0x2c9c(%rip),%rax        # ffffffffffffe090 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd2f0>
+ d2c:	48 0f af c2          	imul   %rdx,%rax
+ d30:	e9 55 ff ff ff       	jmpq   c8a <__vdso_gettimeofday@@LINUX_2.6+0x5a>
+ d35:	48 89 75 e8          	mov    %rsi,-0x18(%rbp)
+ d39:	e8 f2 fb ff ff       	callq  930 <LINUX_2.6@@LINUX_2.6+0x930>
+ d3e:	48 8b 75 e8          	mov    -0x18(%rbp),%rsi
+ d42:	eb d4                	jmp    d18 <__vdso_gettimeofday@@LINUX_2.6+0xe8>
+ d44:	f3 90                	pause  
+ d46:	e9 fe fe ff ff       	jmpq   c49 <__vdso_gettimeofday@@LINUX_2.6+0x19>
+ d4b:	8b 15 8f d3 ff ff    	mov    -0x2c71(%rip),%edx        # ffffffffffffe0e0 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd340>
+ d51:	89 16                	mov    %edx,(%rsi)
+ d53:	8b 15 8b d3 ff ff    	mov    -0x2c75(%rip),%edx        # ffffffffffffe0e4 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd344>
+ d59:	89 56 04             	mov    %edx,0x4(%rsi)
+ d5c:	eb a3                	jmp    d01 <__vdso_gettimeofday@@LINUX_2.6+0xd1>
+ d5e:	b8 60 00 00 00       	mov    $0x60,%eax
+ d63:	4c 89 cf             	mov    %r9,%rdi
+ d66:	0f 05                	syscall 
+ d68:	eb 97                	jmp    d01 <__vdso_gettimeofday@@LINUX_2.6+0xd1>
+ d6a:	31 d2                	xor    %edx,%edx
+ d6c:	e9 55 ff ff ff       	jmpq   cc6 <__vdso_gettimeofday@@LINUX_2.6+0x96>
+ d71:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+ d76:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+ d7d:	00 00 00 
+
+0000000000000d80 <__vdso_time@@LINUX_2.6>:
+ d80:	55                   	push   %rbp
+ d81:	48 85 ff             	test   %rdi,%rdi
+ d84:	48 8b 05 1d d3 ff ff 	mov    -0x2ce3(%rip),%rax        # ffffffffffffe0a8 <__vdso_getcpu@@LINUX_2.6+0xffffffffffffd308>
+ d8b:	48 89 e5             	mov    %rsp,%rbp
+ d8e:	74 03                	je     d93 <__vdso_time@@LINUX_2.6+0x13>
+ d90:	48 89 07             	mov    %rax,(%rdi)
+ d93:	5d                   	pop    %rbp
+ d94:	c3                   	retq   
+ d95:	90                   	nop
+ d96:	90                   	nop
+ d97:	90                   	nop
+ d98:	90                   	nop
+ d99:	90                   	nop
+ d9a:	90                   	nop
+ d9b:	90                   	nop
+ d9c:	90                   	nop
+ d9d:	90                   	nop
+ d9e:	90                   	nop
+ d9f:	90                   	nop
+
+0000000000000da0 <__vdso_getcpu@@LINUX_2.6>:
+ da0:	55                   	push   %rbp
+ da1:	b8 7b 00 00 00       	mov    $0x7b,%eax
+ da6:	48 89 e5             	mov    %rsp,%rbp
+ da9:	0f 03 c0             	lsl    %ax,%eax
+ dac:	48 85 ff             	test   %rdi,%rdi
+ daf:	74 0a                	je     dbb <__vdso_getcpu@@LINUX_2.6+0x1b>
+ db1:	89 c2                	mov    %eax,%edx
+ db3:	81 e2 ff 0f 00 00    	and    $0xfff,%edx
+ db9:	89 17                	mov    %edx,(%rdi)
+ dbb:	48 85 f6             	test   %rsi,%rsi
+ dbe:	74 05                	je     dc5 <__vdso_getcpu@@LINUX_2.6+0x25>
+ dc0:	c1 e8 0c             	shr    $0xc,%eax
+ dc3:	89 06                	mov    %eax,(%rsi)
+ dc5:	31 c0                	xor    %eax,%eax
+ dc7:	5d                   	pop    %rbp
+ dc8:	c3                   	retq   
+
+Disassembly of section .altinstr_replacement:
+
+0000000000000dfd <.altinstr_replacement>:
+ dfd:	0f ae f0             	mfence 
+ e00:	0f ae e8             	lfence 
+ e03:	0f ae f0             	mfence 
+ e06:	0f ae e8             	lfence 
+leliang@xman:~/project/save-daily-exercise/os/vsyscall$ exit
+exit
+
+Script done on 2017年07月16日 星期日 21时37分26秒

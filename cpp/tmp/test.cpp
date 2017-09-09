@@ -1,6 +1,20 @@
 #include <iostream>
 #include <string>
 
+#ifdef DEBUG_LEVEL
+#error "not define debug level"
+#endif
+
+#define __NS2147483647  1
+#define __NS2147483647L 2
+#define NS_TEST_X(x) __NS##x
+#define NS_TEST_Y(x) NS_TEST_X(x)
+
+#if NS_TEST_Y(INT_FAST32_MAX) == __NS2147483647 && \
+    NS_TEST_Y(INT_LEAST32_MAX) == __NS2147483647L && \
+    NS_TEST_Y(INT32_MAX) == __NS2147483647L
+#warning "OOOOKKKKKKK"
+#endif
 
 int fun()
 {}
