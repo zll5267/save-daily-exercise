@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdio>
 
 #ifdef DEBUG_LEVEL
 #error "not define debug level"
@@ -46,5 +47,9 @@ int main()
             break;
         }
     }
+
+    char single_quote = '"';
+    char slash = '\\';
+    printf("%c, %c\n", single_quote, slash);
 }
 

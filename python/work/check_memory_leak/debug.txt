@@ -1,0 +1,70 @@
+[I]{tid:20851}(1434656000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008440, size = 85
+[I]{tid:20851}(1434656000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 2000a510, size = 20
+[I]{tid:20851}(1434656000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20009ce0, size = 14
+[I]{tid:20851}(1434656000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:172, addr = 20012570, size = 93
+[I]{tid:20851}(1434656000)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:201, addr = 20012570
+[I]{tid:20851}(1434656000)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20006b00
+[I]{tid:20851}(1434656000)lightduer_memory.c(212):duer_free_ext: file:modules/connagent/lightduer_ca.c, line:876, addr = 20009bd0
+[I]{tid:20851}(1434656000)lightduer_memory.c(212):duer_free_ext: file:modules/connagent/lightduer_ca.c, line:880, addr = 2000a450
+[I]{tid:20851}(1434656000)lightduer_memory.c(212):duer_free_ext: file:framework/utils/lightduer_queue_cache.c, line:115, addr = 20002920
+[I]{tid:20851}(1434656099)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 2000a450, size = 64
+[I]{tid:20851}(1434656099)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20002920, size = 2
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 2000a510
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008500
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008440
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20009ce0
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20009d00
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008af0
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20002920
+[I]{tid:20851}(1434656099)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 2000a450
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/connagent/lightduer_ca.c, line:777, addr = 20008f40, size = 64
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/connagent/lightduer_ca.c, line:798, addr = 20009ce0, size = 2
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:framework/utils/lightduer_queue_cache.c, line:40, addr = 20008500, size = 16
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008440, size = 85
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008af0, size = 48
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20015000, size = 40
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20002920, size = 24
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20006b00, size = 85
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 2000a510, size = 20
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20012d50, size = 14
+[I]{tid:20851}(1434711000)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:172, addr = 20012570, size = 93
+[I]{tid:20851}(1434711000)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:201, addr = 20012570
+[I]{tid:20851}(1434711000)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008440
+[I]{tid:20851}(1434711000)lightduer_memory.c(212):duer_free_ext: file:modules/connagent/lightduer_ca.c, line:876, addr = 20009ce0
+[I]{tid:20851}(1434711000)lightduer_memory.c(212):duer_free_ext: file:modules/connagent/lightduer_ca.c, line:880, addr = 20008f40
+[I]{tid:20851}(1434711000)lightduer_memory.c(212):duer_free_ext: file:framework/utils/lightduer_queue_cache.c, line:115, addr = 20008500
+[I]{tid:20851}(1434711183)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008f40, size = 64
+[I]{tid:20851}(1434711183)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008500, size = 2
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 2000a510
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20002920
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20006b00
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20012d50
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20015000
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008af0
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008500
+[I]{tid:20851}(1434711183)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008f40
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/connagent/lightduer_ca.c, line:777, addr = 20009120, size = 64
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/connagent/lightduer_ca.c, line:798, addr = 20012d50, size = 2
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:framework/utils/lightduer_queue_cache.c, line:40, addr = 20002920, size = 16
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20006b00, size = 85
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008af0, size = 48
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20018c90, size = 40
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008500, size = 24
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20008440, size = 85
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 2000a510, size = 20
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20014560, size = 14
+[I]{tid:20851}(1434766001)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:172, addr = 20012570, size = 93
+[I]{tid:20851}(1434766001)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:201, addr = 20012570
+[I]{tid:20851}(1434766001)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20006b00
+[I]{tid:20851}(1434766001)lightduer_memory.c(212):duer_free_ext: file:modules/connagent/lightduer_ca.c, line:876, addr = 20012d50
+[I]{tid:20851}(1434766001)lightduer_memory.c(212):duer_free_ext: file:modules/connagent/lightduer_ca.c, line:880, addr = 20009120
+[I]{tid:20851}(1434766001)lightduer_memory.c(212):duer_free_ext: file:framework/utils/lightduer_queue_cache.c, line:115, addr = 20002920
+[I]{tid:20851}(1434766168)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20009120, size = 64
+[I]{tid:20851}(1434766168)lightduer_memory.c(186):duer_malloc_ext: file:modules/coap/lightduer_coap.c, line:230, addr = 20002920, size = 2
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 2000a510
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008500
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008440
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20014560
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20018c90
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, addr = 20008af0
+[I]{tid:20851}(1434766168)lightduer_memory.c(212):duer_free_ext: file:modules/coap/lightduer_coap.c, line:234, ad
