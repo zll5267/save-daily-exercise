@@ -22,6 +22,7 @@ int main() {
     //printf("%d\n",ss);
     struct sockaddr_in server_sockaddr;
     server_sockaddr.sin_family = AF_INET;
+    printf("port:%d\n", PORT);
     server_sockaddr.sin_port = htons(PORT);
     //printf("%d\n",INADDR_ANY);
     server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);

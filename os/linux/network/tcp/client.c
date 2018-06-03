@@ -36,8 +36,9 @@ int main()
     while (fgets(sendbuf, sizeof(sendbuf), stdin) != NULL)
     {
         send(sock_cli, sendbuf, strlen(sendbuf),0); ///发送
-        //if(strcmp(sendbuf,"exit\n")==0)
-        //    break;
+        if(strcmp(sendbuf,"exit\n")==0) {
+            break;
+        }
         recv(sock_cli, recvbuf, sizeof(recvbuf),0); ///接收
         fputs(recvbuf, stdout);
 

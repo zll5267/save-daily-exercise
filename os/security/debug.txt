@@ -1,0 +1,30 @@
+RSA.c: In function ‘int RSA_Encrypt(rsa_key_e, rsa_key_t, const unsigned char*, int, unsigned char*)’:
+RSA.c:59:5: error: expected ‘;’ before ‘}’ token
+     } else {
+     ^
+RSA.c: In function ‘int RSA_Decrypt(rsa_key_e, rsa_key_t, const unsigned char*, int, unsigned char*)’:
+RSA.c:87:5: error: expected ‘;’ before ‘}’ token
+     } else {
+     ^
+RSA_main.c: In function ‘int main()’:
+RSA_main.c:5:29: error: invalid conversion from ‘const char*’ to ‘unsigned char*’ [-fpermissive]
+  unsigned char* plainText = "Hello World!";
+                             ^
+RSA_main.c:6:63: error: ‘strlen’ was not declared in this scope
+         unsigned char* encryptedText = malloc(strlen(plainText) + 1);
+                                                               ^
+RSA_main.c:6:68: error: ‘malloc’ was not declared in this scope
+         unsigned char* encryptedText = malloc(strlen(plainText) + 1);
+                                                                    ^
+RSA_main.c:8:48: error: ‘memset’ was not declared in this scope
+  memset(encryptedText, 0, strlen(plainText) + 1);
+                                                ^
+RSA_main.c:13:20: error: ‘RSA_GenKey’ was not declared in this scope
+  RSA_GenKey(e, d, n);
+                    ^
+RSA_main.c:14:54: error: ‘printf’ was not declared in this scope
+  printf("key pair(e, d, n): (%d, %d, %d)\n", e, d , n);
+                                                      ^
+RSA_main.c:17:28: error: ‘plaintText’ was not declared in this scope
+  printf("plaintText:%s\n", plaintText);
+                            ^
