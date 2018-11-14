@@ -21,7 +21,7 @@ void print_trace(void)
         std::cout << "backace_symbols" << std::endl;
         return;
     }
-    std::cout << "Obtained %d stack frames." << std::endl;
+    std::cout << "Obtained " << size << " stack frames." << std::endl;
 
     for(i = 0; i < size; ++i)
     {

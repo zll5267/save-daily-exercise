@@ -25,7 +25,7 @@ static void* GetConstructorAddress()
         "call next\n\t"
         "next:"
     );
-    p->T::T();
+    //p->T::T();
     __asm__ (
         "popl %%eax\n\t"
         : "=a"(p)

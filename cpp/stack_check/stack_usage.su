@@ -1,0 +1,2 @@
+stack_usage.c:5:6:func1	80	static
+stack_usage.c:13:5:main	16	static
