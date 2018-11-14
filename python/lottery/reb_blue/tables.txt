@@ -1,0 +1,8 @@
+sqlite> .schema redblue
+CREATE TABLE redblue(code char(7) primary key not null, blue text, red text,date text,sales integer, poolmoney integer, grade1number integer, grade1money integer, grade2number integer,grade2money integer, grade3number integer, grade3money interger, grade4number integer, grade4money integer, grade5number integer, grade5money integer, grade6number integer, grade6money integer, detailslink text, videolink text, grade1detail text);
+sqlite> .schema kaijiang500_rb_info
+CREATE TABLE kaijiang500_rb_info(code primary key not null, detaillink text not null);
+sqlite> .schema kaijiang500_redblue
+CREATE TABLE kaijiang500_redblue(code char(7) primary key not null, blue text, red text,date text,sales integer, poolmoney integer, grade1number integer, grade1money integer, grade2number integer,grade2money integer, grade3number integer, grade3money interger, grade4number integer, grade4money integer, grade5number integer, grade5money integer, grade6number integer, grade6money integer, detailslink text, sequence_balls text, grade1detail text);
+sqlite>
+
